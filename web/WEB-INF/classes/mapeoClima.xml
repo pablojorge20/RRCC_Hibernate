@@ -1,0 +1,31 @@
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!-- Configuration for the Seguridad package. -->
+    <package name="clima" namespace="/" extends="login">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>        
+        
+        <!-- Default interceptor stack. -->
+        <!--default-interceptor-ref name="paramsPrepareParamsStack"/-->
+        <!-- LOGIN -->
+
+           <action name="climaSocial" class="celepsa.rrcc.web.actions.ClimaSocialAction" method="GenerarClima">
+            <result name="input">/WEB-INF/jsp/ClimaSocial.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">climaSocial</param>
+                <param name="mensaje">${mensaje}</param>                
+            </result>            
+            <result name="cancel" type="redirectAction">climaSocial</result>
+            <result name="login" type="redirectAction">login</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>
+         <action name="Actualizar" class="celepsa.rrcc.web.actions.StakePersonaAction" method="GenerarClima">
+            <result name="success" type="redirectAction">welcome</result>
+            <result name="input">/WEB-INF/jsp/ClimaSocial.jsp</result>    
+        </action>
+     
+    </package>
+</struts>

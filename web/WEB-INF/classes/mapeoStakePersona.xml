@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!-- Configuration for the Seguridad package. -->
+    <package name="stakepersona" namespace="/" extends="login">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>        
+        
+        <!-- Default interceptor stack. -->
+        <!--default-interceptor-ref name="paramsPrepareParamsStack"/-->
+        <!-- LOGIN -->
+
+           <action name="StakePersonaList" class="celepsa.rrcc.web.actions.StakePersonaListAction" method="listarStakePersona">
+            <result name="input">/WEB-INF/jsp/StakePersonaList.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">StakePersonaList</param>
+                <param name="mensaje">${mensaje}</param>                
+            </result>            
+            <result name="cancel" type="redirectAction">StakePersonaList</result>
+            <result name="login" type="redirectAction">login</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>
+      <action name="Personas" class="celepsa.rrcc.web.actions.StakePersonaAction" method="obtenerStakePersona">
+            <result name="success" type="redirectAction">${accion}</result>          
+            <result name="input">/WEB-INF/jsp/StakePersona.jsp</result>
+            <result name="login"  type="redirectAction">w</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>
+     <action name="grabarPersona" class="celepsa.rrcc.web.actions.StakePersonaAction" method="grabar">
+            <result name="success" type="redirectAction">welcome</result>
+            <result name="input">/WEB-INF/jsp/StakePersona.jsp</result>    
+        </action>
+    </package>
+</struts>

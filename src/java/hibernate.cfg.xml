@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/RRHH</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="celepsa/rrcc/eh/TmNivelInfluencia.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/TmZona.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/Criticidad.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/TmStakeAgrupacion.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/AgrupacionDocumento.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/TmStakePersona.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/PersonaDocumento.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/TmClima.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/TmTdocumentoIdentidad.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/TmAdjunto.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/TmTipoDocumento.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/TmEstado.hbm.xml"/>
+    <mapping resource="celepsa/rrcc/eh/TmDocumento.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

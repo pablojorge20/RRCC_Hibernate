@@ -1,0 +1,88 @@
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!-- Include webwork default (from the Struts JAR). -->
+    <include file="struts-default.xml"/>
+    <!-- SPRING -->
+    <!--<constant name="struts.objectFactory" value="spring"/> -->
+    <!-- STRUTS 2.1 -->
+    <constant name="struts.action.extension" value="action" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.multipart.maxSize" value="30000000" />
+
+    <!-- Configuración del paquete base default. -->
+    <package name="default" extends="struts-default">
+    	<!-- Default interceptor stack. -->
+        <default-interceptor-ref name="paramsPrepareParamsStack"/>  
+              
+        <action name="login" class="celepsa.rrcc.web.actions.LoginAction" method="login" >
+            <result name="success" type="redirectAction">${accion}</result>
+            <result name="redireccion" type="redirect">
+                <param name="location">${url}</param>
+            </result>
+	    <result name="input">/WEB-INF/jsp/login.jsp</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+	</action>
+        
+        <action name="check" class="celepsa.rrcc.web.actions.LoginAction" method="check" >
+            <result name="success" type="redirectAction">${accion}</result> 
+            <result name="redireccion" type="redirect">
+                <param name="location">${url}</param>
+            </result>
+	    <result name="input">/WEB-INF/jsp/login.jsp</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+	</action>
+        
+     </package>
+  
+    <!-- Configuración del paquete base para operaciones con login. -->
+    <package name="login" namespace="/" extends="struts-default">
+        <!-- login -->
+        <interceptors>
+            <interceptor name="login" class="celepsa.rrcc.web.actions.LoginInterceptor" />
+            <interceptor-stack name="defaultLoginStack">
+                <interceptor-ref name="servletConfig" />
+                <interceptor-ref name="params" />
+                <interceptor-ref name="login" />
+                <interceptor-ref name="prepare" />
+                <interceptor-ref name="chain" />
+                <interceptor-ref name="modelDriven" />
+                <interceptor-ref name="fileUpload" />
+                <interceptor-ref name="staticParams" />
+                <interceptor-ref name="params" />
+                <interceptor-ref name="conversionError" />
+                <interceptor-ref name="validation" />
+                <interceptor-ref name="workflow" />
+            </interceptor-stack>
+            <interceptor-stack name="defaultInsecureStack">
+                <interceptor-ref name="servletConfig" />
+                <interceptor-ref name="params" />
+                <interceptor-ref name="prepare" />
+                <interceptor-ref name="chain" />
+                <interceptor-ref name="modelDriven" />
+                <interceptor-ref name="fileUpload" />
+                <interceptor-ref name="staticParams" />
+                <interceptor-ref name="params" />
+                <interceptor-ref name="conversionError" />
+                <interceptor-ref name="validation" />
+                <interceptor-ref name="workflow" />
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="defaultLoginStack" />
+        <default-action-ref name="index" />
+
+	<global-results>
+            <result name="login" type="redirectAction">login</result>
+            <result name="success" type="redirectAction">${accion}</result>
+            <result name="stop">/WEB-INF/jsp/acceso.jsp</result>
+	</global-results>
+   </package>
+
+   <include file="mapeoSeguridad.xml"/>
+   <include file="mapeoDocumentos.xml"/>
+   <include file="mapeoStakePersona.xml"/>
+   <include file="mapeoStakeAgrupacion.xml"/>
+   <include file="mapeoClima.xml"/>
+</struts>

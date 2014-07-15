@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-jul-2014 15:31:36 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="celepsa.rrcc.eh.TmStakePersona" table="tmStakePersona" catalog="rrhh">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="fechaRegistro" type="string">
+            <column name="FechaRegistro" length="45" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="Nombre" length="45" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="Apellido" length="45" />
+        </property>
+        <property name="alias" type="string">
+            <column name="Alias" length="45" />
+        </property>
+        <property name="identidad" type="string">
+            <column name="Identidad" length="45" />
+        </property>
+        <property name="nroDocumento" type="string">
+            <column name="NroDocumento" length="45" />
+        </property>
+        <property name="tmTdocumentoId" type="int">
+            <column name="tmTDocumento_id" not-null="true" />
+        </property>
+        <property name="fotografia" type="string">
+            <column name="Fotografia" length="100" />
+        </property>
+        <property name="tmNivelInfluenciaId" type="int">
+            <column name="tmNivelInfluencia_id" not-null="true" />
+        </property>
+        <property name="est" type="java.lang.Integer">
+            <column name="est" />
+        </property>
+        <property name="tmZonaId" type="int">
+            <column name="tmZona_id" not-null="true" />
+        </property>
+        <property name="tmEstadoId" type="int">
+            <column name="tmEstado_id" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

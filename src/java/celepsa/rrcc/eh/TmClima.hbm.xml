@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-jul-2014 15:31:36 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="celepsa.rrcc.eh.TmClima" table="tmClima" catalog="rrhh">
+        <composite-id name="id" class="celepsa.rrcc.eh.TmClimaId">
+            <key-property name="tmZonaId" type="int">
+                <column name="tmZona_id" />
+            </key-property>
+            <key-property name="fechaGeneracion" type="string">
+                <column name="FechaGeneracion" length="10" />
+            </key-property>
+        </composite-id>
+        <property name="clima" type="string">
+            <column name="Clima" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

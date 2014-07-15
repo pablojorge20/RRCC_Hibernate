@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="RRHH"/>
+  <table-filter match-name="tmAdjunto"/>
+  <table-filter match-name="tmDocumento"/>
+  <table-filter match-name="tmTDocumentoIdentidad"/>
+  <table-filter match-name="tmNivelInfluencia"/>
+  <table-filter match-name="tmEstado"/>
+  <table-filter match-name="AgrupacionDocumento"/>
+  <table-filter match-name="tmStakeAgrupacion"/>
+  <table-filter match-name="tmTipoDocumento"/>
+  <table-filter match-name="tmStakePersona"/>
+  <table-filter match-name="tmZona"/>
+  <table-filter match-name="PersonaDocumento"/>
+  <table-filter match-name="tmClima"/>
+  <table-filter match-name="Criticidad"/>
+</hibernate-reverse-engineering>

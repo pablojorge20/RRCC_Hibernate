@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-jul-2014 15:31:36 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="celepsa.rrcc.eh.PersonaDocumento" table="PersonaDocumento" catalog="rrhh">
+        <composite-id name="id" class="celepsa.rrcc.eh.PersonaDocumentoId">
+            <key-property name="tmDocumentoId" type="int">
+                <column name="tmDocumento_id" />
+            </key-property>
+            <key-property name="tmStakePersonaId" type="int">
+                <column name="tmStakePersona_id" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

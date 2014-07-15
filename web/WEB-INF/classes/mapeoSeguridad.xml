@@ -1,0 +1,32 @@
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!-- Configuration for the Seguridad package. -->
+    <package name="seguridad" namespace="/" extends="login">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>        
+        
+        <!-- Default interceptor stack. -->
+        <!--default-interceptor-ref name="paramsPrepareParamsStack"/-->
+        <!-- LOGIN -->
+        <action name="logout" class="celepsa.rrcc.web.actions.LoginAction" method="logout">
+            <result name="success" type="redirectAction">welcome</result>
+            <result name="login"  type="redirectAction">login</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>
+               <action name="Documentos" class="celepsa.rrcc.web.actions.DocumentosAction" method="obtenerDocumentos">
+            <result name="success" type="redirectAction">${accion}</result>          
+            <result name="input">/WEB-INF/jsp/Documento.jsp</result>
+            <result name="login"  type="redirectAction">w</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>
+           <action name="welcome" class="celepsa.rrcc.web.actions.WelcomeAction" method="welcome">
+            <result name="success" type="redirectAction">${accion}</result>          
+            <result name="input">/WEB-INF/jsp/welcome.jsp</result>
+            <result name="login"  type="redirectAction">w</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>
+    </package>
+</struts>

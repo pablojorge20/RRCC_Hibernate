@@ -1,0 +1,68 @@
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!-- Configuration for the Seguridad package. -->
+    <package name="documentos" namespace="/" extends="login">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>        
+        
+        <!-- Default interceptor stack. -->
+        <!--default-interceptor-ref name="paramsPrepareParamsStack"/-->
+        <!-- LOGIN -->
+        <action name="grabar" class="celepsa.rrcc.web.actions.DocumentosAction" method="grabar">
+            <result name="success" type="redirectAction">welcome</result>
+            <result name="input">/WEB-INF/jsp/Documento.jsp</result>    
+        </action>
+        
+         <action name="grabarStakehoder" class="celepsa.rrcc.web.actions.DocumentoStakeholder" method="grabar">
+            <result name="success" type="redirectAction">welcome</result>
+            <result name="input">/WEB-INF/jsp/DocumentosStakeholder.jsp</result>    
+        </action>
+        
+        
+           <action name="DocumentosList" class="celepsa.rrcc.web.actions.DocumentosListAction" method="listarDocumentos">
+            <result name="input">/WEB-INF/jsp/DocumentosList.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">DocumentosList</param>
+                <param name="mensaje">${mensaje}</param>                
+            </result>            
+            <result name="cancel" type="redirectAction">DocumentosList</result>
+            <result name="login" type="redirectAction">login</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>
+         <action name="StakeholderDoc" class="celepsa.rrcc.web.actions.DocumentoStakeholder" method="listarStakeholder">
+            <result name="input">/WEB-INF/jsp/DocumentosStakeholder.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">StakeholderDoc</param>
+                <param name="mensaje">${mensaje}</param>                
+            </result>            
+            <result name="cancel" type="redirectAction">DocumentosList</result>
+            <result name="login" type="redirectAction">login</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>  
+        
+        <action name="AdjuntosDoc" class="celepsa.rrcc.web.actions.DocumentosAdjuntosAction" method="listarAdjuntos">
+            <result name="input">/WEB-INF/jsp/DocumentosAdjuntos.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">AdjuntosDoc</param>
+                <param name="mensaje">${mensaje}</param>                
+            </result>            
+            <result name="cancel" type="redirectAction">DocumentosList</result>
+            <result name="login" type="redirectAction">login</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>  
+        
+          <action name="grabarAdjunto" class="celepsa.rrcc.web.actions.DocumentosAdjuntosAction" method="subirArchivo">
+            <result name="success" type="redirectAction">welcome</result>
+            <result name="input">/WEB-INF/jsp/DocumentosAdjuntos.jsp</result>    
+        </action>
+  
+          <action name="loadAdjuntoJSON" class="celepsa.rrcc.web.actions.DocumentosAdjuntosAction" method="subirArchivo">
+              <result name="input">/WEB-INF/jsp/DocumentosAdjuntos.jsp</result>    
+            
+        </action> 
+   
+    </package>
+</struts>

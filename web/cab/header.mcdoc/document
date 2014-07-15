@@ -1,0 +1,240 @@
+<slideZest version="alpha 1">
+  <Document id="Document_0" type="Document" title="Document_0">
+    <slideArray>
+      <slides id="Slide_0" type="Slide" title="Slide-0">
+        <componentArray>
+          <component id="ImageComponent_0" type="ImageComponent" displayedInEditor="true" title="Image-0" lockedInEditor="false" frameColorInEditor="48ac4d">
+            <settings>
+              <height>125</height>
+              <width>106</width>
+              <y>80</y>
+              <visible>false</visible>
+              <x>852</x>
+              <imageAsset>Media-1335285957.8522</imageAsset>
+            </settings>
+          </component>
+          <component id="ImageComponent_1" type="ImageComponent" displayedInEditor="true" title="Image-1" lockedInEditor="false" frameColorInEditor="27438d">
+            <settings>
+              <height>160</height>
+              <width>968</width>
+              <y>80</y>
+              <x>484</x>
+              <imageAsset>Media-1335364669.9367</imageAsset>
+            </settings>
+          </component>
+          <component id="ImageComponent_2" type="ImageComponent" displayedInEditor="true" title="Image-2" lockedInEditor="false" frameColorInEditor="f8af65">
+            <settings>
+              <scaleX>0.3099</scaleX>
+              <y>76</y>
+              <scaleY>0.3099</scaleY>
+              <height>160</height>
+              <width>968</width>
+              <visible>false</visible>
+              <x>320</x>
+              <imageAsset>Media-1335365127.2405</imageAsset>
+            </settings>
+          </component>
+          <component id="ImageComponent_4" type="ImageComponent" displayedInEditor="true" title="Image-4" lockedInEditor="false" frameColorInEditor="8883bc">
+            <settings>
+              <scaleX>0.3099</scaleX>
+              <y>75</y>
+              <scaleY>0.3099</scaleY>
+              <height>160</height>
+              <width>968</width>
+              <visible>false</visible>
+              <x>373</x>
+              <imageAsset>Media-1335366725.3435</imageAsset>
+            </settings>
+          </component>
+          <component id="ImageComponent_5" type="ImageComponent" displayedInEditor="true" title="Image-5" lockedInEditor="false" frameColorInEditor="b1cf35">
+            <settings>
+              <scaleX>0.3099</scaleX>
+              <y>126</y>
+              <scaleY>0.3099</scaleY>
+              <height>160</height>
+              <width>968</width>
+              <visible>false</visible>
+              <x>387</x>
+              <imageAsset>Media-1335367289.3452</imageAsset>
+            </settings>
+          </component>
+          <component id="ImageComponent_7" type="ImageComponent" displayedInEditor="true" title="Image-7" lockedInEditor="false" frameColorInEditor="e8008c">
+            <settings>
+              <scaleX>0.3099</scaleX>
+              <y>40</y>
+              <scaleY>0.3099</scaleY>
+              <height>160</height>
+              <width>968</width>
+              <visible>false</visible>
+              <x>427</x>
+              <imageAsset>Media-1335368606.1427</imageAsset>
+            </settings>
+          </component>
+        </componentArray>
+        <settings>
+          <_gradient_fillColor0>63784</_gradient_fillColor0>
+          <_gradient_fillColor1>3596f4</_gradient_fillColor1>
+        </settings>
+        <stateArray>
+          <state id="SlideState_0" type="SlideState" title="Initial%20State%20" duration="0">
+            <sortedDisplayListArray>
+              <val>ref#ImageComponent_1</val>
+              <val>ref#ImageComponent_2</val>
+              <val>ref#ImageComponent_4</val>
+              <val>ref#ImageComponent_5</val>
+              <val>ref#ImageComponent_7</val>
+              <val>ref#ImageComponent_0</val>
+            </sortedDisplayListArray>
+            <settings/>
+            <transitionArray/>
+          </state>
+          <state id="SlideState_1" type="SlideState" title="" duration="1">
+            <settings/>
+            <transitionArray>
+              <transition id="Transition_1" type="Transition" newValue="number#80" propertyName="x" componentId="ImageComponent_0"/>
+              <transition id="Transition_0" type="Transition" newValue="boolean#true" propertyName="visible" tweenable="false" componentId="ImageComponent_0">
+                <effect id="TweenElementsEffect_0" type="TweenElementsEffect" title="TweenElementsEffect_0">
+                  <settings>
+                    <alpha>0</alpha>
+                  </settings>
+                </effect>
+              </transition>
+              <transition id="Transition_2" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_0"/>
+              <transition id="Transition_21" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_2"/>
+              <transition id="Transition_24" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_2"/>
+              <transition id="Transition_22" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_2"/>
+              <transition id="Transition_23" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_2"/>
+              <transition id="Transition_9" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_1"/>
+              <transition id="Transition_8" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_1"/>
+              <transition id="Transition_7" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_1"/>
+              <transition id="Transition_10" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_1"/>
+            </transitionArray>
+          </state>
+          <state id="SlideState_3" type="SlideState" title="" duration="5">
+            <settings/>
+            <transitionArray>
+              <transition id="Transition_16" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_2"/>
+              <transition id="Transition_19" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_2"/>
+              <transition id="Transition_20" type="Transition" newValue="boolean#true" propertyName="visible" tweenable="false" componentId="ImageComponent_2">
+                <effect id="TweenElementsEffect_2" type="TweenElementsEffect" title="TweenElementsEffect_2">
+                  <settings>
+                    <alpha>0</alpha>
+                    <alpha_durationRatio>0.40789473684210525</alpha_durationRatio>
+                  </settings>
+                </effect>
+              </transition>
+              <transition id="Transition_17" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_2"/>
+              <transition id="Transition_18" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_2"/>
+              <transition id="Transition_5" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_1"/>
+              <transition id="Transition_4" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_1"/>
+              <transition id="Transition_3" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_1"/>
+              <transition id="Transition_6" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_1"/>
+            </transitionArray>
+          </state>
+          <state id="SlideState_4" type="SlideState" title="" duration="1">
+            <settings/>
+            <transitionArray>
+              <transition id="Transition_42" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_4"/>
+              <transition id="Transition_45" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_4"/>
+              <transition id="Transition_43" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_4"/>
+              <transition id="Transition_44" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_4"/>
+              <transition id="Transition_12" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_2"/>
+              <transition id="Transition_11" type="Transition" newValue="boolean#true" propertyName="visible" tweenable="false" componentId="ImageComponent_2"/>
+              <transition id="Transition_15" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_2"/>
+              <transition id="Transition_13" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_2"/>
+              <transition id="Transition_14" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_2"/>
+            </transitionArray>
+          </state>
+          <state id="SlideState_8" type="SlideState" title="" duration="5">
+            <settings/>
+            <transitionArray>
+              <transition id="Transition_34" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_4"/>
+              <transition id="Transition_33" type="Transition" newValue="boolean#true" propertyName="visible" tweenable="false" componentId="ImageComponent_4">
+                <effect id="TweenElementsEffect_5" type="TweenElementsEffect" title="TweenElementsEffect_5">
+                  <settings>
+                    <alpha>0</alpha>
+                  </settings>
+                </effect>
+              </transition>
+              <transition id="Transition_37" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_4"/>
+              <transition id="Transition_35" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_4"/>
+              <transition id="Transition_36" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_4"/>
+              <transition id="Transition_46" type="Transition" newValue="boolean#false" propertyName="visible" tweenable="false" componentId="ImageComponent_2">
+                <effect id="TweenElementsEffect_4" type="TweenElementsEffect" title="TweenElementsEffect_4">
+                  <settings>
+                    <alpha>0</alpha>
+                  </settings>
+                </effect>
+              </transition>
+            </transitionArray>
+          </state>
+          <state id="SlideState_9" type="SlideState" title="" duration="1">
+            <settings/>
+            <transitionArray>
+              <transition id="Transition_52" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_5"/>
+              <transition id="Transition_55" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_5"/>
+              <transition id="Transition_53" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_5"/>
+              <transition id="Transition_54" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_5"/>
+            </transitionArray>
+          </state>
+          <state id="SlideState_10" type="SlideState" title="" duration="5">
+            <settings/>
+            <transitionArray>
+              <transition id="Transition_48" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_5"/>
+              <transition id="Transition_47" type="Transition" newValue="boolean#true" propertyName="visible" tweenable="false" componentId="ImageComponent_5">
+                <effect id="TweenElementsEffect_6" type="TweenElementsEffect" title="TweenElementsEffect_6">
+                  <settings>
+                    <alpha>0</alpha>
+                  </settings>
+                </effect>
+              </transition>
+              <transition id="Transition_51" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_5"/>
+              <transition id="Transition_49" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_5"/>
+              <transition id="Transition_50" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_5"/>
+            </transitionArray>
+          </state>
+          <state id="SlideState_11" type="SlideState" title="" duration="1">
+            <settings/>
+            <transitionArray>
+              <transition id="Transition_64" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_7"/>
+              <transition id="Transition_63" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_7"/>
+              <transition id="Transition_62" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_7"/>
+              <transition id="Transition_65" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_7"/>
+            </transitionArray>
+          </state>
+          <state id="SlideState_12" type="SlideState" title="" duration="5">
+            <settings>
+              <onEnd>%7B%22type%22:%22goTo%22,%22arg1%22:%22Slide_0%22,%22arg2%22:%22SlideState_3%22,%22arg3%22:%22false%22%7D</onEnd>
+            </settings>
+            <transitionArray>
+              <transition id="Transition_59" type="Transition" newValue="number#1" propertyName="scaleX" componentId="ImageComponent_7"/>
+              <transition id="Transition_57" type="Transition" newValue="boolean#true" propertyName="visible" tweenable="false" componentId="ImageComponent_7">
+                <effect id="TweenElementsEffect_8" type="TweenElementsEffect" title="TweenElementsEffect_8">
+                  <settings>
+                    <alpha>0</alpha>
+                  </settings>
+                </effect>
+              </transition>
+              <transition id="Transition_58" type="Transition" newValue="number#80" propertyName="y" componentId="ImageComponent_7"/>
+              <transition id="Transition_60" type="Transition" newValue="number#1" propertyName="scaleY" componentId="ImageComponent_7"/>
+              <transition id="Transition_61" type="Transition" newValue="number#484" propertyName="x" componentId="ImageComponent_7"/>
+            </transitionArray>
+          </state>
+        </stateArray>
+      </slides>
+    </slideArray>
+    <settings>
+      <backgroundColor>ffffff</backgroundColor>
+      <editorColor>404040</editorColor>
+      <frameAlpha>0.5</frameAlpha>
+      <width>968</width>
+      <globalSpeedFactor>2</globalSpeedFactor>
+      <ruleColor>79f0fe</ruleColor>
+      <frameColor>ffffff</frameColor>
+      <snapColor>ff00</snapColor>
+      <height>160</height>
+      <showRules>true</showRules>
+      <backgroundAlpha>1</backgroundAlpha>
+    </settings>
+  </Document>
+</slideZest>

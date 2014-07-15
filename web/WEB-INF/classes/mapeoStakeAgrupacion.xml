@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!-- Configuration for the Seguridad package. -->
+    <package name="stakeAgrupacion" namespace="/" extends="login">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>        
+        
+        <!-- Default interceptor stack. -->
+        <!--default-interceptor-ref name="paramsPrepareParamsStack"/-->
+        <!-- LOGIN -->
+
+           <action name="StakeAgrupacionList" class="celepsa.rrcc.web.actions.StakeAgrupacionListAction" method="listarStakeAgrupacion">
+            <result name="input">/WEB-INF/jsp/StakeAgrupacionList.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">StakeAgrupacionList</param>
+                <param name="mensaje">${mensaje}</param>                
+            </result>            
+            <result name="cancel" type="redirectAction">StakeAgrupacionList</result>
+            <result name="login" type="redirectAction">login</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>
+      <action name="Agrupacions" class="celepsa.rrcc.web.actions.StakeAgrupacionAction" method="obtenerStakeAgrupacion">
+            <result name="success" type="redirectAction">${accion}</result>          
+            <result name="input">/WEB-INF/jsp/StakeAgrupacion.jsp</result>
+            <result name="login"  type="redirectAction">w</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </action>
+     <action name="grabarAgrupacion" class="celepsa.rrcc.web.actions.StakeAgrupacionAction" method="grabar">
+            <result name="success" type="redirectAction">welcome</result>
+            <result name="input">/WEB-INF/jsp/StakeAgrupacion.jsp</result>    
+        </action>
+    </package>
+</struts>
