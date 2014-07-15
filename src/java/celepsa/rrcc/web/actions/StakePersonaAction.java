@@ -9,13 +9,14 @@ package celepsa.rrcc.web.actions;
 import celepsa.rrcc.be.EstadoBE;
 import celepsa.rrcc.be.NivelInfluenciaBE;
 import celepsa.rrcc.be.PersonaBE;
-import celepsa.rrcc.be.TipoDocumentoIdentidadBE;
+
 import celepsa.rrcc.be.ZonaBE;
 import celepsa.rrcc.bl.EstadoBL;
 import celepsa.rrcc.bl.NivelInfluenciaBL;
 import celepsa.rrcc.bl.PersonaBL;
 import celepsa.rrcc.bl.TipoDocumentoIdentidadBL;
 import celepsa.rrcc.bl.ZonaBL;
+import celepsa.rrcc.eh.TmTdocumentoIdentidad;
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -26,7 +27,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
  */
 public class StakePersonaAction extends BaseAction implements Preparable{
     private PersonaBE Persona;
-    private List<TipoDocumentoIdentidadBE> LTipo;
+    private List<TmTdocumentoIdentidad> LTipo;
     private List<NivelInfluenciaBE> LNinfluencia;
     private List<ZonaBE> LZona;
     private List<EstadoBE> LEstado;
@@ -131,14 +132,14 @@ public class StakePersonaAction extends BaseAction implements Preparable{
     /**
      * @return the LTipo
      */
-    public List<TipoDocumentoIdentidadBE> getLTipo() {
+    public List<TmTdocumentoIdentidad> getLTipo() {
         return LTipo;
     }
 
     /**
      * @param LTipo the LTipo to set
      */
-    public void setLTipo(List<TipoDocumentoIdentidadBE> LTipo) {
+    public void setLTipo(List<TmTdocumentoIdentidad> LTipo) {
         this.LTipo = LTipo;
     }
 
@@ -184,5 +185,4 @@ public class StakePersonaAction extends BaseAction implements Preparable{
         this.LEstado = LEstado;
     }
 
-   
 }
