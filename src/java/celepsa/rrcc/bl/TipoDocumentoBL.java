@@ -6,8 +6,7 @@
 
 package celepsa.rrcc.bl;
 
-import celepsa.rrcc.be.TipoDocumentoBE;
-import celepsa.rrcc.da.TipoDocumentoDA;
+
 import celepsa.rrcc.eh.HibernateUtil;
 import celepsa.rrcc.eh.TmTipoDocumento;
 import java.util.List;

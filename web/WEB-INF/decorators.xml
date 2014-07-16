@@ -25,53 +25,6 @@
         <pattern>/item.action</pattern>
         <pattern>/proveedor.action</pattern>
     </decorator>
-    
-    <decorator name="layoutUnico1" page="../jsp/seg/rolFormMant.jsp">
-        <pattern>/rolFormMant*</pattern>
-    </decorator>
 
-    <decorator name="layoutPopup" page="popup.jsp">
-        <pattern>/linea.action</pattern>
-        <pattern>/verLineasPres.action</pattern>
-        <pattern>/verLineasPres!buscarLinea.action</pattern>
-        <pattern>/verLineasPresProc.action</pattern>
-        <pattern>/verLineasPresProc!buscarLinea.action</pattern>
-        <pattern>/revisionDetalle.action</pattern>
-    </decorator>
-    
-    <decorator name="layoutExtend" page="layoutExtend.jsp">
-        <pattern>/registroPres.action</pattern>
-        <pattern>/reportPresXCentroXMes.action</pattern>
-        <pattern>/reportPresXCentroXItemXMes.action</pattern>
-        <pattern>/reportPresCons.action</pattern>
-        <pattern>/reportVersionPres.action</pattern>        
-        <pattern>/reportEgpPres.action</pattern>        
-        <pattern>/mantEgpReal.action</pattern>
-        <pattern>/reportEgpPptoVsReal.action</pattern>
-        <pattern>/proyectoMant.action</pattern>
-        <pattern>/proyectoMant!inicializar.action</pattern>
-        <pattern>/planFiltro.action</pattern>
-        <pattern>/planClasif.action</pattern>
-    </decorator>
-    
-    <decorator name="layoutPlanCompras" page="layoutCompras.jsp">
-        <pattern>/requerimientoList.action</pattern>
-        <pattern>/requerimientoMant.action</pattern>
-        <pattern>/planClasif.action</pattern>
-        <pattern>/planFiltro.action</pattern>
-        <pattern>/proveedorList.action</pattern>        
-        <pattern>/grupoMaterialList.action</pattern>        
-        <pattern>/grupoCompraList.action</pattern>        
-        <pattern>/reportReqXComprador.action</pattern>        
-        <pattern>/reportReqXPostor.action</pattern>                
-    </decorator>
-
-    <decorator name="layout2" page="layout2.jsp">
-        <pattern>/usuarioList.action</pattern>
-    </decorator>
-
-    <decorator name="layout135" page="layout135.jsp">
-        <pattern>/trasladoList*</pattern>
-    </decorator>
-
+ 
 </decorators> 
