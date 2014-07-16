@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class ClimaBL {
   private List<TmClima> LCLima;
-    private List<TmClima> getLCLima;
+    
   
     public List<TmClima> GenerarClima(List<TmZona> LZona) 
     {
@@ -49,13 +49,13 @@ public class ClimaBL {
              try {
                  TmClima Clima= new TmClima();
                  TmClimaId id_zona = new TmClimaId();
-                 TmClimaId fechaGeneracion = new TmClimaId();
+                 
                  id_zona.setTmZonaId(objZona.getId());
                  Clima.setId(id_zona);
                  
                  Date date = new Date();
                  DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-                 fechaGeneracion.setFechaGeneracion(fecha.format(date));
+                 id_zona.setFechaGeneracion(fecha.format(date));
               
                  SumCri =((Integer) objClimaDA.CriticidadZona(objZona));
                  SumInf= ((Integer) objClimaDA1.InfluenciaPersonas(objZona));
@@ -63,11 +63,12 @@ public class ClimaBL {
               
                  
                  Clima.setClima(Integer.toString(SumCri + SumInf + SumInfxDoc));
-                 
+                 Clima.setId(id_zona);
                  
                  if ( id_zona.getTmZonaId()>0)
                  {
-                     getLCLima.add(Clima);
+                     LCLima.add(Clima);
+                     
                  }     } catch (Exception ex) {
                  Logger.getLogger(ClimaBL.class.getName()).log(Level.SEVERE, null, ex);
              }
@@ -75,7 +76,7 @@ public class ClimaBL {
       
     
             }
-        return getLCLima;
+        return LCLima;
         
         
           
