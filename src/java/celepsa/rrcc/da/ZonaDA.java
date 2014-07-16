@@ -8,50 +8,35 @@ package celepsa.rrcc.da;
 
 import celepsa.rrcc.bd.ConexionBD;
 import celepsa.rrcc.be.ZonaBE;
+import celepsa.rrcc.eh.HibernateUtil;
+import celepsa.rrcc.eh.TmZona;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
  * @author pmedina
  */
 public class ZonaDA {
-            public List<ZonaBE> listarZona() throws Exception  {
-        ConexionBD objConexion = null;
-        try 
-        {
-            objConexion = new ConexionBD();
-            List<ZonaBE> lstRetorno = new ArrayList<ZonaBE>();
-            String sQuery = " SELECT * FROM tmZona" ;
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
+      Session session= null;
+      public ZonaDA() {
+            this.session =HibernateUtil.getSessionFactory().getCurrentSession();
+      }
+        
+    public List<TmZona> listarZona() throws Exception{
+        List<TmZona> TZona = null;
+        try
             {
-                while (objResult.next()) 
-                {
-                    lstRetorno.add(populateZona(objResult));
-                }
-            } 
-            return lstRetorno;
-        } 
-        catch (Exception e) 
-        {
-            System.out.println(e.getMessage());
-            throw e;
-        } 
-        finally 
-        {
-            objConexion.close();
-        }
-    }
-
-    private ZonaBE populateZona(ResultSet resultado) throws SQLException {
-        ZonaBE objZonaBE = new ZonaBE();
-        objZonaBE.setId(resultado.getString("id"));
-        objZonaBE.setDescripcion(resultado.getString("Descripcion"));
-        return objZonaBE;
+                org.hibernate.Transaction  tx =session.beginTransaction();
+                Query q =session.createQuery("From TmZona as tzona");
+                TZona=(List<TmZona>) q.list();           
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        return TZona;
     } 
 }

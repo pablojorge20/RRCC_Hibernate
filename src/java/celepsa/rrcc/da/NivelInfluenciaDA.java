@@ -6,52 +6,34 @@
 
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.bd.ConexionBD;
-import celepsa.rrcc.be.NivelInfluenciaBE;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+
+import celepsa.rrcc.eh.HibernateUtil;
+import celepsa.rrcc.eh.TmNivelInfluencia;
+
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
  * @author pmedina
  */
 public class NivelInfluenciaDA {
-            public List<NivelInfluenciaBE> listarNivelInfluencia() throws Exception  {
-        ConexionBD objConexion = null;
-        try 
-        {
-            objConexion = new ConexionBD();
-            List<NivelInfluenciaBE> lstRetorno = new ArrayList<NivelInfluenciaBE>();
-            String sQuery = " SELECT * FROM tmNivelInfluencia" ;
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
+   Session session= null;
+      public NivelInfluenciaDA() {
+            this.session =HibernateUtil.getSessionFactory().getCurrentSession();
+      }
+        
+    public List<TmNivelInfluencia> listarNivelInfluencia() throws Exception{
+        List<TmNivelInfluencia> TInfluencia = null;
+        try
             {
-                while (objResult.next()) 
-                {
-                    lstRetorno.add(populateNivelInfluencia(objResult));
-                }
-            } 
-            return lstRetorno;
-        } 
-        catch (Exception e) 
-        {
-            System.out.println(e.getMessage());
-            throw e;
-        } 
-        finally 
-        {
-            objConexion.close();
-        }
+                org.hibernate.Transaction  tx =session.beginTransaction();
+                Query q =session.createQuery("From TmNivelInfluencia as TInfluencia");
+                TInfluencia=(List<TmNivelInfluencia>) q.list();           
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        return TInfluencia;
     }
-
-    private NivelInfluenciaBE populateNivelInfluencia(ResultSet resultado) throws SQLException {
-        NivelInfluenciaBE objNivelInfluenciaBE = new NivelInfluenciaBE();
-        objNivelInfluenciaBE.setId(resultado.getString("id"));
-        objNivelInfluenciaBE.setDescripcion(resultado.getString("Descripcion"));
-        return objNivelInfluenciaBE;
-    } 
 }

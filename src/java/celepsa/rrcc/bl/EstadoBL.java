@@ -7,9 +7,8 @@
 package celepsa.rrcc.bl;
 
 
-
-import celepsa.rrcc.be.EstadoBE;
 import celepsa.rrcc.da.EstadoDA;
+import celepsa.rrcc.eh.TmEstado;
 import java.util.List;
 
 /**
@@ -17,7 +16,7 @@ import java.util.List;
  * @author pmedina
  */
 public class EstadoBL {
-    public List<EstadoBE> ListarEstado()  throws Exception
+    public List<TmEstado> ListarEstado()  throws Exception
     {
         EstadoDA objSistemaDA = new EstadoDA();
         return objSistemaDA.listarEstado();
