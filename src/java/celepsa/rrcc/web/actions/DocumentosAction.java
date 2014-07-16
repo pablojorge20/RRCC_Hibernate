@@ -15,7 +15,6 @@ import celepsa.rrcc.bl.StakeholderBL;
 import celepsa.rrcc.bl.TipoDocumentoBL;
 import celepsa.rrcc.eh.TmEstado;
 import celepsa.rrcc.eh.TmTipoDocumento;
-import celepsa.rrcc.web.util.Messenger;
 import com.opensymphony.xwork2.Preparable;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,23 +120,27 @@ public class DocumentosAction extends BaseAction implements Preparable {
 
     public String grabar()
     {
-    
-                
+ 
         try
         {
-            DocumentoBL objSistemaBL = new DocumentoBL();
-           // Documento = objSistemaBL.obtenerDocumento(Documento);
-            if (getDocumento().getId() != null &&
-                !Documento.getId().isEmpty())
-            {
-                objSistemaBL.actualizarDocumento(getDocumento());
-                addActionMessage("El Documento se actualizo correctamente");
+            if (!Documento.getAsunto().isEmpty() &&
+                !Documento.getObservaciones().isEmpty()){
+                DocumentoBL objSistemaBL = new DocumentoBL();
+          
+                if (getDocumento().getId() != null &&
+                    !Documento.getId().isEmpty()){
+                    objSistemaBL.actualizarDocumento(getDocumento());
+                    addActionMessage("El Documento se actualizo correctamente");
+                }
+                else{
+                    objSistemaBL.registrarDocumento(getDocumento()); 
+                    addActionMessage("El Documento se grabo correctamente");
+                }
             }
-            else
-            {
-                objSistemaBL.registrarDocumento(getDocumento()); 
-                addActionMessage("El Documento se grabo correctamente");
+            else{
+                addActionMessage("Por favor llene Asunto y Observaciones");
             }
+            
         }
         catch(Exception e)        
         {

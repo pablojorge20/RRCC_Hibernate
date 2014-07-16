@@ -9,22 +9,22 @@ package celepsa.rrcc.eh;
 public class TmClimaId  implements java.io.Serializable {
 
 
-     private int tmZonaId;
+     private TmZona tmZonaId;
      private String fechaGeneracion;
 
     public TmClimaId() {
     }
 
-    public TmClimaId(int tmZonaId, String fechaGeneracion) {
+    public TmClimaId(TmZona tmZonaId, String fechaGeneracion) {
        this.tmZonaId = tmZonaId;
        this.fechaGeneracion = fechaGeneracion;
     }
    
-    public int getTmZonaId() {
+    public TmZona getTmZonaId() {
         return this.tmZonaId;
     }
     
-    public void setTmZonaId(int tmZonaId) {
+    public void setTmZonaId(TmZona tmZonaId) {
         this.tmZonaId = tmZonaId;
     }
     public String getFechaGeneracion() {
@@ -49,7 +49,7 @@ public class TmClimaId  implements java.io.Serializable {
    public int hashCode() {
          int result = 17;
          
-         result = 37 * result + this.getTmZonaId();
+         result = 37 * result + this.getTmZonaId().getId();
          result = 37 * result + ( getFechaGeneracion() == null ? 0 : this.getFechaGeneracion().hashCode() );
          return result;
    }   

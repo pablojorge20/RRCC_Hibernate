@@ -9,7 +9,9 @@ package celepsa.rrcc.bl;
 import celepsa.rrcc.be.AdjuntoBE;
 import celepsa.rrcc.be.DocumentoBE;
 import celepsa.rrcc.da.DocumentoDA;
+import java.text.SimpleDateFormat;
 import java.util.List;
+
 
 /**
  *
@@ -24,8 +26,20 @@ public class DocumentoBL {
       
       public void actualizarDocumento (DocumentoBE objSistema) throws Exception 
     {
-     DocumentoDA objSistemaDA = new DocumentoDA();
-        objSistemaDA.ActualizarDocumento(objSistema);
+        SimpleDateFormat fT = new SimpleDateFormat("dd/MM/yyyy");
+        if (fT.parse(objSistema.getFechaCaducidad()).before
+           (fT.parse(objSistema.getFechaRecepcion()))){
+                DocumentoDA objSistemaDA = new DocumentoDA();
+                
+                objSistemaDA.ActualizarDocumento(objSistema);
+        }
+        else{
+            throw new Exception("*La fecha no de Caducidad no debe ser menor o igual a la fecha de recepción");   
+            
+        }
+            
+        
+     
     }
       
             public List<DocumentoBE> listarDocumento(Integer tdoc) throws Exception 
@@ -63,6 +77,7 @@ public List<DocumentoBE> buscarDocumentos(String AsuntoBuscado) throws Exception
       //  MsgCorreoDA objMsgCorreoDA = new MsgCorreoDA();
         DocumentoDA objDocumentoDA = new DocumentoDA();
         // Obtener datos del mensaje del correo
+        
        // objMsgCorreo = objMsgCorreoDA.obtenerMsgCorreo(objMsgCorreo);
         objDocumento =objDocumentoDA.obtenerDocumento(objDocumento);
         // Eliminación
@@ -104,5 +119,7 @@ public List<DocumentoBE> buscarDocumentos(String AsuntoBuscado) throws Exception
  
         
     }  
+
+    
     
 }
