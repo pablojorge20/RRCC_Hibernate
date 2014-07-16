@@ -15,14 +15,12 @@ import java.util.List;
  * @author pmedina
  */
 public class AgrupacionBL {
- public List<AgrupacionBE> listarAgrupacion(Integer pAg) throws Exception 
-    {
+public List<AgrupacionBE> listarAgrupacion(Integer pAg) throws Exception {
            
         AgrupacionDA objSistemaDA = new AgrupacionDA();
         return objSistemaDA.listarAgrupacion(pAg);
     }    
-     public AgrupacionBE obtenerAgrupacion(AgrupacionBE objAgrupacion) throws Exception
-    {
+public AgrupacionBE obtenerAgrupacion(AgrupacionBE objAgrupacion) throws Exception{
         AgrupacionDA objAgrupacionDA = new AgrupacionDA();
         return objAgrupacionDA.obtenerAgrupacion(objAgrupacion);
     }  
