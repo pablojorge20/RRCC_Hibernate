@@ -98,8 +98,15 @@ public class StakePersonaAction extends BaseAction implements Preparable{
             }
             else
             {
-                objSistemaBL.registrarPersona(getPersona());
-                addActionMessage("El Documento se grabo correctamente");
+               boolean a =objSistemaBL.registrarPersona(getPersona());
+               if (a=false ){
+                    addActionMessage("El Numero de DNI ya se ha registrado");
+               }
+               else{
+                    addActionMessage("El Documento se grabo correctamente");
+               }
+                   
+               
             }
         }
         catch(Exception e)        

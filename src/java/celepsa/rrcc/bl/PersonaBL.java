@@ -27,10 +27,23 @@ public class PersonaBL {
         return objPersonaDA.obtenerPersona(objPersona);
     }  
      
-      public void registrarPersona(PersonaBE objSistema) throws Exception 
+      public boolean registrarPersona(PersonaBE objSistema) throws Exception 
     {
-        PersonaDA objSistemaDA = new PersonaDA();
-        objSistemaDA.registrarPersona(objSistema);
+        PersonaBE PerRegistrada = new PersonaBE();
+        
+        //PerRegistrada(this.obtenerPersona(objSistema).getNroDocumento());
+        
+        //if (!PerRegistrada.equals(objSistema)){
+            PersonaDA objSistemaDA = new PersonaDA();
+            objSistemaDA.registrarPersona(objSistema);
+        //}
+       // else{
+         //     return false;
+        //}
+     
+        return true;
+        
+        
     }  
       
       public void actualizarPersona (PersonaBE objSistema) throws Exception 
