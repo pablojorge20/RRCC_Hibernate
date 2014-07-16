@@ -8,50 +8,42 @@ package celepsa.rrcc.da;
 
 import celepsa.rrcc.bd.ConexionBD;
 import celepsa.rrcc.be.TipoDocumentoBE;
+import celepsa.rrcc.eh.HibernateUtil;
+import celepsa.rrcc.eh.TmTipoDocumento;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
  * @author pmedina
  */
 public class TipoDocumentoDA {
-        public List<TipoDocumentoBE> listarTipoDocumento() throws Exception  {
-        ConexionBD objConexion = null;
-        try 
+       Session session= null;
+        public TipoDocumentoDA() 
+    {
+            this.session =HibernateUtil.getSessionFactory().getCurrentSession();
+      
+    }
+        
+public List<TmTipoDocumento> ListarTipoDocumento() throws HibernateException
+{
+    List<TmTipoDocumento> TDocumento = null;
+    try
         {
-            objConexion = new ConexionBD();
-            List<TipoDocumentoBE> lstRetorno = new ArrayList<TipoDocumentoBE>();
-            String sQuery = " SELECT * FROM tmTipoDocumento " ;
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
-            {
-                while (objResult.next()) 
-                {
-                    lstRetorno.add(populateTipoDocumento(objResult));
-                }
-            } 
-            return lstRetorno;
-        } 
-        catch (Exception e) 
-        {
-            System.out.println(e.getMessage());
-            throw e;
-        } 
-        finally 
-        {
-            objConexion.close();
+                org.hibernate.Transaction  tx =session.beginTransaction();
+                Query q =session.createQuery("From TmTipoDocumento as tipoDocumento");
+                
+                TDocumento=(List<TmTipoDocumento>) q.list();
+                
+                
+        } catch (HibernateException e){
         }
-    }
+        return TDocumento;
+}
 
-    private TipoDocumentoBE populateTipoDocumento(ResultSet resultado) throws SQLException {
-        TipoDocumentoBE objTipoDocumentoBE = new TipoDocumentoBE();
-        objTipoDocumentoBE.setId(resultado.getString("id"));
-        objTipoDocumentoBE.setDescripcion(resultado.getString("Descripcion"));
-        return objTipoDocumentoBE;
-    }
 }
