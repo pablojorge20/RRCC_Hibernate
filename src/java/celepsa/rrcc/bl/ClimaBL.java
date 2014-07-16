@@ -21,116 +21,68 @@ import java.util.Date;
 
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author pmedina
  */
 public class ClimaBL {
-    private List<TmClima> LCLima;
-    private Integer SumCri;
-    private Integer SumInf;
-    private Integer SumInfxDoc;
-    private Integer IDZona;
-    public List<TmClima> GenerarClima(List<TmZona> LZona)  throws Exception
+  private List<TmClima> LCLima;
+    private List<TmClima> getLCLima;
+  
+    public List<TmClima> GenerarClima(List<TmZona> LZona) 
     {
-        
+         
+         setLCLima(new ArrayList<TmClima>());
+         Integer SumCri;
+         Integer SumInf;
+         Integer SumInfxDoc;
          ClimaDA objClimaDA = new ClimaDA();
          ClimaDA objClimaDA1 = new ClimaDA();
          ClimaDA objClimaDA2 = new ClimaDA();
-         setLCLima(new ArrayList<TmClima>());
+         
         
             for(TmZona objZona : LZona)
             {
+             try {
                  TmClima Clima= new TmClima();
                  TmClimaId id_zona = new TmClimaId();
                  TmClimaId fechaGeneracion = new TmClimaId();
-           id_zona.setTmZonaId(objZona.getId());
-        Clima.setId(id_zona);
-      
-      Date date = new Date();
-      DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-      fechaGeneracion.setFechaGeneracion(fecha.format(date));
-      //Clima. (fecha.format(date));
-            setSumCri((Integer) objClimaDA.CriticidadZona(objZona));
-            setSumInf((Integer) objClimaDA1.InfluenciaPersonas(objZona));
-            setSumInfxDoc((Integer) objClimaDA2.InfluenciaPersonasDocumento(objZona));
-      //Clima.setClima(objClimaDA.CriticidadZona(objZona));
-    //  Clima.setClima(objClimaDA1.InfluenciaPersonas(objZona));
-      
-      
-       Clima.setClima(Integer.toString(getSumCri()+getSumInf()+getSumInfxDoc()));
-       
-           
-       if ( id_zona.getTmZonaId()>0)
-       {
-       getLCLima().add(Clima);
-       }
+                 id_zona.setTmZonaId(objZona.getId());
+                 Clima.setId(id_zona);
+                 
+                 Date date = new Date();
+                 DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+                 fechaGeneracion.setFechaGeneracion(fecha.format(date));
+              
+                 SumCri =((Integer) objClimaDA.CriticidadZona(objZona));
+                 SumInf= ((Integer) objClimaDA1.InfluenciaPersonas(objZona));
+                 SumInfxDoc=((Integer) objClimaDA2.InfluenciaPersonasDocumento(objZona));
+              
+                 
+                 Clima.setClima(Integer.toString(SumCri + SumInf + SumInfxDoc));
+                 
+                 
+                 if ( id_zona.getTmZonaId()>0)
+                 {
+                     getLCLima.add(Clima);
+                 }     } catch (Exception ex) {
+                 Logger.getLogger(ClimaBL.class.getName()).log(Level.SEVERE, null, ex);
+             }
       
       
     
             }
-        return getLCLima();
+        return getLCLima;
         
         
           
     }  
 
-
-    /**
-     * @return the SumCri
-     */
-    public Integer getSumCri() {
-        return SumCri;
-    }
-
-    /**
-     * @param SumCri the SumCri to set
-     */
-    public void setSumCri(Integer SumCri) {
-        this.SumCri = SumCri;
-    }
-
-    /**
-     * @return the SumInf
-     */
-    public Integer getSumInf() {
-        return SumInf;
-    }
-
-    /**
-     * @param SumInf the SumInf to set
-     */
-    public void setSumInf(Integer SumInf) {
-        this.SumInf = SumInf;
-    }
-
-    /**
-     * @return the SumInfxDoc
-     */
-    public Integer getSumInfxDoc() {
-        return SumInfxDoc;
-    }
-
-    /**
-     * @param SumInfxDoc the SumInfxDoc to set
-     */
-    public void setSumInfxDoc(Integer SumInfxDoc) {
-        this.SumInfxDoc = SumInfxDoc;
-    }
-
-    /**
-     * @return the IDZona
-     */
-    public Integer getIDZona() {
-        return IDZona;
-    }
-
-    /**
-     * @param IDZona the IDZona to set
-     */
-    public void setIDZona(Integer IDZona) {
-        this.IDZona = IDZona;
+    private void LCLima(ArrayList<TmClima> arrayList) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -147,5 +99,6 @@ public class ClimaBL {
         this.LCLima = LCLima;
     }
 
-   
+
+
 }
