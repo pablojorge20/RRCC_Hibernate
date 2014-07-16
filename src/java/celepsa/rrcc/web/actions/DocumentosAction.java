@@ -7,14 +7,13 @@
 package celepsa.rrcc.web.actions;
 import celepsa.rrcc.be.CriticidadBE;
 import celepsa.rrcc.be.DocumentoBE;
-import celepsa.rrcc.be.EstadoBE;
 import celepsa.rrcc.be.IngrsoSalidaBE;
 import celepsa.rrcc.be.StakeholderBE;
-import celepsa.rrcc.be.TipoDocumentoBE;
 import celepsa.rrcc.bl.DocumentoBL;
 import celepsa.rrcc.bl.EstadoBL;
 import celepsa.rrcc.bl.StakeholderBL;
 import celepsa.rrcc.bl.TipoDocumentoBL;
+import celepsa.rrcc.eh.TmEstado;
 import celepsa.rrcc.eh.TmTipoDocumento;
 import celepsa.rrcc.web.util.Messenger;
 import com.opensymphony.xwork2.Preparable;
@@ -39,7 +38,7 @@ public class DocumentosAction extends BaseAction implements Preparable {
     private List<DocumentoBE> LDocumento;
     private List<DocumentoBE> LProyecto;
     private List<IngrsoSalidaBE> LIngreso;
-    private List<EstadoBE> LEstado;
+    private List<TmEstado> LEstado;
     @Override
     public void prepare() throws Exception {
         super.prepare();
@@ -269,19 +268,7 @@ public class DocumentosAction extends BaseAction implements Preparable {
         this.LIngreso = LIngreso;
     }
 
-    /**
-     * @return the LEstado
-     */
-    public List<EstadoBE> getLEstado() {
-        return LEstado;
-    }
 
-    /**
-     * @param LEstado the LEstado to set
-     */
-    public void setLEstado(List<EstadoBE> LEstado) {
-        this.LEstado = LEstado;
-    }
 
     /**
      * @return the LTipo
@@ -295,6 +282,20 @@ public class DocumentosAction extends BaseAction implements Preparable {
      */
     public void setLTipo(List<TmTipoDocumento> LTipo) {
         this.LTipo = LTipo;
+    }
+
+    /**
+     * @return the LEstado
+     */
+    public List<TmEstado> getLEstado() {
+        return LEstado;
+    }
+
+    /**
+     * @param LEstado the LEstado to set
+     */
+    public void setLEstado(List<TmEstado> LEstado) {
+        this.LEstado = LEstado;
     }
     
 

@@ -6,52 +6,36 @@
 
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.bd.ConexionBD;
-import celepsa.rrcc.be.TipoDocumentoIdentidadBE;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import celepsa.rrcc.eh.HibernateUtil;
+import celepsa.rrcc.eh.TmTdocumentoIdentidad;
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
  * @author pmedina
  */
 public class TipoDocumentoIdentidadDA {
-        public List<TipoDocumentoIdentidadBE> listarTipoDocumento() throws Exception  {
-        ConexionBD objConexion = null;
-        try 
-        {
-            objConexion = new ConexionBD();
-            List<TipoDocumentoIdentidadBE> lstRetorno = new ArrayList<TipoDocumentoIdentidadBE>();
-            String sQuery = " SELECT * FROM tmTDocumentoIdentidad " ;
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
-            {
-                while (objResult.next()) 
-                {
-                    lstRetorno.add(populateTipoDocumento(objResult));
-                }
-            } 
-            return lstRetorno;
-        } 
-        catch (Exception e) 
-        {
-            System.out.println(e.getMessage());
-            throw e;
-        } 
-        finally 
-        {
-            objConexion.close();
-        }
+     Session session= null;
+        public TipoDocumentoIdentidadDA() 
+    {
+            this.session =HibernateUtil.getSessionFactory().getCurrentSession();
     }
-
-    private TipoDocumentoIdentidadBE populateTipoDocumento(ResultSet resultado) throws SQLException {
-        TipoDocumentoIdentidadBE objTipoDocumentoBE = new TipoDocumentoIdentidadBE();
-        objTipoDocumentoBE.setId(resultado.getString("id"));
-        objTipoDocumentoBE.setDescripcion(resultado.getString("Descripcion"));
-        return objTipoDocumentoBE;
-    }    
+        
+public List<TmTdocumentoIdentidad> ListarTipoDocumento() throws Exception{
+    List<TmTdocumentoIdentidad> TDocumento = null;
+    try
+        {
+                org.hibernate.Transaction  tx =session.beginTransaction();
+                Query q =session.createQuery("From TmTdocumentoIdentidad as tipoDocumento");
+                
+                TDocumento=(List<TmTdocumentoIdentidad>) q.list();
+                
+                
+        } catch (Exception e){
+                e.printStackTrace();
+        }
+        return TDocumento;
+}  
 }

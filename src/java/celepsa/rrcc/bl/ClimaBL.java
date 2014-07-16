@@ -11,6 +11,9 @@ package celepsa.rrcc.bl;
 import celepsa.rrcc.be.ClimaBE;
 import celepsa.rrcc.be.ZonaBE;
 import celepsa.rrcc.da.ClimaDA;
+import celepsa.rrcc.eh.TmClima;
+import celepsa.rrcc.eh.TmClimaId;
+import celepsa.rrcc.eh.TmZona;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,53 +27,42 @@ import java.util.List;
  * @author pmedina
  */
 public class ClimaBL {
-    private List<ClimaBE> LCLima;
+    private List<TmClima> LCLima;
     private Integer SumCri;
     private Integer SumInf;
     private Integer SumInfxDoc;
     private Integer IDZona;
-    public List<ClimaBE> GenerarClima(List<ZonaBE> LZona)  throws Exception
+    public List<TmClima> GenerarClima(List<TmZona> LZona)  throws Exception
     {
         
          ClimaDA objClimaDA = new ClimaDA();
          ClimaDA objClimaDA1 = new ClimaDA();
          ClimaDA objClimaDA2 = new ClimaDA();
-         setLCLima(new ArrayList<ClimaBE>());
+         setLCLima(new ArrayList<TmClima>());
         
-            for(ZonaBE objZona : LZona)
+            for(TmZona objZona : LZona)
             {
-                 ClimaBE Clima= new ClimaBE();
-      Clima.setZona_id(objZona);
+                 TmClima Clima= new TmClima();
+                 TmClimaId id_zona = new TmClimaId();
+                 TmClimaId fechaGeneracion = new TmClimaId();
+           id_zona.setTmZonaId(objZona.getId());
+        Clima.setId(id_zona);
+      
       Date date = new Date();
       DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-      Clima.setFechaGeneracion(fecha.format(date));
+      fechaGeneracion.setFechaGeneracion(fecha.format(date));
+      //Clima. (fecha.format(date));
             setSumCri((Integer) objClimaDA.CriticidadZona(objZona));
             setSumInf((Integer) objClimaDA1.InfluenciaPersonas(objZona));
             setSumInfxDoc((Integer) objClimaDA2.InfluenciaPersonasDocumento(objZona));
       //Clima.setClima(objClimaDA.CriticidadZona(objZona));
     //  Clima.setClima(objClimaDA1.InfluenciaPersonas(objZona));
-      if (  getSumCri()+getSumInf()+getSumInfxDoc()>20)
-        {
-         Clima.setColor("#FE2E2E");
-         Clima.setCFont("#FFFFFF");
-        }
-      else
-        {
-         if (  getSumCri()+getSumInf()+getSumInfxDoc()>10)
-        {
-             Clima.setColor("#FE9A2E");
-            Clima.setCFont("#FFFFFF");
-        } 
-         else
-         {
-           Clima.setColor("70FFB3");
-            Clima.setCFont("001C81");  
-         }
-        }
       
-       Clima.setClima(getSumCri()+getSumInf()+getSumInfxDoc());
-       IDZona=Integer.parseInt(objZona.getId());
-       if (IDZona>0)
+      
+       Clima.setClima(Integer.toString(getSumCri()+getSumInf()+getSumInfxDoc()));
+       
+           
+       if ( id_zona.getTmZonaId()>0)
        {
        getLCLima().add(Clima);
        }
@@ -84,19 +76,6 @@ public class ClimaBL {
           
     }  
 
-    /**
-     * @return the LCLima
-     */
-    public List<ClimaBE> getLCLima() {
-        return LCLima;
-    }
-
-    /**
-     * @param LCLima the LCLima to set
-     */
-    public void setLCLima(List<ClimaBE> LCLima) {
-        this.LCLima = LCLima;
-    }
 
     /**
      * @return the SumCri
@@ -153,4 +132,20 @@ public class ClimaBL {
     public void setIDZona(Integer IDZona) {
         this.IDZona = IDZona;
     }
+
+    /**
+     * @return the LCLima
+     */
+    public List<TmClima> getLCLima() {
+        return LCLima;
+    }
+
+    /**
+     * @param LCLima the LCLima to set
+     */
+    public void setLCLima(List<TmClima> LCLima) {
+        this.LCLima = LCLima;
+    }
+
+   
 }

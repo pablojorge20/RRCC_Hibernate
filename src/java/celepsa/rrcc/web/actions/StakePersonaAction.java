@@ -10,13 +10,16 @@ import celepsa.rrcc.be.EstadoBE;
 import celepsa.rrcc.be.NivelInfluenciaBE;
 import celepsa.rrcc.be.PersonaBE;
 
-import celepsa.rrcc.be.ZonaBE;
+
 import celepsa.rrcc.bl.EstadoBL;
 import celepsa.rrcc.bl.NivelInfluenciaBL;
 import celepsa.rrcc.bl.PersonaBL;
 import celepsa.rrcc.bl.TipoDocumentoIdentidadBL;
 import celepsa.rrcc.bl.ZonaBL;
+import celepsa.rrcc.eh.TmEstado;
+import celepsa.rrcc.eh.TmNivelInfluencia;
 import celepsa.rrcc.eh.TmTdocumentoIdentidad;
+import celepsa.rrcc.eh.TmZona;
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -28,9 +31,9 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 public class StakePersonaAction extends BaseAction implements Preparable{
     private PersonaBE Persona;
     private List<TmTdocumentoIdentidad> LTipo;
-    private List<NivelInfluenciaBE> LNinfluencia;
-    private List<ZonaBE> LZona;
-    private List<EstadoBE> LEstado;
+    private List<TmNivelInfluencia> LNinfluencia;
+    private List<TmZona> LZona;
+    private List<TmEstado> LEstado;
     
  @Override
     public void prepare() throws Exception {
@@ -143,46 +146,50 @@ public class StakePersonaAction extends BaseAction implements Preparable{
         this.LTipo = LTipo;
     }
 
-    /**
-     * @return the LNinfluencia
-     */
-    public List<NivelInfluenciaBE> getLNinfluencia() {
-        return LNinfluencia;
-    }
 
-    /**
-     * @param LNinfluencia the LNinfluencia to set
-     */
-    public void setLNinfluencia(List<NivelInfluenciaBE> LNinfluencia) {
-        this.LNinfluencia = LNinfluencia;
-    }
 
     /**
      * @return the LZona
      */
-    public List<ZonaBE> getLZona() {
+    public List<TmZona> getLZona() {
         return LZona;
     }
 
     /**
      * @param LZona the LZona to set
      */
-    public void setLZona(List<ZonaBE> LZona) {
+    public void setLZona(List<TmZona> LZona) {
         this.LZona = LZona;
+    }
+
+
+    /**
+     * @return the LNinfluencia
+     */
+    public List<TmNivelInfluencia> getLNinfluencia() {
+        return LNinfluencia;
+    }
+
+    /**
+     * @param LNinfluencia the LNinfluencia to set
+     */
+    public void setLNinfluencia(List<TmNivelInfluencia> LNinfluencia) {
+        this.LNinfluencia = LNinfluencia;
     }
 
     /**
      * @return the LEstado
      */
-    public List<EstadoBE> getLEstado() {
+    public List<TmEstado> getLEstado() {
         return LEstado;
     }
 
     /**
      * @param LEstado the LEstado to set
      */
-    public void setLEstado(List<EstadoBE> LEstado) {
+    public void setLEstado(List<TmEstado> LEstado) {
         this.LEstado = LEstado;
     }
+
 
 }
