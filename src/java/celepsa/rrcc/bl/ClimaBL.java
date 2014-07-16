@@ -50,7 +50,8 @@ public class ClimaBL {
                  TmClima Clima= new TmClima();
                  TmClimaId id_zona = new TmClimaId();
                  
-                 id_zona.setTmZonaId(objZona.getId());
+                 id_zona.setTmZonaId(objZona);
+                 //id_zona.setTmZonaId(objZona.getId());
                  Clima.setId(id_zona);
                  
                  Date date = new Date();
@@ -65,7 +66,7 @@ public class ClimaBL {
                  Clima.setClima(Integer.toString(SumCri + SumInf + SumInfxDoc));
                  Clima.setId(id_zona);
                  
-                 if ( id_zona.getTmZonaId()>0)
+                 if (objZona.getId()>0)
                  {
                      LCLima.add(Clima);
                      

@@ -42,7 +42,7 @@
                             <s:param name="Zona_id.id" value="id"/>
                         </s:url>
                         <font color ="<s:property value="CFont"/>"> 
-                            <s:property value="Zona_id.Descripcion"/>
+                            <s:property value="id.tmZonaId.Descripcion"/>
                         </font>
                     </td>
                         <td BGCOLOR="<s:property value="Color"/>">
