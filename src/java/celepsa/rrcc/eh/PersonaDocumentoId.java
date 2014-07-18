@@ -1,5 +1,5 @@
 package celepsa.rrcc.eh;
-// Generated 15-jul-2014 15:31:34 by Hibernate Tools 3.6.0
+// Generated 17/07/2014 10:17:45 PM by Hibernate Tools 3.6.0
 
 
 
@@ -36,23 +36,6 @@ public class PersonaDocumentoId  implements java.io.Serializable {
     }
 
 
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof PersonaDocumentoId) ) return false;
-		 PersonaDocumentoId castOther = ( PersonaDocumentoId ) other; 
-         
-		 return (this.getTmDocumentoId()==castOther.getTmDocumentoId())
- && (this.getTmStakePersonaId()==castOther.getTmStakePersonaId());
-   }
-   
-   public int hashCode() {
-         int result = 17;
-         
-         result = 37 * result + this.getTmDocumentoId();
-         result = 37 * result + this.getTmStakePersonaId();
-         return result;
-   }   
 
 
 }

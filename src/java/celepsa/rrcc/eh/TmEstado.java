@@ -1,5 +1,5 @@
 package celepsa.rrcc.eh;
-// Generated 15-jul-2014 15:31:34 by Hibernate Tools 3.6.0
+// Generated 17/07/2014 10:17:45 PM by Hibernate Tools 3.6.0
 
 
 

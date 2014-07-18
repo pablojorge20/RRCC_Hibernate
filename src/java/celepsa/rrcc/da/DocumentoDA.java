@@ -15,10 +15,16 @@ import celepsa.rrcc.be.StakeholderBE;
 import celepsa.rrcc.be.TipoDocumentoBE;
 import celepsa.rrcc.bd.ConexionBD;
 import celepsa.rrcc.be.EstadoBE;
+import celepsa.rrcc.eh.HibernateUtil;
+import celepsa.rrcc.eh.TmDocumento;
+import celepsa.rrcc.eh.TmStakePersona;
+import celepsa.rrcc.eh.TmTdocumentoIdentidad;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
@@ -26,249 +32,193 @@ import java.util.List;
  */
 public class DocumentoDA {
   
-   public int registrarDocumento(DocumentoBE objSistema) throws Exception {
-           
-        ConexionBD objConexion = null;
+    
+    Session session = null;
+
+    public DocumentoDA() {
+        this.session = HibernateUtil.getSessionFactory().getCurrentSession();
+    }
+        
+    public int registrarDocumento(DocumentoBE objSistema) throws Exception {
+        /*
+         ConexionBD objConexion = null;
          String query ="";
         
                    
          query ="INSERT INTO `tmDocumento`(`id`,`FechaRegistro`,`FechaRecepcion`,`FechaCaducidad`,`Asunto`,`Observaciones`,`IngresoSalida`," +
-                "`tmStakePersona_id`,`tmTipoDocumento_id`,`RefConvenio`,`RefPrograma`,`RefProyecto`,`RefDocumento`, `Criticidad_id`,`eliminado`, `tmEstado_id`)" +
-"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,'0',?)";
-        
-      int cont = 1;
-        try 
-        {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-             objConexion.agregarParametro(cont++, CrearIDDoc());        
-            objConexion.agregarParametro(cont++, objSistema.getFechaRegistro());
-            objConexion.agregarParametro(cont++, objSistema.getFechaRecepcion());
-            objConexion.agregarParametro(cont++, objSistema.getFechaCaducidad());
-            objConexion.agregarParametro(cont++, objSistema.getAsunto());
-            objConexion.agregarParametro(cont++, objSistema.getObservaciones());
-            objConexion.agregarParametro(cont++, objSistema.getIngreso().getId());
-            objConexion.agregarParametro(cont++, objSistema.getStakeholder().getId());
-            objConexion.agregarParametro(cont++, objSistema.getTipoDocumento().getId());
-            
-            
-            if (objSistema.getConvenio() != null &&
-                objSistema.getConvenio().getId() != null &&
-                !objSistema.getConvenio().getId().isEmpty())
-            {
-                objConexion.agregarParametro(cont++, objSistema.getConvenio().getId());
+         "`tmStakePersona_id`,`tmTipoDocumento_id`,`RefConvenio`,`RefPrograma`,`RefProyecto`,`RefDocumento`, `Criticidad_id`,`eliminado`, `tmEstado_id`)" +
+         "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,'0',?)";
+         */
+        //   int cont = 1;
+        TmDocumento documento = new TmDocumento();
+        try {
+            // objConexion = new ConexionBD();
+            // objConexion.open();
+            //  objConexion.prepararSentencia(query);
+            documento.setId(CrearIDDoc());
+            documento.setFechaRegistro(objSistema.getFechaRegistro());
+            documento.setFechaRecepcion(objSistema.getFechaRecepcion());
+            documento.setFechaCaducidad(objSistema.getFechaCaducidad());
+            documento.setAsunto(objSistema.getAsunto());
+            documento.setObservaciones(objSistema.getObservaciones());
+            //habia que castearlo de string a integer
+            documento.setIngresoSalida(Integer.parseInt(objSistema.getIngreso().getId()));
+            //faltaba castear ede string a integer
+            documento.setTmStakePersonaId(Integer.parseInt(objSistema.getStakeholder().getId()));
+            documento.setTmTipoDocumentoId(Integer.parseInt(objSistema.getTipoDocumento().getId()));
+
+            if (objSistema.getConvenio() != null
+                    && objSistema.getConvenio().getId() != null
+                    && !objSistema.getConvenio().getId().isEmpty()) {
+                documento.setRefConvenio(Integer.parseInt(objSistema.getConvenio().getId()));
+            } else {
+                documento.setRefConvenio(java.sql.Types.NULL);
             }
-            else
-            {
-                objConexion.agregarParametro(cont++, java.sql.Types.NULL);
+
+            if (objSistema.getPrograma() != null
+                    && objSistema.getPrograma().getId() != null
+                    && !objSistema.getPrograma().getId().isEmpty()) {
+                documento.setRefPrograma(Integer.parseInt(objSistema.getPrograma().getId()));
+            } else {
+                documento.setRefPrograma(java.sql.Types.NULL);
             }
-            
-            
-             if (objSistema.getPrograma() != null &&
-                objSistema.getPrograma().getId() != null &&
-                !objSistema.getPrograma().getId().isEmpty())
-            {
-                objConexion.agregarParametro(cont++, objSistema.getPrograma().getId());
+
+            if (objSistema.getProyecto() != null
+                    && objSistema.getProyecto().getId() != null
+                    && !objSistema.getProyecto().getId().isEmpty()) {
+                documento.setRefProyecto(Integer.parseInt(objSistema.getProyecto().getId()));
+            } else {
+                documento.setRefProyecto(java.sql.Types.NULL);
             }
-            else
-            {
-                objConexion.agregarParametro(cont++, java.sql.Types.NULL);
+
+            if (objSistema.getDocumento() != null
+                    && objSistema.getDocumento().getId() != null
+                    && !objSistema.getDocumento().getId().isEmpty()) {
+                documento.setRefDocumento(Integer.parseInt(objSistema.getDocumento().getId()));
+            } else {
+                documento.setRefDocumento(java.sql.Types.NULL);
             }
-                 
-              if (objSistema.getProyecto() != null &&
-                objSistema.getProyecto().getId() != null &&
-                !objSistema.getProyecto().getId().isEmpty())
-            {
-                objConexion.agregarParametro(cont++, objSistema.getProyecto().getId());
-            }
-            else
-            {
-                objConexion.agregarParametro(cont++, java.sql.Types.NULL);
-            }
-            
-                if (objSistema.getDocumento() != null &&
-                objSistema.getDocumento().getId() != null &&
-                !objSistema.getDocumento().getId().isEmpty())
-            {
-                objConexion.agregarParametro(cont++, objSistema.getDocumento().getId());
-            }
-            else
-            {
-                objConexion.agregarParametro(cont++, java.sql.Types.NULL);
-            }
-            objConexion.agregarParametro(cont++, objSistema.getCriticidad().getId());    
-            objConexion.agregarParametro(cont++, objSistema.getEstado().getId());
-            
-            return objConexion.insertar();
-        } 
-        catch (Exception e) 
-        {
-            System.out.println(e.getMessage());
-            throw e;
+            documento.setCriticidadId(Integer.parseInt(objSistema.getCriticidad().getId()));
+            documento.setEliminado('0');
+            documento.setTmEstadoId(Integer.parseInt(objSistema.getEstado().getId()));
+            System.out.println("antes del insert con hibernate");
+            org.hibernate.Transaction tx = session.beginTransaction();
+            session.save(documento);
+            System.out.println("luego del commit ");
+            tx.commit();
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;// no inserto nada 
         }
-        finally
-        {
-            objConexion.close();
-        }
-    
-        }
+
+    }
         
-          public boolean ActualizarDocumento(DocumentoBE objSistema) throws Exception {
-           
-        ConexionBD objConexion = null;
-         String query ="";
-       
-             query ="UPDATE `RRHH`.`tmDocumento` SET `FechaRegistro`=?, " +
-                    "`FechaRecepcion`=?, `FechaCaducidad`=?, " +
-                    "`Asunto`=?, `Observaciones`=?, "+
-                    "`IngresoSalida`=?, `tmStakePersona_id`=?, `tmTipoDocumento_id`=?, "+
-                    "`RefConvenio`=?, `RefPrograma`=?, `RefProyecto`=?, `RefDocumento`=?,"+
-                    "`Criticidad_id`=?, `tmEstado_id`=? WHERE `id`='"+ objSistema.getId() +"'";        
- 
-        
-        
-      int cont = 1;
-        
-        try 
-        {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-        
-                
-    
-            objConexion.agregarParametro(cont++, objSistema.getFechaRegistro());
-            objConexion.agregarParametro(cont++, objSistema.getFechaRecepcion());
-            objConexion.agregarParametro(cont++, objSistema.getFechaCaducidad());
-            objConexion.agregarParametro(cont++, objSistema.getAsunto());
-            objConexion.agregarParametro(cont++, objSistema.getObservaciones());
-            objConexion.agregarParametro(cont++, objSistema.getIngreso().getId());
-            objConexion.agregarParametro(cont++, objSistema.getStakeholder().getId());
-            objConexion.agregarParametro(cont++, objSistema.getTipoDocumento().getId());
-            
-            
-            if (objSistema.getConvenio() != null &&
-                objSistema.getConvenio().getId() != null &&
-                !objSistema.getConvenio().getId().isEmpty())
-            {
-                objConexion.agregarParametro(cont++, objSistema.getConvenio().getId());
+    public boolean ActualizarDocumento(DocumentoBE objSistema) throws Exception {
+
+        TmDocumento documento = new TmDocumento();
+        try {
+            documento.setId(Integer.parseInt(objSistema.getId()));
+            documento.setFechaRegistro(objSistema.getFechaRegistro());
+            documento.setFechaRecepcion(objSistema.getFechaRecepcion());
+            documento.setFechaCaducidad(objSistema.getFechaCaducidad());
+            documento.setAsunto(objSistema.getAsunto());
+            documento.setObservaciones(objSistema.getObservaciones());
+            //habia que castearlo de string a integer
+            documento.setIngresoSalida(Integer.parseInt(objSistema.getIngreso().getId()));
+            //faltaba castear ede string a integer
+            documento.setTmStakePersonaId(Integer.parseInt(objSistema.getStakeholder().getId()));
+            documento.setTmTipoDocumentoId(Integer.parseInt(objSistema.getTipoDocumento().getId()));
+
+            if (objSistema.getConvenio() != null
+                    && objSistema.getConvenio().getId() != null
+                    && !objSistema.getConvenio().getId().isEmpty()) {
+                documento.setRefConvenio(Integer.parseInt(objSistema.getConvenio().getId()));
+            } else {
+                documento.setRefConvenio(java.sql.Types.NULL);
             }
-            else
-            {
-                objConexion.agregarParametro(cont++, java.sql.Types.NULL);
+
+            if (objSistema.getPrograma() != null
+                    && objSistema.getPrograma().getId() != null
+                    && !objSistema.getPrograma().getId().isEmpty()) {
+                documento.setRefPrograma(Integer.parseInt(objSistema.getPrograma().getId()));
+            } else {
+                documento.setRefPrograma(java.sql.Types.NULL);
             }
-            
-            
-             if (objSistema.getPrograma() != null &&
-                objSistema.getPrograma().getId() != null &&
-                !objSistema.getPrograma().getId().isEmpty())
-            {
-                objConexion.agregarParametro(cont++, objSistema.getPrograma().getId());
+
+            if (objSistema.getProyecto() != null
+                    && objSistema.getProyecto().getId() != null
+                    && !objSistema.getProyecto().getId().isEmpty()) {
+                documento.setRefProyecto(Integer.parseInt(objSistema.getProyecto().getId()));
+            } else {
+                documento.setRefProyecto(java.sql.Types.NULL);
             }
-            else
-            {
-                objConexion.agregarParametro(cont++, java.sql.Types.NULL);
+
+            if (objSistema.getDocumento() != null
+                    && objSistema.getDocumento().getId() != null
+                    && !objSistema.getDocumento().getId().isEmpty()) {
+                documento.setRefDocumento(Integer.parseInt(objSistema.getDocumento().getId()));
+            } else {
+                documento.setRefDocumento(java.sql.Types.NULL);
             }
-                 
-              if (objSistema.getProyecto() != null &&
-                objSistema.getProyecto().getId() != null &&
-                !objSistema.getProyecto().getId().isEmpty())
-            {
-                objConexion.agregarParametro(cont++, objSistema.getProyecto().getId());
-            }
-            else
-            {
-                objConexion.agregarParametro(cont++, java.sql.Types.NULL);
-            }
-            
-                if (objSistema.getDocumento() != null &&
-                objSistema.getDocumento().getId() != null &&
-                !objSistema.getDocumento().getId().isEmpty())
-            {
-                objConexion.agregarParametro(cont++, objSistema.getDocumento().getId());
-            }
-            else
-            {
-                objConexion.agregarParametro(cont++, java.sql.Types.NULL);
-            }
-            objConexion.agregarParametro(cont++, objSistema.getCriticidad().getId());   
-            
-            objConexion.agregarParametro(cont++, Integer.parseInt(objSistema.getEstado().getId()));  
-            
-             objConexion.ejecutar();
+            documento.setCriticidadId(Integer.parseInt(objSistema.getCriticidad().getId()));
+            documento.setTmEstadoId(Integer.parseInt(objSistema.getEstado().getId()));
+
+            org.hibernate.Transaction tx = session.beginTransaction();
+            //el merge  hace el update ,  solo debes setearle el ID para que
+            //arme bien el query y ponga en el update where id=xxx
+            session.merge(documento);
+            tx.commit();
             return true;
-            //return objConexion.insertar();
-        } 
-        catch (Exception e) 
-        {
-            System.out.println(e.getMessage());
-            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;// no actualizo nada 
         }
-        finally
-        {
-            objConexion.close();
-        }
-    
-        }
-        
-         public List<DocumentoBE> listarDocumentos(Integer tdoc) throws Exception  {
+
+    }
+     
+    public List<DocumentoBE> listarDocumentos(Integer tdoc) throws Exception {
         ConexionBD objConexion = null;
-        try 
-        {
+        try {
             objConexion = new ConexionBD();
             List<DocumentoBE> lstRetorno = new ArrayList<DocumentoBE>();
-            String sQuery="";
-            if (tdoc==0){
-                sQuery = " SELECT * FROM tmDocumento WHERE eliminado='0'" ;   
-                }
-            else
-                {
-                  sQuery = " SELECT * FROM tmDocumento WHERE tmTipoDocumento_id=" + tdoc +" OR tmTipoDocumento_id=0 and eliminado='0'" ;   
-                }
-           
+            String sQuery = "";
+            if (tdoc == 0) {
+                sQuery = " SELECT * FROM tmDocumento WHERE eliminado='0'";
+            } else {
+                sQuery = " SELECT * FROM tmDocumento WHERE tmTipoDocumento_id=" + tdoc + " OR tmTipoDocumento_id=0 and eliminado='0'";
+            }
+
             objConexion.open();
             objConexion.prepararSentencia(sQuery);
             ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
-            {
-                while (objResult.next()) 
-                {
+            if (objResult != null) {
+                while (objResult.next()) {
                     lstRetorno.add(populateDocumento(objResult));
                 }
-            } 
+            }
             return lstRetorno;
-        } 
-        catch (Exception e) 
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
-        } 
-        finally 
-        {
+        } finally {
             objConexion.close();
         }
     }
 
           public List<DocumentoBE> listarDocumentosVarios() throws Exception  {
-               ConexionBD objConexion = null;
-        try 
+         try 
         {
-            objConexion = new ConexionBD();
+          
             List<DocumentoBE> lstRetorno = new ArrayList<DocumentoBE>();
-            String sQuery = "SELECT tmDocumento.id, tmDocumento.Asunto, tmStakePersona.id,tmStakePersona.Nombre, tmStakePersona.Apellido," +
+            String sQuery = "SELECT tmDocumento.id, tmDocumento.Asunto, "
+                    + "tmStakePersona.id,tmStakePersona.Nombre, tmStakePersona.Apellido," +
 "Criticidad.id, Criticidad.Descripcion from tmDocumento, tmStakePersona, Criticidad where " +
-"tmDocumento.tmStakePersona_id=tmStakePersona.id and tmDocumento.Criticidad_id=Criticidad.id and eliminado='0'";
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
-            {
-                while (objResult.next()) 
-                {
-                    lstRetorno.add(populateDocumentoVarios(objResult));
-                }
-            } 
+"tmDocumento.tmStakePersona_id=tmStakePersona.id and"
+                    + " tmDocumento.Criticidad_id=Criticidad.id and eliminado='0'";
+         TmDocumento t;
+            Query query  = session.createQuery("");
+            lstRetorno = query.list();
             return lstRetorno;
         } 
         catch (Exception e) 
@@ -276,10 +226,6 @@ public class DocumentoDA {
             System.out.println(e.getMessage());
             throw e;
         } 
-        finally 
-        {
-            objConexion.close();
-        }
   
     }
 

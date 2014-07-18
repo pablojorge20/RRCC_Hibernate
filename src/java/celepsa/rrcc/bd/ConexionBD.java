@@ -13,14 +13,19 @@ public class ConexionBD {
     public void open() throws Exception
     {
         Properties properties = new Properties();
+        System.out.println(" anets de la bd.properties ");
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties");
         if (inputStream != null)
         {
+            
+             System.out.println("properties directo  ");
+             
             properties.load(inputStream);
         }
         else
         {
             String curDir = System.getProperty("user.dir") + "/db.properties";
+            System.out.println(" carpeta dnde busca archivo " + curDir );
             FileInputStream file = new FileInputStream(curDir); 
             if (file != null)
             {
@@ -28,7 +33,7 @@ public class ConexionBD {
             }
             else
             {
-                throw new Exception("No existe archivo config.properties");
+                throw new Exception("No existe archivo db.properties");
             }
         }
         
@@ -36,8 +41,9 @@ public class ConexionBD {
         String url = properties.getProperty("jdbc.url");
         String driver = properties.getProperty("jdbc.driver");
         String userName = properties.getProperty("jdbc.username");
-        String password = Encriptador.desencriptar(properties.getProperty("jdbc.password"));
-        //System.out.println("url="+url +",user=" + userName);
+        //String password = Encriptador.desencriptar(properties.getProperty("jdbc.password"));
+        String password = (properties.getProperty("jdbc.password"));
+        System.out.println("url="+url +",user=" + userName + " pass=" + password);
         try 
         {
             Class.forName(driver).newInstance();
@@ -45,6 +51,8 @@ public class ConexionBD {
         } 
         catch (Exception e) 
         {
+            
+            e.printStackTrace();
             System.out.println(e.getMessage());
             throw e;
         }

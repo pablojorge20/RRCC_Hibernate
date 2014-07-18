@@ -1,5 +1,5 @@
 package celepsa.rrcc.eh;
-// Generated 15-jul-2014 15:31:34 by Hibernate Tools 3.6.0
+// Generated 17/07/2014 10:17:45 PM by Hibernate Tools 3.6.0
 
 
 
@@ -9,22 +9,22 @@ package celepsa.rrcc.eh;
 public class TmClimaId  implements java.io.Serializable {
 
 
-     private TmZona tmZonaId;
+     private int tmZonaId;
      private String fechaGeneracion;
 
     public TmClimaId() {
     }
 
-    public TmClimaId(TmZona tmZonaId, String fechaGeneracion) {
+    public TmClimaId(int tmZonaId, String fechaGeneracion) {
        this.tmZonaId = tmZonaId;
        this.fechaGeneracion = fechaGeneracion;
     }
    
-    public TmZona getTmZonaId() {
+    public int getTmZonaId() {
         return this.tmZonaId;
     }
     
-    public void setTmZonaId(TmZona tmZonaId) {
+    public void setTmZonaId(int tmZonaId) {
         this.tmZonaId = tmZonaId;
     }
     public String getFechaGeneracion() {
@@ -36,23 +36,6 @@ public class TmClimaId  implements java.io.Serializable {
     }
 
 
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof TmClimaId) ) return false;
-		 TmClimaId castOther = ( TmClimaId ) other; 
-         
-		 return (this.getTmZonaId()==castOther.getTmZonaId())
- && ( (this.getFechaGeneracion()==castOther.getFechaGeneracion()) || ( this.getFechaGeneracion()!=null && castOther.getFechaGeneracion()!=null && this.getFechaGeneracion().equals(castOther.getFechaGeneracion()) ) );
-   }
-   
-   public int hashCode() {
-         int result = 17;
-         
-         result = 37 * result + this.getTmZonaId().getId();
-         result = 37 * result + ( getFechaGeneracion() == null ? 0 : this.getFechaGeneracion().hashCode() );
-         return result;
-   }   
 
 
 }
