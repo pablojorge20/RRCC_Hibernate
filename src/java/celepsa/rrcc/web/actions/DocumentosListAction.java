@@ -70,7 +70,7 @@ public class DocumentosListAction extends BaseAction implements Preparable{
     
      
     public String eliminarDocumento() {
-              try 
+        try 
         {
             boolean a=false;
             //CorreoBL objMsgCorreoBL = new CorreoBL();

@@ -50,8 +50,7 @@ public class ClimaBL {
                  TmClima Clima= new TmClima();
                  TmClimaId id_zona = new TmClimaId();
                  
-                 id_zona.setTmZonaId(objZona);
-                 //id_zona.setTmZonaId(objZona.getId());
+                 id_zona.setTmZonaId(objZona.getId());
                  Clima.setId(id_zona);
                  
                  Date date = new Date();

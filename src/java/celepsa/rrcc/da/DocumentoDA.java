@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -170,58 +171,46 @@ public class DocumentoDA {
             session.merge(documento);
             tx.commit();
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NumberFormatException | HibernateException e) {
+            System.out.println( e.getMessage() );
             return false;// no actualizo nada 
         }
 
     }
      
     public List<DocumentoBE> listarDocumentos(Integer tdoc) throws Exception {
-        ConexionBD objConexion = null;
         try {
-            objConexion = new ConexionBD();
-            List<DocumentoBE> lstRetorno = new ArrayList<DocumentoBE>();
+         
             String sQuery = "";
             if (tdoc == 0) {
-                sQuery = " SELECT * FROM tmDocumento WHERE eliminado='0'";
-            } else {
-                sQuery = " SELECT * FROM tmDocumento WHERE tmTipoDocumento_id=" + tdoc + " OR tmTipoDocumento_id=0 and eliminado='0'";
-            }
-
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) {
-                while (objResult.next()) {
-                    lstRetorno.add(populateDocumento(objResult));
-                }
-            }
-            return lstRetorno;
-        } catch (Exception e) {
+                sQuery = " from TmDocumento where  eliminado='0'";
+            } else { 
+                sQuery =  "from TmDocumento where tmTipoDocumentoId=" +tdoc+ " OR tmTipoDocumentoId=0  eliminado='0' " ;
+            } 
+            Query query  = session.createQuery( sQuery );
+            return query.list();
+             
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
-        } finally {
-            objConexion.close();
-        }
+        } 
     }
 
           public List<DocumentoBE> listarDocumentosVarios() throws Exception  {
          try 
         {
-          
-            List<DocumentoBE> lstRetorno = new ArrayList<DocumentoBE>();
-            String sQuery = "SELECT tmDocumento.id, tmDocumento.Asunto, "
+         /*    String sQuery = "SELECT tmDocumento.id, tmDocumento.Asunto, "
                     + "tmStakePersona.id,tmStakePersona.Nombre, tmStakePersona.Apellido," +
-"Criticidad.id, Criticidad.Descripcion from tmDocumento, tmStakePersona, Criticidad where " +
-"tmDocumento.tmStakePersona_id=tmStakePersona.id and"
+            "Criticidad.id, Criticidad.Descripcion from tmDocumento, tmStakePersona, Criticidad where " +
+            "tmDocumento.tmStakePersona_id=tmStakePersona.id and"
                     + " tmDocumento.Criticidad_id=Criticidad.id and eliminado='0'";
-         TmDocumento t;
-            Query query  = session.createQuery("");
-            lstRetorno = query.list();
-            return lstRetorno;
+         */
+            // NECEISTO RECREAR LAS ENTIDADES Y NO TENGO EL SCRIPT PARA QUE CARGUE TODAS LAS CLASES
+            //ASOCIADAS DE GOLPE
+            Query query  = session.createQuery("from TmDocumento where  eliminado='0' ");
+            return query.list();
         } 
-        catch (Exception e) 
+        catch (HibernateException e) 
         {
             System.out.println(e.getMessage());
             throw e;
@@ -229,39 +218,26 @@ public class DocumentoDA {
   
     }
 
-           public List<DocumentoBE> buscarDocumentosVarios(String AsuntoBuscado) throws Exception  {
-               ConexionBD objConexion = null;
-        try 
-        {
-            objConexion = new ConexionBD();
-            List<DocumentoBE> lstRetorno = new ArrayList<DocumentoBE>();
-            String sQuery = "SELECT tmDocumento.id, tmDocumento.Asunto, tmStakePersona.id,tmStakePersona.Nombre, tmStakePersona.Apellido," +
-"Criticidad.id, Criticidad.Descripcion from tmDocumento, tmStakePersona, Criticidad where " +
-"tmDocumento.tmStakePersona_id=tmStakePersona.id and tmDocumento.Criticidad_id=Criticidad.id and eliminado='0' and tmDocumento.Asunto like '%"+ AsuntoBuscado +"%' ";
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
-            {
-                while (objResult.next()) 
-                {
-                    lstRetorno.add(populateDocumentoVarios(objResult));
-                }
-            } 
-            return lstRetorno;
+      public List<DocumentoBE> buscarDocumentosVarios(String AsuntoBuscado) throws Exception  {
+        try{
+         /* String sQuery = "SELECT tmDocumento.id, tmDocumento.Asunto, tmStakePersona.id,tmStakePersona.Nombre, tmStakePersona.Apellido," +
+            "Criticidad.id, Criticidad.Descripcion"
+                  + " from tmDocumento, tmStakePersona, Criticidad "
+                  + "where tmDocumento.tmStakePersona_id=tmStakePersona.id"
+                  + " and tmDocumento.Criticidad_id=Criticidad.id"
+                  + " and eliminado='0'"
+                  + " and tmDocumento.Asunto like '%"+ AsuntoBuscado +"%' ";*/
+           Query query  = session.createQuery("from TmDocumento where  eliminado='0' and asunto like :asunto ");
+           query.setString("asunto", "%"+AsuntoBuscado+"%");
+            return query.list();
         } 
-        catch (Exception e) 
+        catch (HibernateException e) 
         {
             System.out.println(e.getMessage());
             throw e;
         } 
-        finally 
-        {
-            objConexion.close();
-        }
-  
     }
-
+/*
    private DocumentoBE populateDocumentoVarios(ResultSet resultado) throws SQLException {
         DocumentoBE objDocumentoBE = new DocumentoBE();
         PersonaBE objPersonaBE = new PersonaBE();
@@ -280,7 +256,7 @@ public class DocumentoDA {
           
         return objDocumentoBE;
     }
-       
+       */
     private DocumentoBE populateDocumento(ResultSet resultado) throws SQLException {
         DocumentoBE objDocumentoBE = new DocumentoBE();
         DocumentoBE objConvenioBE = new DocumentoBE();
@@ -349,6 +325,7 @@ public class DocumentoDA {
     
         return objAdjuntoBE;
     }
+    
     private Integer CrearIDDoc() throws Exception  {
           Integer idnew=0;
            ConexionBD objConexion2 = null;
@@ -407,60 +384,29 @@ public class DocumentoDA {
 
             
     }
-    public DocumentoBE obtenerDocumento(DocumentoBE objDocumento) throws Exception  {
-        ConexionBD objConexion = null;
-        int cont = 1;
+    public TmDocumento obtenerDocumento(TmDocumento objDocumento) throws Exception  {
         try 
-        {
-            objConexion = new ConexionBD();
-            DocumentoBE objDocumentoResult = null;
-            String sQuery = " SELECT  * FROM RRHH.tmDocumento WHERE id = ? ";
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            objConexion.agregarParametro(cont++, objDocumento.getId());
-
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
-            {
-                if (objResult.next()) 
-                {
-                    objDocumentoResult = this.populateDocumento(objResult);
-                }
-            } 
-            return objDocumentoResult;
+        {    
+          Query query  = session.createQuery("from TmDocumento where id = :id ");
+           query.setInteger("id", objDocumento.getId()  );
+            return (TmDocumento) query.list().get(0); 
         } 
-        catch (Exception e) 
+        catch (NumberFormatException | HibernateException e) 
         {
             System.out.println(e.getMessage());
             throw e;
-        } 
-        finally 
-        {
-            objConexion.close();
-        }
+        }  
     }
     public boolean eliminarDocumento(DocumentoBE objDocumento) throws Exception {
-        ConexionBD objConexion = null;
-        int cont = 1;
-        String query = " UPDATE tmDocumento SET eliminado = ? WHERE id = ? ";
-        
+       // eliminar con hibernate 
         try {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-            objConexion.agregarParametro(cont++, objDocumento.getEliminado());
-            objConexion.agregarParametro(cont++, objDocumento.getId());
-            objConexion.ejecutar();
-            return true;
-        } 
-        catch (Exception e) 
-        {
+           Query query  = session.createQuery(" update TmDocumento set eliminado = :eliminado where id = :id ");
+           query.setString("eliminado", objDocumento.getEliminado()  );
+           query.setInteger("id", Integer.parseInt( objDocumento.getId() ) );
+            return query.executeUpdate()>0; 
+        } catch (NumberFormatException | HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
-        }
-        finally
-        {
-            objConexion.close();
         }
     }
   
