@@ -11,7 +11,6 @@ import celepsa.rrcc.be.DocumentoBE;
 import celepsa.rrcc.da.ConsultasVariasDA;
 import celepsa.rrcc.da.DocumentoDA;
 import celepsa.rrcc.eh.TmDocumento;
-import celepsa.rrcc.web.util.Funciones;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -83,7 +82,7 @@ public List<DocumentoBE> buscarDocumentos(String AsuntoBuscado) throws Exception
     {
         DocumentoDA objDocumentoDA = new DocumentoDA();
         TmDocumento obj = new TmDocumento();
-        obj.setId( Integer.parseInt(  objDocumento.getId() ) );
+        obj.setId(Integer.parseInt(objDocumento.getId()));
         return objDocumentoDA.obtenerDocumento( obj );
     }  
     
