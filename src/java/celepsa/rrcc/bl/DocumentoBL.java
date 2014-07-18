@@ -10,6 +10,7 @@ import celepsa.rrcc.be.AdjuntoBE;
 import celepsa.rrcc.be.DocumentoBE;
 import celepsa.rrcc.da.ConsultasVariasDA;
 import celepsa.rrcc.da.DocumentoDA;
+import celepsa.rrcc.eh.TmDocumento;
 import celepsa.rrcc.web.util.Funciones;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -56,29 +57,34 @@ public List<DocumentoBE> buscarDocumentos(String AsuntoBuscado) throws Exception
         return objSistemaDA.buscarDocumentosVarios(AsuntoBuscado);
      
     }
- public boolean eliminarDocumento(DocumentoBE objDocumento) throws Exception{
+ public boolean eliminarDocumento(TmDocumento objDocumento) throws Exception{
         boolean a,b=false;
-     ConsultasVariasDA objconsulta = new ConsultasVariasDA();
+        ConsultasVariasDA objconsulta = new ConsultasVariasDA();
         DocumentoDA objDocumentoDA = new DocumentoDA();
        
         objDocumento =objDocumentoDA.obtenerDocumento(objDocumento);
         
-         a =objconsulta.BuscarPersonaDocumento(objDocumento.getId());
+         a =objconsulta.BuscarPersonaDocumento( objDocumento.getId()+"" );
         if (a == true ){
             b=true;//No se puede eliminar por que tiene transaccion
         }
         else{
-            objDocumento.setEliminado("1");
-            objDocumentoDA.eliminarDocumento(objDocumento); 
+            objDocumento.setEliminado('1');
+            DocumentoBE obj = new DocumentoBE();
+            obj.setEliminado( objDocumento.getEliminado()+"" );
+            obj.setId( objDocumento.getId()+"" );
+            objDocumentoDA.eliminarDocumento(obj); 
             b=false;
         }
           return b;
         
     }    
-    public DocumentoBE obtenerDocumento(DocumentoBE objDocumento) throws Exception
+    public TmDocumento obtenerDocumento(DocumentoBE objDocumento) throws Exception
     {
         DocumentoDA objDocumentoDA = new DocumentoDA();
-        return objDocumentoDA.obtenerDocumento(objDocumento);
+        TmDocumento obj = new TmDocumento();
+        obj.setId( Integer.parseInt(  objDocumento.getId() ) );
+        return objDocumentoDA.obtenerDocumento( obj );
     }  
     
     public void registrarAdjunto(AdjuntoBE objSistema, DocumentoBE objDocumento) throws Exception 
