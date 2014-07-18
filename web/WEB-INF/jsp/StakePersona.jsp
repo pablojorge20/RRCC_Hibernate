@@ -51,11 +51,10 @@
 		<label class="description" for="element_1">Fecha Registro </label>
 		<span>
 			
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	 <s:textfield name="persona.FechaRegistro" value="%{persona.FechaRegistro}" size="15" maxLength="10" theme="simple"/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	 <s:textfield name="persona.FechaRegistro" value="%{persona.FechaRegistro}" size="15" disabled="true" maxLength="10" theme="simple"/>
               
 		<br>
                     
-                    <br>
 		<label class="description" for="element_2">Nombre </label>
 		<span>
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <s:textfield name="persona.Nombre" value="%{persona.Nombre}" size="45" maxLength="45" theme="simple"/>
@@ -70,9 +69,10 @@
 			
 		</span>
 		 <br>
+                     <br>
 		<label class="description" for="element_2">Alias </label>
 		<span>
-                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <s:textfield name="persona.Alias" value="%{persona.Alias}" size="30" maxLength="30" theme="simple"/>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <s:textfield name="persona.Alias" value="%{persona.Alias}" size="20" maxLength="20" theme="simple"/>
 			
 			
 		</span>
@@ -114,8 +114,8 @@
     		
 		<label class="description" for="element_1">Identidad </label>
                             <span>
-			
-                        <s:textfield name="persona.Identidad" value="%{persona.Identidad}" size="50" maxLength="100" theme="simple"/>    
+			<br>
+                        <s:textarea name="persona.Identidad" value="%{persona.Identidad}" wrap="true" rows="6" cols="50" maxLength="250" theme="simple"/>    
                             </span>  
                 <div>
 <br>
@@ -136,6 +136,7 @@
                                    cssClass="texto"/>  
 	
                 		 <br>
+                                     <br>
 		<label class="description" for="element_2">Nro Documento </label>
 		<span>
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <s:textfield name="Persona.NroDocumento" value="%{persona.NroDocumento}" size="15" maxLength="10" theme="simple"/>
@@ -145,7 +146,7 @@
                    
                     <br>
                         <br>
-                            <br>
+                           
 		<label class="description" for="element_8">Estado </label>
 		
 	  <s:select  list="LEstado"
