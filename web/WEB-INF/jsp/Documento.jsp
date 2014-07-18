@@ -51,19 +51,19 @@
 		<label class="description" for="element_1">Fecha Registro </label>
 		<span>
 			
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	 <s:textfield name="documento.fechaRegistro" value="%{documento.fechaRegistro}" size="15" maxLength="10" theme="simple"/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	 <s:textfield name="documento.fechaRegistro" value="%{documento.fechaRegistro}" size="12" disabled="true" maxLength="10" theme="simple"/>
               
 		 
 		<br>
+                    <br>
 		<label class="description" for="element_2">Fecha recepcion </label>
 		<span>
-                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <s:textfield name="documento.fechaRecepcion" value="%{documento.fechaRecepcion}" size="15" maxLength="10" theme="simple"/>
-			
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <sx:datetimepicker name="documento.fechaRecepcion"  value="%{documento.fechaRecepcion}"  displayFormat="dd/MM/yyyy"/>
 			
 		</span>
-		
+		<br>
 		 
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
 		<label class="description" for="element_5">Tipo Documentos </label>
 		&nbsp;&nbsp;&nbsp;
 	<s:select  list="LTipo"
@@ -90,13 +90,13 @@
 		<br>
 		<label class="description" for="element_3">Observaciones </label>
 		<div>
-                     <s:textfield name="documento.observaciones" value="%{documento.observaciones}" size="50" maxLength="100" theme="simple"/>
+                     <s:textarea name="documento.observaciones" value="%{documento.observaciones}" rows="2" cols="50" maxLength="100" theme="simple"/>
 			
 		</div> 
 		
 		<label class="description" for="element_4">Asunto </label>
 		<div>
-                    <s:textfield name="documento.asunto" value="%{documento.asunto}" size="50" maxLength="100" theme="simple"/>
+                    <s:textarea name="documento.asunto" value="%{documento.asunto}" rows="2" cols="50" maxLength="100" theme="simple"/>
 		
 		</div> 
 		
@@ -142,13 +142,16 @@
 			
 </TD>
 
-<TD WIDTH=200>
+<TD WIDTH=250>
     		
 		<label class="description" for="element_1">Fecha Caducidad </label>
                             <span>
 			
-                        <s:textfield name="documento.fechaCaducidad" value="%{documento.fechaCaducidad}" size="50" maxLength="100" theme="simple"/>    
+                        
+                        <sx:datetimepicker name="documento.fechaCaducidad"  value="%{documento.fechaCaducidad}"  displayFormat="dd/MM/yyyy"/>
                             </span>  
+                            <BR>
+                                <BR>
                 <div>
 <label class="description" for="element_1">Relacionado a: </label>
 </div>

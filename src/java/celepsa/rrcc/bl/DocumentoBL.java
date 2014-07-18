@@ -8,7 +8,9 @@ package celepsa.rrcc.bl;
 
 import celepsa.rrcc.be.AdjuntoBE;
 import celepsa.rrcc.be.DocumentoBE;
+import celepsa.rrcc.da.ConsultasVariasDA;
 import celepsa.rrcc.da.DocumentoDA;
+import celepsa.rrcc.web.util.Funciones;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -20,25 +22,17 @@ import java.util.List;
 public class DocumentoBL {
       public void registrarDocumento(DocumentoBE objSistema) throws Exception 
     {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        //Date fRegistro =
         DocumentoDA objSistemaDA = new DocumentoDA();
         objSistemaDA.registrarDocumento(objSistema);
     }  
       
       public void actualizarDocumento (DocumentoBE objSistema) throws Exception 
     {
-        SimpleDateFormat fT = new SimpleDateFormat("dd/MM/yyyy");
-        if (fT.parse(objSistema.getFechaCaducidad()).before
-           (fT.parse(objSistema.getFechaRecepcion()))){
-                DocumentoDA objSistemaDA = new DocumentoDA();
-                
+       
+                DocumentoDA objSistemaDA = new DocumentoDA();           
                 objSistemaDA.ActualizarDocumento(objSistema);
-        }
-        else{
-            throw new Exception("*La fecha no de Caducidad no debe ser menor o igual a la fecha de recepción");   
-            
-        }
-            
-        
      
     }
       
@@ -62,32 +56,23 @@ public List<DocumentoBE> buscarDocumentos(String AsuntoBuscado) throws Exception
         return objSistemaDA.buscarDocumentosVarios(AsuntoBuscado);
      
     }
- public void eliminarDocumento(DocumentoBE objDocumento) throws Exception
-    {
-        //public void eliminarMsgCorreo(MsgCorreoBE objMsgCorreo, UsuarioBE objUsuario) throws Exception
-     //   PoliticasBL objPoliticasBL = new PoliticasBL();
-        
-        // Verificar el mensaje de correo está siendo usado
-      //  int iCont = objPoliticasBL.contarMsgCorreo(objMsgCorreo);
-        //if (iCont > 0)
-        //{
-          //  throw new Exception("*No se puede eliminar porque el mensaje de correo está asociado en la políticas.");
-        //}
-        
-      //  MsgCorreoDA objMsgCorreoDA = new MsgCorreoDA();
+ public boolean eliminarDocumento(DocumentoBE objDocumento) throws Exception{
+        boolean a,b=false;
+     ConsultasVariasDA objconsulta = new ConsultasVariasDA();
         DocumentoDA objDocumentoDA = new DocumentoDA();
-        // Obtener datos del mensaje del correo
-        
-       // objMsgCorreo = objMsgCorreoDA.obtenerMsgCorreo(objMsgCorreo);
-        objDocumento =objDocumentoDA.obtenerDocumento(objDocumento);
-        // Eliminación
-        objDocumento.setEliminado("1");
-            objDocumentoDA.eliminarDocumento(objDocumento);
-                
-    //    objMsgCorreo.setEliminado("1");
-      //  objMsgCorreoDA.eliminarMsgCorreo(objMsgCorreo);
-        
        
+        objDocumento =objDocumentoDA.obtenerDocumento(objDocumento);
+        
+         a =objconsulta.BuscarPersonaDocumento(objDocumento.getId());
+        if (a == true ){
+            b=true;//No se puede eliminar por que tiene transaccion
+        }
+        else{
+            objDocumento.setEliminado("1");
+            objDocumentoDA.eliminarDocumento(objDocumento); 
+            b=false;
+        }
+          return b;
         
     }    
     public DocumentoBE obtenerDocumento(DocumentoBE objDocumento) throws Exception

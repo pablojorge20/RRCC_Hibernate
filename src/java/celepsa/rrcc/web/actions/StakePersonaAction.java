@@ -6,11 +6,7 @@
 
 package celepsa.rrcc.web.actions;
 
-import celepsa.rrcc.be.EstadoBE;
-import celepsa.rrcc.be.NivelInfluenciaBE;
 import celepsa.rrcc.be.PersonaBE;
-
-
 import celepsa.rrcc.bl.EstadoBL;
 import celepsa.rrcc.bl.NivelInfluenciaBL;
 import celepsa.rrcc.bl.PersonaBL;
@@ -21,6 +17,9 @@ import celepsa.rrcc.eh.TmNivelInfluencia;
 import celepsa.rrcc.eh.TmTdocumentoIdentidad;
 import celepsa.rrcc.eh.TmZona;
 import com.opensymphony.xwork2.Preparable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
@@ -51,6 +50,14 @@ public class StakePersonaAction extends BaseAction implements Preparable{
         
           EstadoBL objEstadoBL = new EstadoBL();
         setLEstado(objEstadoBL.ListarEstado());
+        
+            //pmedina-agrgado
+       Date date = new Date();
+       DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+       PersonaBE FRegPersona= new PersonaBE();
+       FRegPersona.setFechaRegistro(fecha.format(date));
+       setPersona(FRegPersona);
+       //pmedina-agrgado
         
     }
    

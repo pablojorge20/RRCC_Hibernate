@@ -72,11 +72,19 @@ public class DocumentosListAction extends BaseAction implements Preparable{
     public String eliminarDocumento() {
               try 
         {
+            boolean a=false;
             //CorreoBL objMsgCorreoBL = new CorreoBL();
             DocumentoBL objDocumentoBL = new DocumentoBL();
-            objDocumentoBL.eliminarDocumento(documento);
+             a=objDocumentoBL.eliminarDocumento(documento);
             //objMsgCorreoBL.eliminarMsgCorreo(msgCorreo, this.getUsuarioSession());
-            addActionMessage("El Documento se elimino correctamente");
+            if(a==true){
+               addActionMessage("No se puede eliminar por que tiene transacciones, puede cambiar el estado del documento"); 
+            }
+            else{
+                addActionMessage("El Documento se anulo correctamente");
+            }
+                
+            
             
             this.listarDocumentos();
             
