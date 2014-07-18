@@ -16,7 +16,10 @@ import celepsa.rrcc.bl.TipoDocumentoBL;
 import celepsa.rrcc.eh.TmEstado;
 import celepsa.rrcc.eh.TmTipoDocumento;
 import com.opensymphony.xwork2.Preparable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
@@ -45,7 +48,16 @@ public class DocumentosAction extends BaseAction implements Preparable {
         TipoDocumentoBL objTipoDocumentoBL = new TipoDocumentoBL();
         //setLTipo(objTipoDocumentoBL.ListarTipoDocumento());
         setLTipo(objTipoDocumentoBL.ListarTipoDocumento());
-        
+        //pmedina-agrgado
+       Date date = new Date();
+       DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+       DocumentoBE fdocumento= new DocumentoBE();
+       fdocumento.setFechaCaducidad(fecha.format(date));
+       fdocumento.setFechaRegistro(fecha.format(date));
+       fdocumento.setFechaRecepcion(fecha.format(date));
+       setDocumento(fdocumento);
+       //pmedina-agrgado
+       
        DocumentoBL objDocumentoBL = new DocumentoBL();
         setLConvenio(objDocumentoBL.listarDocumento(4));
         setLPrograma(objDocumentoBL.listarDocumento(5));
@@ -84,7 +96,7 @@ public class DocumentosAction extends BaseAction implements Preparable {
         setLIngreso(new ArrayList<IngrsoSalidaBE>());
         getLIngreso().add(Ingres1);
         getLIngreso().add(Ingrse2);
-        
+     
     }
    
     @SkipValidation
@@ -118,15 +130,18 @@ public class DocumentosAction extends BaseAction implements Preparable {
         
     }
 
-    public String grabar()
-    {
+    public String grabar(){
+        DocumentoBL objSistemaBL = new DocumentoBL();
  
         try
         {
             if (!Documento.getAsunto().isEmpty() &&
                 !Documento.getObservaciones().isEmpty()){
-                DocumentoBL objSistemaBL = new DocumentoBL();
-          
+               Documento.setFechaRecepcion(this.formatFecha(Documento.getFechaRecepcion().substring(0, 10)));
+                Documento.setFechaCaducidad(this.formatFecha(Documento.getFechaCaducidad().substring(0, 10)));
+                //Date reportDate =fT.parse(Recepcion2);
+                //String Recepcion=fT.format(reportDate);
+                
                 if (getDocumento().getId() != null &&
                     !Documento.getId().isEmpty()){
                     objSistemaBL.actualizarDocumento(getDocumento());
@@ -151,6 +166,13 @@ public class DocumentosAction extends BaseAction implements Preparable {
         return INPUT;
      
     }
+    private String formatFecha(String fecha){
+         
+          //SimpleDateFormat fT = new SimpleDateFormat("dd/MM/yyyy");
+               
+               fecha = fecha.substring(8, 10) + "/" + fecha.substring(5, 7)+ "/" + fecha.substring(0, 4);
+      return fecha;  
+    } 
     
     public String cancelar()
     {
