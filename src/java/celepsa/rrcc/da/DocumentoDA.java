@@ -398,27 +398,15 @@ public class DocumentoDA {
         }  
     }
     public boolean eliminarDocumento(DocumentoBE objDocumento) throws Exception {
-        ConexionBD objConexion = null;
-        int cont = 1;
-        String query = " UPDATE tmDocumento SET eliminado = ? WHERE id = ? ";
-        
+       // eliminar con hibernate 
         try {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-            objConexion.agregarParametro(cont++, objDocumento.getEliminado());
-            objConexion.agregarParametro(cont++, objDocumento.getId());
-            objConexion.ejecutar();
-            return true;
-        } 
-        catch (Exception e) 
-        {
+           Query query  = session.createQuery(" update TmDocumento set eliminado = :eliminado where id = :id ");
+           query.setString("eliminado", objDocumento.getEliminado()  );
+           query.setInteger("id", Integer.parseInt( objDocumento.getId() ) );
+            return query.executeUpdate()>0; 
+        } catch (NumberFormatException | HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
-        }
-        finally
-        {
-            objConexion.close();
         }
     }
   
