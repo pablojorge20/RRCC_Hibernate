@@ -8,12 +8,10 @@ package celepsa.rrcc.bl;
 
 
 
-import celepsa.rrcc.be.ClimaBE;
-import celepsa.rrcc.be.ZonaBE;
 import celepsa.rrcc.da.ClimaDA;
-import celepsa.rrcc.eh.TmClima;
-import celepsa.rrcc.eh.TmClimaId;
-import celepsa.rrcc.eh.TmZona;
+import celepsa.rrcc.eh.Tmclima;
+import celepsa.rrcc.eh.TmclimaPK;
+import celepsa.rrcc.eh.Tmzona;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,13 +27,13 @@ import java.util.logging.Logger;
  * @author pmedina
  */
 public class ClimaBL {
-  private List<TmClima> LCLima;
+  private List<Tmclima> LCLima;
     
   
-    public List<TmClima> GenerarClima(List<TmZona> LZona) 
+    public List<Tmclima> GenerarClima(List<Tmzona> LZona) 
     {
          
-         setLCLima(new ArrayList<TmClima>());
+         setLCLima(new ArrayList<Tmclima>());
          Integer SumCri;
          Integer SumInf;
          Integer SumInfxDoc;
@@ -44,26 +42,26 @@ public class ClimaBL {
          ClimaDA objClimaDA2 = new ClimaDA();
          
         
-            for(TmZona objZona : LZona)
+            for(Tmzona objZona : LZona)
             {
              try {
-                 TmClima Clima= new TmClima();
-                 TmClimaId id_zona = new TmClimaId();
+                 Tmclima Clima= new Tmclima();
+                 TmclimaPK id_zona = new TmclimaPK();
                  
-                 id_zona.setTmZonaId(objZona.getId());
-                 Clima.setId(id_zona);
+                 id_zona.setTmZonaid(objZona.getId());
+                 Clima.setTmclimaPK(id_zona);
                  
                  Date date = new Date();
                  DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
                  id_zona.setFechaGeneracion(fecha.format(date));
               
-                 SumCri =((Integer) objClimaDA.CriticidadZona(objZona));
+                 SumCri =((Integer) objClimaDA.CriticidadZona( objZona));
                  SumInf= ((Integer) objClimaDA1.InfluenciaPersonas(objZona));
                  SumInfxDoc=((Integer) objClimaDA2.InfluenciaPersonasDocumento(objZona));
               
                  
                  Clima.setClima(Integer.toString(SumCri + SumInf + SumInfxDoc));
-                 Clima.setId(id_zona);
+                 Clima.setTmclimaPK(id_zona);
                  
                  if (objZona.getId()>0)
                  {
@@ -82,21 +80,21 @@ public class ClimaBL {
           
     }  
 
-    private void LCLima(ArrayList<TmClima> arrayList) {
+    private void LCLima(ArrayList<Tmclima> arrayList) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
      * @return the LCLima
      */
-    public List<TmClima> getLCLima() {
+    public List<Tmclima> getLCLima() {
         return LCLima;
     }
 
     /**
      * @param LCLima the LCLima to set
      */
-    public void setLCLima(List<TmClima> LCLima) {
+    public void setLCLima(List<Tmclima> LCLima) {
         this.LCLima = LCLima;
     }
 
