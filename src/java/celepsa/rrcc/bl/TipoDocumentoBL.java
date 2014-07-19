@@ -8,7 +8,7 @@ package celepsa.rrcc.bl;
 
 
 import celepsa.rrcc.da.TipoDocumentoDA;
-import celepsa.rrcc.eh.TmTipoDocumento;
+import celepsa.rrcc.eh.Tmtipodocumento;
 import java.util.List;
 
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author pmedina
  */
 public class TipoDocumentoBL {
-      public List<TmTipoDocumento> ListarTipoDocumento()  throws Exception
+      public List<Tmtipodocumento> ListarTipoDocumento()  throws Exception
     {
         TipoDocumentoDA objSistemaDA = new TipoDocumentoDA();
         return objSistemaDA.ListarTipoDocumento();

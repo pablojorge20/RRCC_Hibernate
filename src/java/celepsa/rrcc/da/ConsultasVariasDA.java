@@ -6,10 +6,9 @@
 
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.eh.HibernateUtil;
-import celepsa.rrcc.eh.PersonaDocumentoId;
-import celepsa.rrcc.eh.TmStakePersona;
-import celepsa.rrcc.eh.TmZona;
+import celepsa.rrcc.eh.Tmdocumento;
+import celepsa.rrcc.eh.Tmstakepersona;
+import celepsa.rrcc.web.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,26 +22,20 @@ public class ConsultasVariasDA {
       public ConsultasVariasDA() {
             this.session =HibernateUtil.getSessionFactory().getCurrentSession();
       }
-        
+       
     public boolean BuscarPersonaDocumento(String idDocPer) {
-        List<PersonaDocumentoId> PDocumento = null;
+       
         boolean a=false;
-        try
-            {
-                org.hibernate.Transaction  tx =session.beginTransaction();
-                Query query =session.createQuery("FROM PersonaDocumentoId as PD WHERE PD.tmDocumentoId = :pdid");
+        try{
+                Query query =session.createQuery("FROM Tmdocumento d WHERE d.id = :pdid");
                 query.setParameter("pdid",idDocPer);
-                PDocumento=query.list();
-                PDocumento = (List<PersonaDocumentoId>) query.list();   
-                if (!PDocumento.isEmpty()){
-                    a= true;
-                }
-                
+                List<Tmdocumento> li = query.list() ;
+              
+                System.out.println(" lista " + li);
+                  a = li != null && li.size()>0;
             } catch (Exception e){
                 e.printStackTrace();
             }
         return a;
-        
-        
     } 
 }

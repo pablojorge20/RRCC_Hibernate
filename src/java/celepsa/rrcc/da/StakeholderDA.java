@@ -7,217 +7,149 @@
 package celepsa.rrcc.da;
 
 import celepsa.rrcc.be.DocumentoBE;
-import celepsa.rrcc.be.StakeholderBE;
-import celepsa.rrcc.bd.ConexionBD;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import celepsa.rrcc.eh.Personadocumento;
+import celepsa.rrcc.eh.Tmstakepersona;
+import celepsa.rrcc.web.util.HibernateUtil;
 import java.util.List;
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 
 /**
  *
  * @author pmedina
  */
 public class StakeholderDA {
-    public List<StakeholderBE> listarStakeholder(Integer tdoc) throws Exception  {
-        ConexionBD objConexion = null;
-        try 
-        {
-            objConexion = new ConexionBD();
-            List<StakeholderBE> lstRetorno = new ArrayList<StakeholderBE>();
+    Session session = null;
+    private static final Logger logger = Logger.getLogger(StakeholderDA.class );
+    public StakeholderDA() {
+        this.session = HibernateUtil.getSessionFactory().getCurrentSession();
+    }
+        
+    public List<Tmstakepersona> listarStakeholder(Integer tdoc) throws Exception  {
+      
+        try    { 
+           logger.debug("listarStakeholder");
             String sQuery="";
             if (tdoc==0){
-               sQuery = "SELECT id, CONCAT(Nombre , ' ', Apellido) as nombre FROM tmStakePersona WHERE est=0" ;   
-         
+               sQuery = " FROM Tmstakepersona WHERE est=0" ;   
+             } else {
+                   /*  sQuery="SELECT DISTINCT tmStakePersona.id, "
+                             + " CONCAT(tmStakePersona.Nombre , ' ', tmStakePersona.Apellido) as nombre FROM " +
+                    "tmStakePersona  WHERE  tmStakePersona.id NOT IN (SELECT tmStakePersona.id  FROM " +
+                    "tmStakePersona, PersonaDocumento where tmStakePersona.id=PersonaDocumento.tmStakePersona_id and " +
+                    " PersonaDocumento.tmDocumento_id =" + tdoc +")";*/
+                    sQuery = " from Tmstakepersona where id not in ( select t.tmStakePersonaid.id from Tmdocumento t where t.id='"+tdoc+"' )" ;
                 }
-            else
-                {
-                  //sQuery = " SELECT * FROM tmDocumento WHERE tmTipoDocumento_id=" + tdoc +" OR tmTipoDocumento_id=0 and eliminado='0'" ;   
-                     sQuery="SELECT DISTINCT tmStakePersona.id, CONCAT(tmStakePersona.Nombre , ' ', tmStakePersona.Apellido) as nombre FROM " +
-"tmStakePersona WHERE  tmStakePersona.id NOT IN (SELECT tmStakePersona.id  FROM " +
-"tmStakePersona, PersonaDocumento where tmStakePersona.id=PersonaDocumento.tmStakePersona_id and " +
-" PersonaDocumento.tmDocumento_id =" + tdoc +")";
-                }
-           
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
-            {
-                while (objResult.next()) 
-                {
-                    lstRetorno.add(populateStakeholder(objResult));
-                }
-            } 
-            return lstRetorno;
+             logger.debug( sQuery );
+            org.hibernate.Transaction tx = session.beginTransaction();
+           Query query  = session.createQuery( sQuery );
+            return query.list();
         } 
         catch (Exception e) 
         {
             System.out.println(e.getMessage());
             throw e;
-        } 
-        finally 
-        {
-            objConexion.close();
-        }
+        }  
     }
-    public List<StakeholderBE> listarStakeholderDoc(String tdoc) throws Exception  {
-        ConexionBD objConexion = null;
-        try 
-        {
-            objConexion = new ConexionBD();
-            List<StakeholderBE> lstRetorno = new ArrayList<StakeholderBE>();
+    
+    public List<Tmstakepersona> listarStakeholderDoc(String tdoc) throws Exception  {
+        
+        try  { logger.debug( "listarStakeholderDoc" );
             String sQuery="";
-         
-                sQuery = "SELECT tmStakePersona.id, CONCAT(tmStakePersona.Nombre , ' ', tmStakePersona.Apellido) as Nombre " + 
+               /* sQuery = "SELECT tmStakePersona.id, CONCAT(tmStakePersona.Nombre , ' ', tmStakePersona.Apellido) as Nombre " + 
                        " FROM tmStakePersona, PersonaDocumento where PersonaDocumento.tmStakePersona_id=tmStakePersona.id " +
-                      "and PersonaDocumento.tmDocumento_id='"+ tdoc +"'" ;   
-         
+                      "and PersonaDocumento.tmDocumento_id='"+ tdoc +"'" ;  */
              
-             
-           
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
-            {
-                while (objResult.next()) 
-                {
-                    lstRetorno.add(populateStakeholder(objResult));
-                }
-            } 
-            return lstRetorno;
-        } 
-        catch (Exception e) 
+                // sQuery = "Select t.tmStakePersonaid from Tmdocumento t where t.id='"+tdoc+"' " ;
+             sQuery = "Select p.tmstakepersona from Personadocumento p where p.tmdocumento.id='"+tdoc+"' " ;
+                  logger.debug( sQuery );
+           org.hibernate.Transaction tx = session.beginTransaction();
+           Query query  = session.createQuery( sQuery );
+            return query.list();
+            
+        } catch (Exception e) 
         {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             throw e;
         } 
-        finally 
-        {
-            objConexion.close();
-        }
     }
-     private StakeholderBE populateStakeholder(ResultSet resultado) throws SQLException {
-        StakeholderBE objStakeholderBE = new StakeholderBE();
-
-        objStakeholderBE.setId(resultado.getString("id"));
-        
-        objStakeholderBE.setNombre(resultado.getString("nombre"));
-
-        return objStakeholderBE;
-    }
-        public int registrarStakeholderDocumento(StakeholderBE objSistema1, DocumentoBE objSistema2) throws Exception {
+     
+        public int registrarStakeholderDocumento(Tmstakepersona objSistema1, DocumentoBE objSistema2) throws Exception {
            
-        ConexionBD objConexion = null;
-         String query ="";
-        
-                   
-         query ="INSERT INTO `RRHH`.`PersonaDocumento` (`tmDocumento_id`, `tmStakePersona_id`) VALUES (?, ?);";
-        
-      int cont = 1;
+         String squery  ="INSERT INTO `RRHH`.`PersonaDocumento` (`tmDocumento_id`, `tmStakePersona_id`, est) VALUES (:doc, :per, 1);";
+         logger.debug( "registrarStakeholderDocumento" );
         try 
         {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-            //falta completar los parametros que se guardaran.
-             objConexion.agregarParametro(cont++, objSistema2.getId());        
-            objConexion.agregarParametro(cont++, objSistema1.getId());
-      
-            return objConexion.insertar();
+            org.hibernate.Transaction tx = session.beginTransaction();
+           SQLQuery query  = session.createSQLQuery ( squery );
+           query.setInteger("doc", Integer.parseInt( objSistema2.getId() ));
+            query.setInteger("per", (objSistema1.getId() ));
+            int res =  query.executeUpdate();
+               tx.commit(); 
+             return res;
         } 
         catch (Exception e) 
         {
-            System.out.println(e.getMessage());
+         e.printStackTrace();
             throw e;
-        }
-        finally
-        {
-            objConexion.close();
-        }
+        } 
     
         }
         
-       public boolean eliminarDocumento(StakeholderBE objStakeholder) throws Exception {
-        ConexionBD objConexion = null;
-        int cont = 1;
-        String query = " UPDATE tmDocumento SET eliminado = ? WHERE id = ? ";
+       public boolean eliminarDocumento(Tmstakepersona objStakeholder) throws Exception {
+       logger.debug( "eliminarDocumento" );
+        String squery = " UPDATE tmDocumento SET  eliminado = 2 WHERE id = :id ";
         
         try {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-           // objConexion.agregarParametro(cont++, objStakeholder.getEliminado());
-            objConexion.agregarParametro(cont++, objStakeholder.getId());
-            objConexion.ejecutar();
-            return true;
+          
+            org.hibernate.Transaction tx = session.beginTransaction();
+           SQLQuery query  = session.createSQLQuery ( squery );
+            query.setInteger("id",  (objStakeholder.getId() ));
+              query.executeUpdate();
+              tx.commit(); 
+              return true;
         } 
         catch (Exception e) 
         {
-            System.out.println(e.getMessage());
-            throw e;
-        }
-        finally
-        {
-            objConexion.close();
-        }
+           e.printStackTrace();
+           return false;
+        } 
     }
-         public boolean eliminarDocumentoStakeholder(StakeholderBE objStakeholder, DocumentoBE objDocumento) throws Exception {
-        ConexionBD objConexion = null;
-        int cont = 1;
-        //String query = " UPDATE tmDocumento SET eliminado = ? WHERE id = ? ";
-        String query ="DELETE FROM `RRHH`.`PersonaDocumento` WHERE `tmDocumento_id`=? and`tmStakePersona_id`=?";
+       
+         public boolean eliminarDocumentoStakeholder(Tmstakepersona objStakeholder, DocumentoBE objDocumento) throws Exception {
+           logger.debug( "eliminarDocumentoStakeholder" );
+        String squery ="DELETE FROM `RRHH`.`PersonaDocumento` WHERE `tmDocumento_id`=:doc and`tmStakePersona_id`=:per";
         try {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-           // objConexion.agregarParametro(cont++, objStakeholder.getEliminado());
-            objConexion.agregarParametro(cont++, objDocumento.getId());
-            objConexion.agregarParametro(cont++, objStakeholder.getId());
-            objConexion.ejecutar();
+            org.hibernate.Transaction tx = session.beginTransaction();
+           SQLQuery query  = session.createSQLQuery ( squery );
+            query.setInteger("doc", Integer.parseInt( objDocumento.getId() ));
+             query.setInteger("per", ( objStakeholder.getId() ));
+              query.executeUpdate();
+              tx.commit(); 
             return true;
         } 
-        catch (Exception e) 
-        {
-            System.out.println(e.getMessage());
-            throw e;
-        }
-        finally
-        {
-            objConexion.close();
-        }
+        catch (Exception e)  {
+          e.printStackTrace();
+           return false;
+        } 
     }
-        public StakeholderBE obtenerDocumento(StakeholderBE objStakeholder) throws Exception  {
-        ConexionBD objConexion = null;
-        int cont = 1;
+        public Tmstakepersona obtenerDocumento(Tmstakepersona objStakeholder) throws Exception  {
+       logger.debug( "obtenerDocumento" );
         try 
-        {
-            objConexion = new ConexionBD();
-            StakeholderBE objStakeholderResult = null;
-            String sQuery = " SELECT  * FROM RRHH.tmDocumento WHERE id = ? ";
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            objConexion.agregarParametro(cont++, objStakeholder.getId());
-
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) 
-            {
-                if (objResult.next()) 
-                {
-                    objStakeholderResult = this.populateStakeholder(objResult);
-                }
-            } 
-            return objStakeholderResult;
+        { 
+            String sQuery = " from Tmstakepersona WHERE id = :id ";
+            
+            SQLQuery query  = session.createSQLQuery ( sQuery );
+            query.setInteger("id", ( objStakeholder.getId() )); 
+            return (Tmstakepersona) query.list().get(0);            
+           
         } 
         catch (Exception e) 
         {
-            System.out.println(e.getMessage());
+           e.printStackTrace();
             throw e;
-        } 
-        finally 
-        {
-            objConexion.close();
-        }
+        }  
     }
 }

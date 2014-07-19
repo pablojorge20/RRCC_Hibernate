@@ -25,35 +25,39 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Elvis
  */
 @Entity
-@Table(name = "criticidad")
+@Table(name = "tmzona")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Criticidad.findAll", query = "SELECT c FROM Criticidad c"),
-    @NamedQuery(name = "Criticidad.findById", query = "SELECT c FROM Criticidad c WHERE c.id = :id"),
-    @NamedQuery(name = "Criticidad.findByDescripcion", query = "SELECT c FROM Criticidad c WHERE c.descripcion = :descripcion")})
-public class Criticidad implements Serializable {
+    @NamedQuery(name = "Tmzona.findAll", query = "SELECT t FROM Tmzona t"),
+    @NamedQuery(name = "Tmzona.findById", query = "SELECT t FROM Tmzona t WHERE t.id = :id"),
+    @NamedQuery(name = "Tmzona.findByDescripcion", query = "SELECT t FROM Tmzona t WHERE t.descripcion = :descripcion")})
+public class Tmzona implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+    @Size(max = 45)
     @Column(name = "Descripcion")
     private String descripcion;
-    @OneToMany(mappedBy = "criticidadid")
-    private Collection<Tmdocumento> tmdocumentoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criticidadid")
-    private Collection<Tmtipodocumento> tmtipodocumentoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criticidadid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tmzona")
+    private Collection<Tmclima> tmclimaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tmZonaid")
     private Collection<Tmevento> tmeventoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criticidadid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tmZonaid")
     private Collection<Tmproyecto> tmproyectoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tmZonaid")
+    private Collection<Tmstakepersona> tmstakepersonaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tmZonaid")
+    private Collection<Tmfileconflictividad> tmfileconflictividadCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tmZonaid")
+    private Collection<Tmstakeagrupacion> tmstakeagrupacionCollection;
 
-    public Criticidad() {
+    public Tmzona() {
     }
 
-    public Criticidad(Integer id) {
+    public Tmzona(Integer id) {
         this.id = id;
     }
 
@@ -74,21 +78,12 @@ public class Criticidad implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Tmdocumento> getTmdocumentoCollection() {
-        return tmdocumentoCollection;
+    public Collection<Tmclima> getTmclimaCollection() {
+        return tmclimaCollection;
     }
 
-    public void setTmdocumentoCollection(Collection<Tmdocumento> tmdocumentoCollection) {
-        this.tmdocumentoCollection = tmdocumentoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Tmtipodocumento> getTmtipodocumentoCollection() {
-        return tmtipodocumentoCollection;
-    }
-
-    public void setTmtipodocumentoCollection(Collection<Tmtipodocumento> tmtipodocumentoCollection) {
-        this.tmtipodocumentoCollection = tmtipodocumentoCollection;
+    public void setTmclimaCollection(Collection<Tmclima> tmclimaCollection) {
+        this.tmclimaCollection = tmclimaCollection;
     }
 
     @XmlTransient
@@ -109,6 +104,33 @@ public class Criticidad implements Serializable {
         this.tmproyectoCollection = tmproyectoCollection;
     }
 
+    @XmlTransient
+    public Collection<Tmstakepersona> getTmstakepersonaCollection() {
+        return tmstakepersonaCollection;
+    }
+
+    public void setTmstakepersonaCollection(Collection<Tmstakepersona> tmstakepersonaCollection) {
+        this.tmstakepersonaCollection = tmstakepersonaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Tmfileconflictividad> getTmfileconflictividadCollection() {
+        return tmfileconflictividadCollection;
+    }
+
+    public void setTmfileconflictividadCollection(Collection<Tmfileconflictividad> tmfileconflictividadCollection) {
+        this.tmfileconflictividadCollection = tmfileconflictividadCollection;
+    }
+
+    @XmlTransient
+    public Collection<Tmstakeagrupacion> getTmstakeagrupacionCollection() {
+        return tmstakeagrupacionCollection;
+    }
+
+    public void setTmstakeagrupacionCollection(Collection<Tmstakeagrupacion> tmstakeagrupacionCollection) {
+        this.tmstakeagrupacionCollection = tmstakeagrupacionCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -119,10 +141,10 @@ public class Criticidad implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Criticidad)) {
+        if (!(object instanceof Tmzona)) {
             return false;
         }
-        Criticidad other = (Criticidad) object;
+        Tmzona other = (Tmzona) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -131,7 +153,7 @@ public class Criticidad implements Serializable {
 
     @Override
     public String toString() {
-        return "celepsa.rrcc.eh.Criticidad[ id=" + id + " ]";
+        return "celepsa.rrcc.eh.Tmzona[ id=" + id + " ]";
     }
     
 }

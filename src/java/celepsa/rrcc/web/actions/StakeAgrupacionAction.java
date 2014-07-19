@@ -6,16 +6,14 @@
 
 package celepsa.rrcc.web.actions;
 
-import celepsa.rrcc.be.NivelInfluenciaBE;
 import celepsa.rrcc.be.AgrupacionBE;
-import celepsa.rrcc.be.EstadoBE;
 import celepsa.rrcc.bl.NivelInfluenciaBL;
 import celepsa.rrcc.bl.AgrupacionBL;
 import celepsa.rrcc.bl.EstadoBL;
 import celepsa.rrcc.bl.ZonaBL;
-import celepsa.rrcc.eh.TmEstado;
-import celepsa.rrcc.eh.TmNivelInfluencia;
-import celepsa.rrcc.eh.TmZona;
+import celepsa.rrcc.eh.Tmestado;
+import celepsa.rrcc.eh.Tmnivelinfluencia;
+import celepsa.rrcc.eh.Tmzona;
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -27,16 +25,16 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 public class StakeAgrupacionAction extends BaseAction implements Preparable{
     private AgrupacionBE Agrupacion;
   
-    private List<TmNivelInfluencia> LNinfluencia;
-       private List<TmZona> LZona;
-    private List<TmEstado> LEstado;
+    private List<Tmnivelinfluencia> LNinfluencia;
+       private List<Tmzona> LZona;
+    private List<Tmestado> LEstado;
  @Override
     public void prepare() throws Exception {
         super.prepare();
      
     
           NivelInfluenciaBL objNivelInfluenciaBL = new NivelInfluenciaBL();
-        setLNinfluencia(objNivelInfluenciaBL.ListarNivelInfluencia());
+          setLNinfluencia(objNivelInfluenciaBL.ListarNivelInfluencia());
        
                 ZonaBL objZonaBL = new ZonaBL();
         setLZona(objZonaBL.ListarZona());
@@ -128,14 +126,14 @@ public class StakeAgrupacionAction extends BaseAction implements Preparable{
     /**
      * @return the LZona
      */
-    public List<TmZona> getLZona() {
+    public List<Tmzona> getLZona() {
         return LZona;
     }
 
     /**
      * @param LZona the LZona to set
      */
-    public void setLZona(List<TmZona> LZona) {
+    public void setLZona(List<Tmzona> LZona) {
         this.LZona = LZona;
     }
 
@@ -144,28 +142,28 @@ public class StakeAgrupacionAction extends BaseAction implements Preparable{
     /**
      * @return the LNinfluencia
      */
-    public List<TmNivelInfluencia> getLNinfluencia() {
+    public List<Tmnivelinfluencia> getLNinfluencia() {
         return LNinfluencia;
     }
 
     /**
      * @param LNinfluencia the LNinfluencia to set
      */
-    public void setLNinfluencia(List<TmNivelInfluencia> LNinfluencia) {
+    public void setLNinfluencia(List<Tmnivelinfluencia> LNinfluencia) {
         this.LNinfluencia = LNinfluencia;
     }
 
     /**
      * @return the LEstado
      */
-    public List<TmEstado> getLEstado() {
+    public List<Tmestado> getLEstado() {
         return LEstado;
     }
 
     /**
      * @param LEstado the LEstado to set
      */
-    public void setLEstado(List<TmEstado> LEstado) {
+    public void setLEstado(List<Tmestado> LEstado) {
         this.LEstado = LEstado;
     }
 

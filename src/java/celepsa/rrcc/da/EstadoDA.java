@@ -5,8 +5,8 @@
  */
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.eh.HibernateUtil;
-import celepsa.rrcc.eh.TmEstado;
+import celepsa.rrcc.web.util.HibernateUtil;
+import celepsa.rrcc.eh.Tmestado;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,12 +23,12 @@ public class EstadoDA {
         this.session = HibernateUtil.getSessionFactory().getCurrentSession();
     }
 
-    public List<TmEstado> listarEstado() throws Exception {
-        List<TmEstado> Testado = null;
+    public List<Tmestado> listarEstado() throws Exception {
+        List<Tmestado> Testado = null;
         try {
             org.hibernate.Transaction tx = session.beginTransaction();
-            Query q = session.createQuery("From TmEstado as Tmestado");
-            Testado = (List<TmEstado>) q.list();
+            Query q = session.createQuery("From Tmestado as Tmestado");
+            Testado = (List<Tmestado>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
         }

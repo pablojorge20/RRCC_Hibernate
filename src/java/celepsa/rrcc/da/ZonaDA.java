@@ -6,13 +6,8 @@
 
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.bd.ConexionBD;
-import celepsa.rrcc.be.ZonaBE;
-import celepsa.rrcc.eh.HibernateUtil;
-import celepsa.rrcc.eh.TmZona;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import celepsa.rrcc.web.util.HibernateUtil;
+import celepsa.rrcc.eh.Tmzona;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -27,13 +22,13 @@ public class ZonaDA {
             this.session =HibernateUtil.getSessionFactory().getCurrentSession();
       }
         
-    public List<TmZona> listarZona() throws Exception{
-        List<TmZona> TZona = null;
+    public List<Tmzona> listarZona() throws Exception{
+        List<Tmzona> TZona = null;
         try
             {
                 org.hibernate.Transaction  tx =session.beginTransaction();
-                Query q =session.createQuery("From TmZona as tzona");
-                TZona=(List<TmZona>) q.list();           
+                Query q =session.createQuery("From Tmzona as tzona");
+                TZona=(List<Tmzona>) q.list();           
             } catch (Exception e){
                 e.printStackTrace();
             }

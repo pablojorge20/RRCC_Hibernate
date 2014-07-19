@@ -6,13 +6,8 @@
 package celepsa.rrcc.da;
 
 import celepsa.rrcc.bd.ConexionBD;
-import celepsa.rrcc.be.DocumentoBE;
-import celepsa.rrcc.be.EstadoBE;
-import celepsa.rrcc.eh.TmZona;
+import celepsa.rrcc.eh.Tmzona;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -25,7 +20,7 @@ public class ClimaDA {
     private Integer SumInfxDoc;
     private Integer SumPerDoc;
 
-    public int CriticidadZona(TmZona objSistema) throws Exception {
+    public int CriticidadZona(Tmzona objSistema) throws Exception {
 
         ConexionBD objConexion = null;
         try {
@@ -62,7 +57,7 @@ public class ClimaDA {
         }
     }
 
-    public int InfluenciaPersonas(TmZona objSistema) throws Exception {
+    public int InfluenciaPersonas(Tmzona objSistema) throws Exception {
 
         ConexionBD objConexion = null;
         try {
@@ -94,7 +89,7 @@ public class ClimaDA {
         }
     }
 
-    public int InfluenciaPersonasDocumento(TmZona objSistema) throws Exception {
+    public int InfluenciaPersonasDocumento(Tmzona objSistema) throws Exception {
 
         ConexionBD objConexion = null;
         try {

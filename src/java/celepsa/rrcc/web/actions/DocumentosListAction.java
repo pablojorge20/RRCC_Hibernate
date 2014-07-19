@@ -9,9 +9,8 @@ package celepsa.rrcc.web.actions;
 import celepsa.rrcc.be.CriticidadBE;
 import celepsa.rrcc.be.DocumentoBE;
 import celepsa.rrcc.bl.DocumentoBL;
-import celepsa.rrcc.web.util.Messenger;
+import celepsa.rrcc.eh.Tmdocumento;
 import com.opensymphony.xwork2.Preparable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ import java.util.List;
  */
 public class DocumentosListAction extends BaseAction implements Preparable{
 
-   private DocumentoBE documento;
+   private Tmdocumento documento;
     private List<DocumentoBE> documentos;
     private String textobuscado;
     private List<CriticidadBE> LCriticidad;
@@ -115,14 +114,14 @@ public class DocumentosListAction extends BaseAction implements Preparable{
     /**
      * @return the documento
      */
-    public DocumentoBE getDocumento() {
+    public Tmdocumento getDocumento() {
         return documento;
     }
 
     /**
      * @param documento the documento to set
      */
-    public void setDocumento(DocumentoBE documento) {
+    public void setDocumento(Tmdocumento documento) {
         this.documento = documento;
     }
 

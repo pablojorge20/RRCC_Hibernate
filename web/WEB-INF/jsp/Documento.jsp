@@ -37,7 +37,7 @@
 	
 		
 		<form id="form_813135" class="appnitro"  method="post" action="">
-					<div class="form_description">
+		<div class="form_description">
 			 <br>&nbsp;&nbsp;<s:text name="Usted esta en :"/>
     <strong>
        Documentos
@@ -69,8 +69,8 @@
 	<s:select  list="LTipo"
                                    listKey="id"
                                    listValue="Descripcion"
-                                   name="documento.tipoDocumento.id"
-                                   value="%{documento.tipoDocumento.id}"
+                                   name="documento.tmTipoDocumentoid.id"
+                                   value="%{documento.tmTipoDocumentoid.id}"
                                  
                                    theme="simple"
                                    cssClass="texto"/>  
@@ -81,8 +81,8 @@
 	  <s:select  list="LRemitente"
                                    listKey="id"
                                    listValue="Nombre"
-                                   name="documento.stakeholder.id"
-                                   value="%{documento.stakeholder.id}"
+                                   name="documento.tmStakePersonaid.id"
+                                   value="%{documento.tmStakePersonaid.id}"
                                  
                                    theme="simple"
                                    cssClass="texto"/>  
@@ -105,8 +105,8 @@
 	  <s:select  list="LIngreso"
                                    listKey="id"
                                    listValue="Descripcion"
-                                   name="documento.ingreso.id"
-                                   value="%{documento.ingreso.id}"
+                                   name="documento.ingresoSalida"
+                                   value="%{documento.ingresoSalida}"
                                  
                                    theme="simple"
                                    cssClass="texto"/>  
@@ -117,8 +117,8 @@
 	  <s:select  list="LCriticidad"
                                    listKey="id"
                                    listValue="Descripcion"
-                                   name="documento.criticidad.id"
-                                   value="%{documento.criticidad.id}"
+                                   name="documento.criticidadid.id"
+                                   value="%{documento.criticidadid.id}"
                                  
                                    theme="simple"
                                    cssClass="texto"/>  
@@ -130,8 +130,8 @@
 	  <s:select  list="LEstado"
                                    listKey="id"
                                    listValue="Descripcion"
-                                   name="documento.estado.id"
-                                   value="%{documento.estado.id}"
+                                   name="documento.tmEstadoid.id"
+                                   value="%{documento.tmEstadoid.id}"
                                  
                                    theme="simple"
                                    cssClass="texto"/>  
@@ -161,8 +161,8 @@
   <s:select  list="LConvenio"
                                    listKey="id"
                                    listValue="Asunto"
-                                   name="documento.convenio.id"
-                                   value="%{documento.convenio.id}"
+                                   name="documento.refConvenio"
+                                   value="%{documento.refConvenio}"
                                  
                                    theme="simple"
                                    cssClass="texto"/>  
@@ -174,8 +174,8 @@
   <s:select  list="LPrograma"
                                    listKey="id"
                                    listValue="Asunto"
-                                   name="documento.programa.id"
-                                   value="%{documento.programa.id}"
+                                   name="documento.refPrograma"
+                                   value="%{documento.refPrograma}"
                                  
                                    theme="simple"
                                    cssClass="texto"/>  
@@ -186,8 +186,8 @@
 <s:select  list="LProyecto"
                                    listKey="id"
                                    listValue="Asunto"
-                                   name="documento.proyecto.id"
-                                   value="%{documento.proyecto.id}"
+                                   name="documento.refProyecto"
+                                   value="%{documento.refProyecto}"
                                  
                                    theme="simple"
                                    cssClass="texto"/>  
@@ -199,8 +199,8 @@
 <s:select  list="LDocumento"
                                    listKey="id"
                                    listValue="Asunto"
-                                   name="documento.documento.id"
-                                   value="%{documento.documento.id}"
+                                   name="documento.refDocumento"
+                                   value="%{documento.refDocumento}"
                                  
                                    theme="simple"
                                    cssClass="texto"/>  

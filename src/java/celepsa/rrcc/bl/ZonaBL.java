@@ -6,7 +6,7 @@
 
 package celepsa.rrcc.bl;
 import celepsa.rrcc.da.ZonaDA;
-import celepsa.rrcc.eh.TmZona;
+import celepsa.rrcc.eh.Tmzona;
 import java.util.List;
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
  * @author pmedina
  */
 public class ZonaBL {
-    public List<TmZona> ListarZona()  throws Exception {
+    public List<Tmzona> ListarZona()  throws Exception {
         ZonaDA objSistemaDA = new ZonaDA();
         return objSistemaDA.listarZona();
     }  

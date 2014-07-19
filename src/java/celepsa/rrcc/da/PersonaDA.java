@@ -11,8 +11,12 @@ import celepsa.rrcc.be.EstadoBE;
 import celepsa.rrcc.be.NivelInfluenciaBE;
 import celepsa.rrcc.be.TipoDocumentoIdentidadBE;
 import celepsa.rrcc.be.ZonaBE;
-import celepsa.rrcc.eh.HibernateUtil;
-import celepsa.rrcc.eh.TmStakePersona;
+import celepsa.rrcc.web.util.HibernateUtil;
+import celepsa.rrcc.eh.Tmestado;
+import celepsa.rrcc.eh.Tmnivelinfluencia;
+import celepsa.rrcc.eh.Tmstakepersona;
+import celepsa.rrcc.eh.Tmtdocumentoidentidad;
+import celepsa.rrcc.eh.Tmzona;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -142,7 +146,7 @@ public class PersonaDA {
          + "`tmNivelInfluencia_id`, `est`, `tmZona_id`, `tmEstado_id`) VALUES (?,?,?,?,?,?,?,?,?,0,?,?);";
 
          int cont = 1;*/
-        TmStakePersona persona = new TmStakePersona();
+        Tmstakepersona persona = new Tmstakepersona();
         try {
             /*objConexion = new ConexionBD();
              objConexion.open();
@@ -154,11 +158,11 @@ public class PersonaDA {
             persona.setAlias(objSistema.getAlias());
             persona.setIdentidad(objSistema.getIdentidad());
             persona.setNroDocumento(objSistema.getNroDocumento());
-            persona.setTmTdocumentoId(Integer.parseInt(objSistema.getTDoumentoIdentidad().getId()));
-            persona.setTmNivelInfluenciaId(Integer.parseInt(objSistema.getNInfluencia().getId()));
+            persona.setTmTDocumentoid( new Tmtdocumentoidentidad ( Integer.parseInt(objSistema.getTDoumentoIdentidad().getId())) );
+            persona.setTmNivelInfluenciaid( new Tmnivelinfluencia( Integer.parseInt(objSistema.getNInfluencia().getId())) );
             persona.setEst(0);
-            persona.setTmZonaId(Integer.parseInt(objSistema.getZona().getId()));
-            persona.setTmEstadoId(Integer.parseInt(objSistema.getEstado().getId()));
+            persona.setTmZonaid(new Tmzona( Integer.parseInt(objSistema.getZona().getId())) );
+            persona.setTmEstadoid(new Tmestado (Integer.parseInt(objSistema.getEstado().getId())));
 
             org.hibernate.Transaction tx = session.beginTransaction();
             session.save(persona);

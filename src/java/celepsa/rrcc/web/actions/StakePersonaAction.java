@@ -12,10 +12,10 @@ import celepsa.rrcc.bl.NivelInfluenciaBL;
 import celepsa.rrcc.bl.PersonaBL;
 import celepsa.rrcc.bl.TipoDocumentoIdentidadBL;
 import celepsa.rrcc.bl.ZonaBL;
-import celepsa.rrcc.eh.TmEstado;
-import celepsa.rrcc.eh.TmNivelInfluencia;
-import celepsa.rrcc.eh.TmTdocumentoIdentidad;
-import celepsa.rrcc.eh.TmZona;
+import celepsa.rrcc.eh.Tmestado;
+import celepsa.rrcc.eh.Tmnivelinfluencia;
+import celepsa.rrcc.eh.Tmtdocumentoidentidad;
+import celepsa.rrcc.eh.Tmzona;
 import com.opensymphony.xwork2.Preparable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,10 +29,10 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
  */
 public class StakePersonaAction extends BaseAction implements Preparable{
     private PersonaBE Persona;
-    private List<TmTdocumentoIdentidad> LTipo;
-    private List<TmNivelInfluencia> LNinfluencia;
-    private List<TmZona> LZona;
-    private List<TmEstado> LEstado;
+    private List<Tmtdocumentoidentidad> LTipo;
+    private List<Tmnivelinfluencia> LNinfluencia;
+    private List<Tmzona> LZona;
+    private List<Tmestado> LEstado;
     
  @Override
     public void prepare() throws Exception {
@@ -149,14 +149,14 @@ public class StakePersonaAction extends BaseAction implements Preparable{
     /**
      * @return the LTipo
      */
-    public List<TmTdocumentoIdentidad> getLTipo() {
+    public List<Tmtdocumentoidentidad> getLTipo() {
         return LTipo;
     }
 
     /**
      * @param LTipo the LTipo to set
      */
-    public void setLTipo(List<TmTdocumentoIdentidad> LTipo) {
+    public void setLTipo(List<Tmtdocumentoidentidad> LTipo) {
         this.LTipo = LTipo;
     }
 
@@ -165,14 +165,14 @@ public class StakePersonaAction extends BaseAction implements Preparable{
     /**
      * @return the LZona
      */
-    public List<TmZona> getLZona() {
+    public List<Tmzona> getLZona() {
         return LZona;
     }
 
     /**
      * @param LZona the LZona to set
      */
-    public void setLZona(List<TmZona> LZona) {
+    public void setLZona(List<Tmzona> LZona) {
         this.LZona = LZona;
     }
 
@@ -180,28 +180,28 @@ public class StakePersonaAction extends BaseAction implements Preparable{
     /**
      * @return the LNinfluencia
      */
-    public List<TmNivelInfluencia> getLNinfluencia() {
+    public List<Tmnivelinfluencia> getLNinfluencia() {
         return LNinfluencia;
     }
 
     /**
      * @param LNinfluencia the LNinfluencia to set
      */
-    public void setLNinfluencia(List<TmNivelInfluencia> LNinfluencia) {
+    public void setLNinfluencia(List<Tmnivelinfluencia> LNinfluencia) {
         this.LNinfluencia = LNinfluencia;
     }
 
     /**
      * @return the LEstado
      */
-    public List<TmEstado> getLEstado() {
+    public List<Tmestado> getLEstado() {
         return LEstado;
     }
 
     /**
      * @param LEstado the LEstado to set
      */
-    public void setLEstado(List<TmEstado> LEstado) {
+    public void setLEstado(List<Tmestado> LEstado) {
         this.LEstado = LEstado;
     }
 

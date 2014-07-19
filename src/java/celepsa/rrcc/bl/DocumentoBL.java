@@ -10,8 +10,7 @@ import celepsa.rrcc.be.AdjuntoBE;
 import celepsa.rrcc.be.DocumentoBE;
 import celepsa.rrcc.da.ConsultasVariasDA;
 import celepsa.rrcc.da.DocumentoDA;
-import celepsa.rrcc.eh.TmDocumento;
-import java.text.SimpleDateFormat;
+import celepsa.rrcc.eh.Tmdocumento;
 import java.util.List;
 
 
@@ -20,25 +19,49 @@ import java.util.List;
  * @author pmedina
  */
 public class DocumentoBL {
-      public void registrarDocumento(DocumentoBE objSistema) throws Exception 
-    {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        //Date fRegistro =
+      public int registrarDocumento(Tmdocumento documento) throws Exception 
+    { 
+        
+           if ( documento.getRefConvenio() == null ) {
+                documento.setRefConvenio(java.sql.Types.NULL);
+            }
+            if (documento.getRefPrograma() == null ) {
+               documento.setRefPrograma(java.sql.Types.NULL);
+            } 
+            if (documento.getRefProyecto() != null ) {
+                documento.setRefProyecto(java.sql.Types.NULL);
+            } 
+            if (documento.getRefDocumento() != null ) {
+                 documento.setRefDocumento(java.sql.Types.NULL);
+            } 
+             documento.setEliminado('0');
+             
         DocumentoDA objSistemaDA = new DocumentoDA();
-        objSistemaDA.registrarDocumento(objSistema);
+        return objSistemaDA.registrarDocumento(documento);
     }  
       
-      public void actualizarDocumento (DocumentoBE objSistema) throws Exception 
+      public void actualizarDocumento (Tmdocumento documento) throws Exception 
     {
        
+            if ( documento.getRefConvenio() == null ) {
+                documento.setRefConvenio(java.sql.Types.NULL);
+            }
+            if (documento.getRefPrograma() == null ) {
+               documento.setRefPrograma(java.sql.Types.NULL);
+            } 
+            if (documento.getRefProyecto() != null ) {
+                documento.setRefProyecto(java.sql.Types.NULL);
+            } 
+            if (documento.getRefDocumento() != null ) {
+                 documento.setRefDocumento(java.sql.Types.NULL);
+            } 
                 DocumentoDA objSistemaDA = new DocumentoDA();           
-                objSistemaDA.ActualizarDocumento(objSistema);
+                objSistemaDA.ActualizarDocumento(documento);
      
     }
       
-            public List<DocumentoBE> listarDocumento(Integer tdoc) throws Exception 
-    {
-           
+    public List<Tmdocumento> listarDocumento(Integer tdoc) throws Exception 
+    { 
         DocumentoDA objSistemaDA = new DocumentoDA();
         return objSistemaDA.listarDocumentos(tdoc);
     }  
@@ -56,7 +79,7 @@ public List<DocumentoBE> buscarDocumentos(String AsuntoBuscado) throws Exception
         return objSistemaDA.buscarDocumentosVarios(AsuntoBuscado);
      
     }
- public boolean eliminarDocumento(TmDocumento objDocumento) throws Exception{
+ public boolean eliminarDocumento(Tmdocumento objDocumento) throws Exception{
         boolean a,b=false;
         ConsultasVariasDA objconsulta = new ConsultasVariasDA();
         DocumentoDA objDocumentoDA = new DocumentoDA();
@@ -78,12 +101,10 @@ public List<DocumentoBE> buscarDocumentos(String AsuntoBuscado) throws Exception
           return b;
         
     }    
-    public TmDocumento obtenerDocumento(DocumentoBE objDocumento) throws Exception
+    public Tmdocumento obtenerDocumento(Tmdocumento objDocumento) throws Exception
     {
         DocumentoDA objDocumentoDA = new DocumentoDA();
-        TmDocumento obj = new TmDocumento();
-        obj.setId(Integer.parseInt(objDocumento.getId()));
-        return objDocumentoDA.obtenerDocumento( obj );
+        return objDocumentoDA.obtenerDocumento( objDocumento );
     }  
     
     public void registrarAdjunto(AdjuntoBE objSistema, DocumentoBE objDocumento) throws Exception 

@@ -5,8 +5,8 @@
  */
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.eh.HibernateUtil;
-import celepsa.rrcc.eh.TmNivelInfluencia;
+import celepsa.rrcc.web.util.HibernateUtil;
+import celepsa.rrcc.eh.Tmnivelinfluencia;
 
 import java.util.List;
 import org.hibernate.Query;
@@ -24,12 +24,12 @@ public class NivelInfluenciaDA {
         this.session = HibernateUtil.getSessionFactory().getCurrentSession();
     }
 
-    public List<TmNivelInfluencia> listarNivelInfluencia() throws Exception {
-        List<TmNivelInfluencia> TInfluencia = null;
+    public List<Tmnivelinfluencia> listarNivelInfluencia() throws Exception {
+        List<Tmnivelinfluencia> TInfluencia = null;
         try {
             org.hibernate.Transaction tx = session.beginTransaction();
-            Query q = session.createQuery("From TmNivelInfluencia as TInfluencia");
-            TInfluencia = (List<TmNivelInfluencia>) q.list();
+            Query q = session.createQuery("From Tmnivelinfluencia  ");
+            TInfluencia = (List<Tmnivelinfluencia>) q.list();
         } catch (Exception e) {
             e.printStackTrace();
         }

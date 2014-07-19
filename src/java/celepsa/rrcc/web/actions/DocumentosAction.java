@@ -6,15 +6,15 @@
 
 package celepsa.rrcc.web.actions;
 import celepsa.rrcc.be.CriticidadBE;
-import celepsa.rrcc.be.DocumentoBE;
 import celepsa.rrcc.be.IngrsoSalidaBE;
-import celepsa.rrcc.be.StakeholderBE;
 import celepsa.rrcc.bl.DocumentoBL;
 import celepsa.rrcc.bl.EstadoBL;
 import celepsa.rrcc.bl.StakeholderBL;
 import celepsa.rrcc.bl.TipoDocumentoBL;
-import celepsa.rrcc.eh.TmEstado;
-import celepsa.rrcc.eh.TmTipoDocumento;
+import celepsa.rrcc.eh.Tmdocumento;
+import celepsa.rrcc.eh.Tmestado;
+import celepsa.rrcc.eh.Tmstakepersona;
+import celepsa.rrcc.eh.Tmtipodocumento;
 import com.opensymphony.xwork2.Preparable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,16 +31,17 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 
 public class DocumentosAction extends BaseAction implements Preparable {
-    private DocumentoBE Documento;
-    private List<TmTipoDocumento> LTipo;
-    private List<StakeholderBE> LRemitente;
+    private Tmdocumento Documento;
+    private List<Tmtipodocumento> LTipo;
+    private List<Tmstakepersona> LRemitente;
     private List<CriticidadBE> LCriticidad;
-    private List<DocumentoBE> LConvenio;
-    private List<DocumentoBE> LPrograma;
-    private List<DocumentoBE> LDocumento;
-    private List<DocumentoBE> LProyecto;
+    private List<Tmdocumento> LConvenio;
+    private List<Tmdocumento> LPrograma;
+    private List<Tmdocumento> LDocumento;
+    private List<Tmdocumento> LProyecto;
     private List<IngrsoSalidaBE> LIngreso;
-    private List<TmEstado> LEstado;
+    private List<Tmestado> LEstado;
+    
     @Override
     public void prepare() throws Exception {
         super.prepare();
@@ -51,7 +52,7 @@ public class DocumentosAction extends BaseAction implements Preparable {
         //pmedina-agrgado
        Date date = new Date();
        DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-       DocumentoBE fdocumento= new DocumentoBE();
+       Tmdocumento fdocumento= new Tmdocumento();
        fdocumento.setFechaCaducidad(fecha.format(date));
        fdocumento.setFechaRegistro(fecha.format(date));
        fdocumento.setFechaRecepcion(fecha.format(date));
@@ -102,16 +103,15 @@ public class DocumentosAction extends BaseAction implements Preparable {
     @SkipValidation
     public String obtenerDocumentos() {
        
-                  try 
-        {
-            if (getDocumento() == null || getDocumento().getId().isEmpty() )
+       try{
+            if (getDocumento() == null || getDocumento().getId() == null)
             {
-                setDocumento(new DocumentoBE());
+                setDocumento(new Tmdocumento());
             }
             else
             {
                 DocumentoBL objDocumentoBL = new DocumentoBL(); 
-                setDocumento(objDocumentoBL.obtenerDocumento(getDocumento()));
+                setDocumento( objDocumentoBL.obtenerDocumento( getDocumento() ) );
                 
             }
             return INPUT;
@@ -141,15 +141,19 @@ public class DocumentosAction extends BaseAction implements Preparable {
                 Documento.setFechaCaducidad(this.formatFecha(Documento.getFechaCaducidad().substring(0, 10)));
                 //Date reportDate =fT.parse(Recepcion2);
                 //String Recepcion=fT.format(reportDate);
-                
-                if (getDocumento().getId() != null &&
-                    !Documento.getId().isEmpty()){
-                    objSistemaBL.actualizarDocumento(getDocumento());
+               // Tmdfileconflictividad.tmfileconflictividad
+               // Tmfileconflictividad
+                        
+                if (getDocumento().getId() != null &&  Documento.getId()!=null ){
+                    objSistemaBL.actualizarDocumento( getDocumento());
                     addActionMessage("El Documento se actualizo correctamente");
                 }
                 else{
-                    objSistemaBL.registrarDocumento(getDocumento()); 
-                    addActionMessage("El Documento se grabo correctamente");
+                    int i = objSistemaBL.registrarDocumento( getDocumento() ); 
+                    if( i > 0 )
+                        addActionMessage("El Documento se grabo correctamente");
+                    else
+                        addActionMessage("No se pudo grabar el documento");
                 }
             }
             else{
@@ -161,8 +165,6 @@ public class DocumentosAction extends BaseAction implements Preparable {
         {
             procesarError(e);
         }
-      
-        
         return INPUT;
      
     }
@@ -182,14 +184,14 @@ public class DocumentosAction extends BaseAction implements Preparable {
     /**
      * @return the Documento
      */
-    public DocumentoBE getDocumento() {
+    public Tmdocumento getDocumento() {
         return Documento;
     }
 
     /**
      * @param Documento the Documento to set
      */
-    public void setDocumento(DocumentoBE Documento) {
+    public void setDocumento(Tmdocumento Documento) {
         this.Documento = Documento;
     }
 
@@ -198,14 +200,14 @@ public class DocumentosAction extends BaseAction implements Preparable {
     /**
      * @return the LRemitente
      */
-    public List<StakeholderBE> getLRemitente() {
+    public List<Tmstakepersona> getLRemitente() {
         return LRemitente;
     }
 
     /**
      * @param LRemitente the LRemitente to set
      */
-    public void setLRemitente(List<StakeholderBE> LRemitente) {
+    public void setLRemitente(List<Tmstakepersona> LRemitente) {
         this.LRemitente = LRemitente;
     }
 
@@ -226,56 +228,56 @@ public class DocumentosAction extends BaseAction implements Preparable {
     /**
      * @return the LConvenio
      */
-    public List<DocumentoBE> getLConvenio() {
+    public List<Tmdocumento> getLConvenio() {
         return LConvenio;
     }
 
     /**
      * @param LConvenio the LConvenio to set
      */
-    public void setLConvenio(List<DocumentoBE> LConvenio) {
+    public void setLConvenio(List<Tmdocumento> LConvenio) {
         this.LConvenio = LConvenio;
     }
 
     /**
      * @return the LPrograma
      */
-    public List<DocumentoBE> getLPrograma() {
+    public List<Tmdocumento> getLPrograma() {
         return LPrograma;
     }
 
     /**
      * @param LPrograma the LPrograma to set
      */
-    public void setLPrograma(List<DocumentoBE> LPrograma) {
+    public void setLPrograma(List<Tmdocumento> LPrograma) {
         this.LPrograma = LPrograma;
     }
 
     /**
      * @return the LDocumento
      */
-    public List<DocumentoBE> getLDocumento() {
+    public List<Tmdocumento> getLDocumento() {
         return LDocumento;
     }
 
     /**
      * @param LDocumento the LDocumento to set
      */
-    public void setLDocumento(List<DocumentoBE> LDocumento) {
+    public void setLDocumento(List<Tmdocumento> LDocumento) {
         this.LDocumento = LDocumento;
     }
 
     /**
      * @return the LProyecto
      */
-    public List<DocumentoBE> getLProyecto() {
+    public List<Tmdocumento> getLProyecto() {
         return LProyecto;
     }
 
     /**
      * @param LProyecto the LProyecto to set
      */
-    public void setLProyecto(List<DocumentoBE> LProyecto) {
+    public void setLProyecto(List<Tmdocumento> LProyecto) {
         this.LProyecto = LProyecto;
     }
 
@@ -298,28 +300,28 @@ public class DocumentosAction extends BaseAction implements Preparable {
     /**
      * @return the LTipo
      */
-    public List<TmTipoDocumento> getLTipo() {
+    public List<Tmtipodocumento> getLTipo() {
         return LTipo;
     }
 
     /**
      * @param LTipo the LTipo to set
      */
-    public void setLTipo(List<TmTipoDocumento> LTipo) {
+    public void setLTipo(List<Tmtipodocumento> LTipo) {
         this.LTipo = LTipo;
     }
 
     /**
      * @return the LEstado
      */
-    public List<TmEstado> getLEstado() {
+    public List<Tmestado> getLEstado() {
         return LEstado;
     }
 
     /**
      * @param LEstado the LEstado to set
      */
-    public void setLEstado(List<TmEstado> LEstado) {
+    public void setLEstado(List<Tmestado> LEstado) {
         this.LEstado = LEstado;
     }
     

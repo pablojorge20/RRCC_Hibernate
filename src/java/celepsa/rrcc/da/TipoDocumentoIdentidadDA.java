@@ -6,8 +6,8 @@
 
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.eh.HibernateUtil;
-import celepsa.rrcc.eh.TmTdocumentoIdentidad;
+import celepsa.rrcc.web.util.HibernateUtil;
+import celepsa.rrcc.eh.Tmtdocumentoidentidad;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,14 +23,14 @@ public class TipoDocumentoIdentidadDA {
             this.session =HibernateUtil.getSessionFactory().getCurrentSession();
     }
         
-public List<TmTdocumentoIdentidad> ListarTipoDocumento() throws Exception{
-    List<TmTdocumentoIdentidad> TDocumento = null;
+public List<Tmtdocumentoidentidad> ListarTipoDocumento() throws Exception{
+    List<Tmtdocumentoidentidad> TDocumento = null;
     try
         {
                 org.hibernate.Transaction  tx =session.beginTransaction();
-                Query q =session.createQuery("From TmTdocumentoIdentidad as tipoDocumento");
+                Query q =session.createQuery("From Tmtdocumentoidentidad as tipoDocumento");
                 
-                TDocumento=(List<TmTdocumentoIdentidad>) q.list();
+                TDocumento=(List<Tmtdocumentoidentidad>) q.list();
                 
                 
         } catch (Exception e){

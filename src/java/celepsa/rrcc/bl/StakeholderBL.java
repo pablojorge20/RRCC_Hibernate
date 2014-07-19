@@ -10,6 +10,7 @@ package celepsa.rrcc.bl;
 import celepsa.rrcc.be.DocumentoBE;
 import celepsa.rrcc.be.StakeholderBE;
 import celepsa.rrcc.da.StakeholderDA;
+import celepsa.rrcc.eh.Tmstakepersona;
 import java.util.List;
 
 /**
@@ -17,26 +18,26 @@ import java.util.List;
  * @author pmedina
  */
 public class StakeholderBL {
-public List<StakeholderBE> listarStakeholder(Integer pAg) throws Exception 
+public List<Tmstakepersona> listarStakeholder(Integer pAg) throws Exception 
     {
            
         StakeholderDA objSistemaDA = new StakeholderDA();
         return objSistemaDA.listarStakeholder(pAg);
     }  
 
-public List<StakeholderBE> listarStakeholderDoc(String pAg) throws Exception 
+public List<Tmstakepersona> listarStakeholderDoc(String pAg) throws Exception 
     {
            
         StakeholderDA objSistemaDA = new StakeholderDA();
         return objSistemaDA.listarStakeholderDoc(pAg);
     } 
 
-      public void registrarStakeholderDocumento(StakeholderBE objSistema1, DocumentoBE objSistema2) throws Exception 
+      public void registrarStakeholderDocumento(Tmstakepersona objSistema1, DocumentoBE objSistema2) throws Exception 
     {
         StakeholderDA objSistemaDA = new StakeholderDA();
         objSistemaDA.registrarStakeholderDocumento(objSistema1, objSistema2);
     }  
- public void eliminarStakeholder(StakeholderBE objStakeholder) throws Exception
+ public void eliminarStakeholder(Tmstakepersona objStakeholder) throws Exception
     {
         //public void eliminarMsgCorreo(MsgCorreoBE objMsgCorreo, UsuarioBE objUsuario) throws Exception
      //   PoliticasBL objPoliticasBL = new PoliticasBL();
@@ -65,7 +66,7 @@ public List<StakeholderBE> listarStakeholderDoc(String pAg) throws Exception
         
     }  
  
- public void eliminarStakeholderDocumento(StakeholderBE objStakeholder, DocumentoBE objDocumento) throws Exception
+ public void eliminarStakeholderDocumento(Tmstakepersona objStakeholder, DocumentoBE objDocumento) throws Exception
     {
         StakeholderDA objStakeholderDA = new StakeholderDA();
             objStakeholderDA.eliminarDocumentoStakeholder(objStakeholder, objDocumento) ;

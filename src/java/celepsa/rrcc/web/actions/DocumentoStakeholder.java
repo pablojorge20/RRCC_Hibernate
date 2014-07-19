@@ -10,6 +10,7 @@ import celepsa.rrcc.be.DocumentoBE;
 import celepsa.rrcc.be.StakeholderBE;
 import celepsa.rrcc.bl.DocumentoBL;
 import celepsa.rrcc.bl.StakeholderBL;
+import celepsa.rrcc.eh.Tmstakepersona;
 import static com.opensymphony.xwork2.Action.INPUT;
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
@@ -19,10 +20,11 @@ import java.util.List;
  * @author pmedina
  */
 public class DocumentoStakeholder extends BaseAction implements Preparable{
-     private StakeholderBE stakeholder;
-    private List<StakeholderBE> stakeholders;
+    
+     private Tmstakepersona stakeholder;
+    private List<Tmstakepersona> stakeholders;
     private DocumentoBE Documento;
-    private List<StakeholderBE> LRemitente;
+    private List<Tmstakepersona> LRemitente;
      @Override
     public void prepare() throws Exception {
         super.prepare();
@@ -53,6 +55,7 @@ public class DocumentoStakeholder extends BaseAction implements Preparable{
         } 
         catch (Exception e) 
         {
+            e.printStackTrace();
             addActionError(e.getMessage());
             return INPUT;
         }
@@ -74,6 +77,7 @@ public class DocumentoStakeholder extends BaseAction implements Preparable{
         } 
         catch (Exception e) 
         {
+            e.printStackTrace();
             if (e.getMessage().startsWith("*"))
             {
                 addActionError(e.getMessage().substring(1));
@@ -103,6 +107,7 @@ public class DocumentoStakeholder extends BaseAction implements Preparable{
         } 
         catch (Exception e) 
         {
+            e.printStackTrace();
             if (e.getMessage().startsWith("*"))
             {
                 addActionError(e.getMessage().substring(1));
@@ -124,8 +129,7 @@ public class DocumentoStakeholder extends BaseAction implements Preparable{
             StakeholderBL objSistemaBL = new StakeholderBL();
             StakeholderBL objRemitenteBL =  new StakeholderBL() ;
            // Documento = objSistemaBL.obtenerDocumento(Documento);
-            if (Documento.getId().isEmpty() &&
-                !stakeholder.getId().isEmpty())
+            if (Documento.getId().isEmpty() &&    stakeholder.getId() != null )
             {
            addActionMessage("Seleccione  correctamente");
             }
@@ -141,6 +145,7 @@ public class DocumentoStakeholder extends BaseAction implements Preparable{
         }
         catch(Exception e)        
         {
+            e.printStackTrace();
             procesarError(e);
         }
       
@@ -155,28 +160,28 @@ public class DocumentoStakeholder extends BaseAction implements Preparable{
     /**
      * @return the stakeholder
      */
-    public StakeholderBE getStakeholder() {
+    public Tmstakepersona getStakeholder() {
         return stakeholder;
     }
 
     /**
      * @param stakeholder the stakeholder to set
      */
-    public void setStakeholder(StakeholderBE stakeholder) {
+    public void setStakeholder(Tmstakepersona stakeholder) {
         this.stakeholder = stakeholder;
     }
 
     /**
      * @return the stakeholders
      */
-    public List<StakeholderBE> getStakeholders() {
+    public List<Tmstakepersona> getStakeholders() {
         return stakeholders;
     }
 
     /**
      * @param stakeholders the stakeholders to set
      */
-    public void setStakeholders(List<StakeholderBE> stakeholders) {
+    public void setStakeholders(List<Tmstakepersona> stakeholders) {
         this.stakeholders = stakeholders;
     }
 
@@ -197,14 +202,14 @@ public class DocumentoStakeholder extends BaseAction implements Preparable{
     /**
      * @return the LRemitente
      */
-    public List<StakeholderBE> getLRemitente() {
+    public List<Tmstakepersona> getLRemitente() {
         return LRemitente;
     }
 
     /**
      * @param LRemitente the LRemitente to set
      */
-    public void setLRemitente(List<StakeholderBE> LRemitente) {
+    public void setLRemitente(List<Tmstakepersona> LRemitente) {
         this.LRemitente = LRemitente;
     }
 }

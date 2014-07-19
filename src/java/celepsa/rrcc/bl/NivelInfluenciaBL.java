@@ -8,7 +8,7 @@ package celepsa.rrcc.bl;
 
 
 import celepsa.rrcc.da.NivelInfluenciaDA;
-import celepsa.rrcc.eh.TmNivelInfluencia;
+import celepsa.rrcc.eh.Tmnivelinfluencia;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
  * @author pmedina
  */
 public class NivelInfluenciaBL {
-    public List<TmNivelInfluencia> ListarNivelInfluencia()  throws Exception
+    public List<Tmnivelinfluencia> ListarNivelInfluencia()  throws Exception
     {
         NivelInfluenciaDA objSistemaDA = new NivelInfluenciaDA();
         return objSistemaDA.listarNivelInfluencia();

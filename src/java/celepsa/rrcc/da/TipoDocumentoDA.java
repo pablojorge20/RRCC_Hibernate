@@ -6,13 +6,8 @@
 
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.bd.ConexionBD;
-import celepsa.rrcc.be.TipoDocumentoBE;
-import celepsa.rrcc.eh.HibernateUtil;
-import celepsa.rrcc.eh.TmTipoDocumento;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import celepsa.rrcc.web.util.HibernateUtil;
+import celepsa.rrcc.eh.Tmtipodocumento;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -30,15 +25,15 @@ public class TipoDocumentoDA {
       
     }
         
-public List<TmTipoDocumento> ListarTipoDocumento() throws HibernateException
+public List<Tmtipodocumento> ListarTipoDocumento() throws HibernateException
 {
-    List<TmTipoDocumento> TDocumento = null;
+    List<Tmtipodocumento> TDocumento = null;
     try
         {
                 org.hibernate.Transaction  tx =session.beginTransaction();
-                Query q =session.createQuery("From TmTipoDocumento as tipoDocumento");
+                Query q =session.createQuery("From Tmtipodocumento as tipoDocumento");
                 
-                TDocumento=(List<TmTipoDocumento>) q.list();
+                TDocumento=(List<Tmtipodocumento>) q.list();
                 
                 
         } catch (HibernateException e){

@@ -6,21 +6,31 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/RRHH</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">123456</property>
+    <property name="hibernate.connection.password">mysql</property>
     <property name="hibernate.show_sql">false</property>        
     <property name="hibernate.current_session_context_class">thread</property>
-    <mapping resource="celepsa/rrcc/eh/TmNivelInfluencia.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/TmZona.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/Criticidad.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/TmStakeAgrupacion.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/AgrupacionDocumento.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/TmStakePersona.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/PersonaDocumento.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/TmClima.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/TmTdocumentoIdentidad.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/TmAdjunto.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/TmTipoDocumento.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/TmEstado.hbm.xml"/>
-    <mapping resource="celepsa/rrcc/eh/TmDocumento.hbm.xml"/>
+    
+     
+    <mapping class="celepsa.rrcc.eh.Criticidad"/>
+    <mapping class="celepsa.rrcc.eh.Intercomentario"/>
+    <mapping class="celepsa.rrcc.eh.Personadocumento"/>
+    <mapping class="celepsa.rrcc.eh.Tmadjunto"/>
+    <mapping class="celepsa.rrcc.eh.Tmclima"/>
+    <mapping class="celepsa.rrcc.eh.Tmdfileconflictividad"/>
+    <mapping class="celepsa.rrcc.eh.Tmdocumento"/>
+    <mapping class="celepsa.rrcc.eh.Tmestado"/>
+    <mapping class="celepsa.rrcc.eh.Tmevento"/>
+    <mapping class="celepsa.rrcc.eh.Tmfileconflictividad"/>    
+    <mapping class="celepsa.rrcc.eh.Tminterpretacion"/>
+    <mapping class="celepsa.rrcc.eh.Tmnivelinfluencia"/>
+    <mapping class="celepsa.rrcc.eh.Tmnotificacion"/>
+    <mapping class="celepsa.rrcc.eh.Tmproyecto"/>
+    <mapping class="celepsa.rrcc.eh.Tmstakeagrupacion"/>
+    <mapping class="celepsa.rrcc.eh.Tmstakepersona"/>
+    <mapping class="celepsa.rrcc.eh.Tmtdocumentoidentidad"/>
+    <mapping class="celepsa.rrcc.eh.Tmtipodocumento"/>
+    <mapping class="celepsa.rrcc.eh.Tmusuario"/>
+    <mapping class="celepsa.rrcc.eh.Tmzona"/>
+    
   </session-factory>
 </hibernate-configuration>

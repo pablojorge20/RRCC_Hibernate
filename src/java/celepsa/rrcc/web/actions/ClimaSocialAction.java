@@ -9,8 +9,8 @@ package celepsa.rrcc.web.actions;
 
 import celepsa.rrcc.bl.ClimaBL;
 import celepsa.rrcc.bl.ZonaBL;
-import celepsa.rrcc.eh.TmClima;
-import celepsa.rrcc.eh.TmZona;
+import celepsa.rrcc.eh.Tmclima;
+import celepsa.rrcc.eh.Tmzona;
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -21,9 +21,9 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
  */
 public class ClimaSocialAction extends BaseAction implements Preparable{
     
-    private List<TmZona> LZona;
-    private TmClima Clima;
-    private List<TmClima> LClima;
+    private List<Tmzona> LZona;
+    private Tmclima Clima;
+    private List<Tmclima> LClima;
     
  @Override
     public void prepare() throws Exception {
@@ -42,7 +42,7 @@ public class ClimaSocialAction extends BaseAction implements Preparable{
      try 
         {
                 ClimaBL objClimaBL = new ClimaBL(); 
-                setLClima(objClimaBL.GenerarClima(getLZona()));
+                setLClima( objClimaBL.GenerarClima( getLZona() ));
             return INPUT;
         }
         catch(Exception e)
@@ -61,42 +61,42 @@ public class ClimaSocialAction extends BaseAction implements Preparable{
     /**
      * @return the LZona
      */
-    public List<TmZona> getLZona() {
+    public List<Tmzona> getLZona() {
         return LZona;
     }
 
     /**
      * @param LZona the LZona to set
      */
-    public void setLZona(List<TmZona> LZona) {
+    public void setLZona(List<Tmzona> LZona) {
         this.LZona = LZona;
     }
 
     /**
      * @return the Clima
      */
-    public TmClima getClima() {
+    public Tmclima getClima() {
         return Clima;
     }
 
     /**
      * @param Clima the Clima to set
      */
-    public void setClima(TmClima Clima) {
+    public void setClima(Tmclima Clima) {
         this.Clima = Clima;
     }
 
     /**
      * @return the LClima
      */
-    public List<TmClima> getLClima() {
+    public List<Tmclima> getLClima() {
         return LClima;
     }
 
     /**
      * @param LClima the LClima to set
      */
-    public void setLClima(List<TmClima> LClima) {
+    public void setLClima(List<Tmclima> LClima) {
         this.LClima = LClima;
     }
 

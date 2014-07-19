@@ -11,14 +11,18 @@ import celepsa.rrcc.be.EstadoBE;
 import celepsa.rrcc.be.NivelInfluenciaBE;
 import celepsa.rrcc.be.TipoDocumentoIdentidadBE;
 import celepsa.rrcc.be.ZonaBE;
-import celepsa.rrcc.eh.HibernateUtil;
-import celepsa.rrcc.eh.TmEstado;
-import celepsa.rrcc.eh.TmStakeAgrupacion;
+import celepsa.rrcc.web.util.HibernateUtil;
+import celepsa.rrcc.eh.Tmestado;
+import celepsa.rrcc.eh.Tmnivelinfluencia;
+import celepsa.rrcc.eh.Tmstakeagrupacion;
+import celepsa.rrcc.eh.Tmzona;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 /**
@@ -26,13 +30,16 @@ import org.hibernate.Session;
  * @author pmedina
  */
 public class AgrupacionDA {
-
+    private static final Logger logger = Logger.getLogger(AgrupacionDA.class );
       Session session = null;
 
     public AgrupacionDA() {
         this.session = HibernateUtil.getSessionFactory().getCurrentSession();
     }
     public List<AgrupacionBE> listarAgrupacion(Integer tdoc) throws Exception {
+        
+           logger.debug("listarAgrupacion");
+           
         ConexionBD objConexion = null;
         try {
             objConexion = new ConexionBD();
@@ -68,7 +75,7 @@ public class AgrupacionDA {
 
     private AgrupacionBE populateAgrupacionVarios(ResultSet resultado) throws SQLException {
         AgrupacionBE objAgrupacionBE = new AgrupacionBE();
-
+   logger.debug("populateAgrupacionVarios");
         objAgrupacionBE.setId(resultado.getString("id"));
 
         objAgrupacionBE.setNombre(resultado.getString("nombre"));
@@ -77,7 +84,10 @@ public class AgrupacionDA {
     }
 
     public AgrupacionBE obtenerAgrupacion(AgrupacionBE objAgrupacion) throws Exception {
+      
+        logger.debug("obtenerAgrupacion");
         ConexionBD objConexion = null;
+        
         int cont = 1;
         try {
             objConexion = new ConexionBD();
@@ -104,7 +114,7 @@ public class AgrupacionDA {
 
     private AgrupacionBE populateAgrupacion(ResultSet resultado) throws SQLException {
         AgrupacionBE objAgrupacionBE = new AgrupacionBE();
-
+logger.debug("populateAgrupacion");
         NivelInfluenciaBE objNivelInfluenciaBE = new NivelInfluenciaBE();
         TipoDocumentoIdentidadBE objTipoDocumentoIdentidadBE = new TipoDocumentoIdentidadBE();
         ZonaBE objZonaBE = new ZonaBE();
@@ -129,28 +139,20 @@ public class AgrupacionDA {
     }
 
     public int registrarAgrupacion(AgrupacionBE objSistema) throws Exception {
-
-      /*  ConexionBD objConexion = null;
-        String query = "";
-
-        query = "INSERT INTO `RRHH`.`tmStakeAgrupacion` (`id`, `FechaRegistro`, `Nombre`, `Identidad`, `Ubicacion`, `Fotografia`,"
-                + "`tmNivelInfluencia_id`, `est`, `tmZona_id`, `tmEstado_id`) VALUES (?,?,?,?,?,?,?,0,?,?);";
-
-        int cont = 1;*/
+  logger.debug("registrarAgrupacion");
+     
         try {
-            TmStakeAgrupacion ad = new TmStakeAgrupacion();
-            /*objConexion = new ConexionBD();
-             objConexion.open();
-             objConexion.prepararSentencia(query);*/
+            Tmstakeagrupacion ad = new Tmstakeagrupacion(); 
             ad.setId(CrearIDAgrupacion());
             ad.setFechaRegistro(objSistema.getFechaRegistro());
             ad.setNombre(objSistema.getNombre());
             ad.setIdentidad(objSistema.getIdentidad());
             ad.setUbicacion(objSistema.getUbicacion());
+            ad.setEst(0);
             ad.setFotografia(objSistema.getFotografia());
-            ad.setTmNivelInfluenciaId(Integer.parseInt(objSistema.getNInfluencia().getId()));
-            ad.setTmZonaId(Integer.parseInt(objSistema.getZona().getId()));
-            ad.setTmEstadoId(Integer.parseInt(objSistema.getEstado().getId()));
+            ad.setTmNivelInfluenciaid( new Tmnivelinfluencia (Integer.parseInt(objSistema.getNInfluencia().getId())) );
+            ad.setTmZonaid(new Tmzona( Integer.parseInt(objSistema.getZona().getId())) );
+            ad.setTmEstadoid(new Tmestado( Integer.parseInt(objSistema.getEstado().getId())) );
             org.hibernate.Transaction tx = session.beginTransaction();
             session.save(ad);
             tx.commit();
@@ -163,7 +165,7 @@ public class AgrupacionDA {
     }
 
     public boolean ActualizarAgrupacion(AgrupacionBE objSistema) throws Exception {
-
+  logger.debug("ActualizarAgrupacion");
         ConexionBD objConexion = null;
         String query = "";
 
@@ -204,93 +206,61 @@ public class AgrupacionDA {
 
     private Integer CrearIDAgrupacion() throws Exception {
         Integer idnew = 0;
-        ConexionBD objConexion2 = null;
-        // DocumentoBE objDocumentoBE = new DocumentoBE();
-        try {
-             /* org.hibernate.Transaction tx = session.beginTransaction();
-            Query q = session.createQuery("From RRHH.tmStakeAgrupacion ORDER BY id DESC LIMIT 1");
-            ResultSet objResult = (int) q.list().size();
-           */
-            objConexion2 = new ConexionBD();
-            //List<DocumentoBE> lstRetorno = new ArrayList<DocumentoBE>();
-            String sQuery = "SELECT  * FROM RRHH.tmStakeAgrupacion ORDER BY id DESC LIMIT 1";
-            objConexion2.open();
-            objConexion2.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion2.ejecutarQuery();
-            if (objResult != null) {
-                objResult.next();
-
-                if (objResult.getRow() == 0) {
-                    idnew = 0;
+          logger.debug("CrearIDAgrupacion");
+        try { 
+            String sQuery = "select max(id) from Tmstakeagrupacion ORDER BY id DESC  ";
+            org.hibernate.Transaction tx = session.beginTransaction();
+            SQLQuery query  = session.createSQLQuery ( sQuery ); 
+            idnew = (Integer) query.uniqueResult();
+            if(idnew != null){
+                 logger.debug(" re " + idnew );
+                if (idnew == 0) {
+                    idnew = 1;
                 } else {
-                    idnew = Integer.parseInt(populateAgrupacion(objResult).getId());
+                    idnew = idnew + 1;
                 }
-
-            } else {
-                idnew = 0;
+                logger.debug("ya habia");
+            }else{
+              idnew = 1;
             }
-
-        //objDocumentoBE.setId(resultado.getString("id"));
-            //objDocumentoBE.setId(objResult.getString("id"));
-            if (idnew == 0) {
-                idnew = 1;
-            } else {
-                idnew = idnew + 1;
-            }
+             logger.debug("idnew="+idnew);
             return idnew;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
-        } finally {
-            objConexion2.close();
-        }
-
+        }  
     }
 
     public boolean eliminarAgrupacion(AgrupacionBE objDocumento) throws Exception {
-        ConexionBD objConexion = null;
-        int cont = 1;
-        String query = " UPDATE tmStakeAgrupacion SET est = ? WHERE id = ? ";
+          logger.debug("eliminarAgrupacion id=" + objDocumento.getId() );
+        String squery = " update Tmstakeagrupacion set est='2' WHERE id = :id ";
 
-        try {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-            objConexion.agregarParametro(cont++, objDocumento.getEst());
-            objConexion.agregarParametro(cont++, objDocumento.getId());
-            objConexion.ejecutar();
+        try { 
+                org.hibernate.Transaction tx = session.beginTransaction();
+            Query query  = session.createQuery ( squery );
+            query.setInteger("id", Integer.parseInt( objDocumento.getId() ) );
+            query.executeUpdate();
+            tx.commit(); 
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw e;
-        } finally {
-            objConexion.close();
-        }
+            e.printStackTrace();
+            return false;
+        }  
     }
 
     public List<AgrupacionBE> buscarAgrupacionVarios(String AsuntoBuscado) throws Exception {
-        ConexionBD objConexion = null;
+       
         try {
-            objConexion = new ConexionBD();
-            List<AgrupacionBE> lstRetorno = new ArrayList<AgrupacionBE>();
-            String sQuery = "SELECT id, Nombre FROM "
-                    + "tmStakeAgrupacion WHERE est=0 and tmStakeAgrupacion.Nombre like '%" + AsuntoBuscado + "%' ";
-            objConexion.open();
-            objConexion.prepararSentencia(sQuery);
-            ResultSet objResult = objConexion.ejecutarQuery();
-            if (objResult != null) {
-                while (objResult.next()) {
-                    lstRetorno.add(populateAgrupacionVarios(objResult));
-                }
-            }
-            return lstRetorno;
+            logger.debug("buscarAgrupacionVarios");
+            org.hibernate.Transaction tx = session.beginTransaction();
+           Query query  = session.createQuery(" from Tmstakeagrupacion WHERE est=0 and nombre like :nombre ");
+           query.setString("nombre", "%"+AsuntoBuscado+"%");
+            return query.list();
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
-        } finally {
-            objConexion.close();
-        }
-
+        }  
     }
 
 }

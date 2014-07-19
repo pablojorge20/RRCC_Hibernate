@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package celepsa.rrcc.eh;
+package celepsa.rrcc.web.util;
 
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;

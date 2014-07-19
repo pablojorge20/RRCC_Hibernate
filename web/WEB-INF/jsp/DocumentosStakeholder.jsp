@@ -7,7 +7,7 @@
     <sx:head/>
 </head>
 
-
+<%  try { %>
 <body>
     <div id="content">
     <div class="post">
@@ -78,4 +78,4 @@
     </div>
     </div>
 </body>
-</html>
+</html><% } catch(Exception e){ e.printStackTrace(); } %>
