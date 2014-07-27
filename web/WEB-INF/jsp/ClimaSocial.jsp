@@ -30,7 +30,7 @@
                 </tr>
                 <tr class="rowH" align="center">
                     <th width="200">Comunidad</th>
-                    <th width="30" align="center">Fecha Generacion</th>
+                    
                     <th width="30" align="center">Nivel Clima Social</th>
                 </tr>
                 <s:iterator value="LClima" status="status">
@@ -39,21 +39,13 @@
                     onmouseout ="this.className='<s:if test="#status.even">rowA</s:if><s:else>rowB</s:else>';" >
                     <td BGCOLOR="<s:property value="Color"/>">
                         <s:url action="climaSocial" id="url" escapeAmp="false">
-                            <s:param name="Zona_id.id" value="id"/>
+                            <s:param name="tmzona.id" value="id"/>
                         </s:url>
                         <font color ="<s:property value="CFont"/>"> 
-                            <s:property value="id.tmZonaId.Descripcion"/>
+                            <s:property value="tmzona.descripcion"/>
                         </font>
                     </td>
-                        <td BGCOLOR="<s:property value="Color"/>">
-                            
-                        <s:url action="climaSocial" id="url" escapeAmp="false">
-                            <s:param name="Zona_id.id" value="id"/>
-                        </s:url>
-                       <font color ="<s:property value="CFont"/>"> 
-                            <s:property value="id.FechaGeneracion"/>
-                       </font>
-                    </td>
+        
                     <td BGCOLOR="<s:property value="Color"/>">
                         <s:url action="climaSocial" id="url" escapeAmp="false">
                             <s:param name="Zona_id.id" value="id"/>
