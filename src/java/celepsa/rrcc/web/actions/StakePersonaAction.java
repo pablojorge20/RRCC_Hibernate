@@ -106,7 +106,7 @@ public class StakePersonaAction extends BaseAction implements Preparable{
             else
             {
                boolean a =objSistemaBL.registrarPersona(getPersona());
-               if (a=false ){
+               if (a==false ){
                     addActionMessage("El Numero de DNI ya se ha registrado");
                }
                else{

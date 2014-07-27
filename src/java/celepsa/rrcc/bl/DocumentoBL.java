@@ -83,13 +83,13 @@ public List<DocumentoBE> buscarDocumentos(String AsuntoBuscado) throws Exception
         boolean a,b=false;
         ConsultasVariasDA objconsulta = new ConsultasVariasDA();
         DocumentoDA objDocumentoDA = new DocumentoDA();
-       
-        objDocumento =objDocumentoDA.obtenerDocumento(objDocumento);
-        
-         a =objconsulta.BuscarPersonaDocumento( objDocumento.getId()+"" );
-        if (a == true ){
-            b=true;//No se puede eliminar por que tiene transaccion
-        }
+
+            objDocumento =objDocumentoDA.obtenerDocumento(objDocumento);
+
+             a =objconsulta.BuscarPersonaDocumento( objDocumento.getId()+"" );
+            if (a == true ){
+                b=true;//No se puede eliminar por que tiene transaccion
+            }
         else{
             objDocumento.setEliminado('1');
             DocumentoBE obj = new DocumentoBE();

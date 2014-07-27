@@ -46,22 +46,24 @@ public class ClimaBL {
             {
              try {
                  Tmclima Clima= new Tmclima();
-                 TmclimaPK id_zona = new TmclimaPK();
+               //  TmclimaPK id_zona = new TmclimaPK();
+                 Clima.setTmzona(objZona);
                  
-                 id_zona.setTmZonaid(objZona.getId());
-                 Clima.setTmclimaPK(id_zona);
+               //  id_zona.setTmZonaid(objZona.getId());
+                 //Clima.setTmclimaPK(id_zona);
                  
                  Date date = new Date();
                  DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-                 id_zona.setFechaGeneracion(fecha.format(date));
+              //   id_zona.setFechaGeneracion(fecha.format(date));
               
+                 
                  SumCri =((Integer) objClimaDA.CriticidadZona( objZona));
                  SumInf= ((Integer) objClimaDA1.InfluenciaPersonas(objZona));
                  SumInfxDoc=((Integer) objClimaDA2.InfluenciaPersonasDocumento(objZona));
               
                  
                  Clima.setClima(Integer.toString(SumCri + SumInf + SumInfxDoc));
-                 Clima.setTmclimaPK(id_zona);
+             //    Clima.setTmclimaPK(id_zona);
                  
                  if (objZona.getId()>0)
                  {
