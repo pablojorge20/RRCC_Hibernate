@@ -8,6 +8,7 @@ package celepsa.rrcc.bl;
 
 import celepsa.rrcc.be.AgrupacionBE;
 import celepsa.rrcc.da.AgrupacionDA;
+import celepsa.rrcc.eh.Tmstakeagrupacion;
 import java.util.List;
 
 /**
@@ -20,18 +21,18 @@ public List<AgrupacionBE> listarAgrupacion(Integer pAg) throws Exception {
         AgrupacionDA objSistemaDA = new AgrupacionDA();
         return objSistemaDA.listarAgrupacion(pAg);
     }    
-public AgrupacionBE obtenerAgrupacion(AgrupacionBE objAgrupacion) throws Exception{
+public Tmstakeagrupacion obtenerAgrupacion(Tmstakeagrupacion objAgrupacion) throws Exception{
         AgrupacionDA objAgrupacionDA = new AgrupacionDA();
         return objAgrupacionDA.obtenerAgrupacion(objAgrupacion);
     }  
      
-      public void registrarAgrupacion(AgrupacionBE objSistema) throws Exception 
+      public void registrarAgrupacion(Tmstakeagrupacion objSistema) throws Exception 
     {
         AgrupacionDA objSistemaDA = new AgrupacionDA();
         objSistemaDA.registrarAgrupacion(objSistema);
     }  
       
-      public void actualizarAgrupacion (AgrupacionBE objSistema) throws Exception 
+      public void actualizarAgrupacion (Tmstakeagrupacion objSistema) throws Exception 
     {
      AgrupacionDA objSistemaDA = new AgrupacionDA();
         objSistemaDA.ActualizarAgrupacion(objSistema);

@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package celepsa.rrcc.web.actions;
 
-import celepsa.rrcc.be.AgrupacionBE;
 import celepsa.rrcc.bl.NivelInfluenciaBL;
 import celepsa.rrcc.bl.AgrupacionBL;
 import celepsa.rrcc.bl.EstadoBL;
 import celepsa.rrcc.bl.ZonaBL;
 import celepsa.rrcc.eh.Tmestado;
 import celepsa.rrcc.eh.Tmnivelinfluencia;
+import celepsa.rrcc.eh.Tmstakeagrupacion;
 import celepsa.rrcc.eh.Tmzona;
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
@@ -22,106 +21,88 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
  *
  * @author pmedina
  */
-public class StakeAgrupacionAction extends BaseAction implements Preparable{
-    private AgrupacionBE Agrupacion;
-  
+public class StakeAgrupacionAction extends BaseAction implements Preparable {
+
+    private Tmstakeagrupacion Agrupacion;
+
     private List<Tmnivelinfluencia> LNinfluencia;
-       private List<Tmzona> LZona;
+    private List<Tmzona> LZona;
     private List<Tmestado> LEstado;
- @Override
+
+    @Override
     public void prepare() throws Exception {
         super.prepare();
-     
-    
-          NivelInfluenciaBL objNivelInfluenciaBL = new NivelInfluenciaBL();
-          setLNinfluencia(objNivelInfluenciaBL.ListarNivelInfluencia());
-       
-                ZonaBL objZonaBL = new ZonaBL();
+
+        NivelInfluenciaBL objNivelInfluenciaBL = new NivelInfluenciaBL();
+        setLNinfluencia(objNivelInfluenciaBL.ListarNivelInfluencia());
+
+        ZonaBL objZonaBL = new ZonaBL();
         setLZona(objZonaBL.ListarZona());
-        
-          EstadoBL objEstadoBL = new EstadoBL();
+
+        EstadoBL objEstadoBL = new EstadoBL();
         setLEstado(objEstadoBL.ListarEstado());
-        
+
     }
-   
+
     @SkipValidation
     public String obtenerStakeAgrupacion() {
-       
-                  try 
-        {
-            if (getAgrupacion() == null || getAgrupacion().getId().isEmpty() )
-            {
-                setAgrupacion(new AgrupacionBE());
-            }
-            else
-            {
-                AgrupacionBL objAgrupacionBL = new AgrupacionBL(); 
+
+        try {
+            if (getAgrupacion() == null || getAgrupacion().getId() == null) {
+                setAgrupacion(new Tmstakeagrupacion());
+            } else {
+                AgrupacionBL objAgrupacionBL = new AgrupacionBL();
                 setAgrupacion(objAgrupacionBL.obtenerAgrupacion(getAgrupacion()));
-                
+
             }
             return INPUT;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             addActionError(e.getMessage());
             return INPUT;
         }
-   
+
     }
-    
-    private void obtenerDetalleParametros() throws Exception
-    {
-  
-        
+
+    private void obtenerDetalleParametros() throws Exception {
+
     }
-  public String grabar()
-    {         
-        try
-        {
+
+    public String grabar() {
+        try {
             AgrupacionBL objSistemaBL = new AgrupacionBL();
-           // Documento = objSistemaBL.obtenerDocumento(Documento);
-            if (getAgrupacion().getId() != null &&
-                !Agrupacion.getId().isEmpty())
-            {
+            // Documento = objSistemaBL.obtenerDocumento(Documento);
+            if (getAgrupacion().getId() != null) {
                 objSistemaBL.actualizarAgrupacion(getAgrupacion());
                 addActionMessage("El Documento se actualizo correctamente");
-            }
-            else
-            {
+            } else {
                 objSistemaBL.registrarAgrupacion(getAgrupacion());
                 addActionMessage("El Documento se grabo correctamente");
             }
-        }
-        catch(Exception e)        
-        {
+        } catch (Exception e) {
             procesarError(e);
         }
-      
-        
+
         return INPUT;
-     
+
     }
-    
-  
-    public String cancelar()
-    {
+
+    public String cancelar() {
         return CANCEL;
     }
 
     /**
      * @return the Agrupacion
      */
-    public AgrupacionBE getAgrupacion() {
+    public Tmstakeagrupacion getAgrupacion() {
         return Agrupacion;
     }
 
     /**
      * @param Agrupacion the Agrupacion to set
      */
-    public void setAgrupacion(AgrupacionBE Agrupacion) {
+    public void setAgrupacion(Tmstakeagrupacion Agrupacion) {
         this.Agrupacion = Agrupacion;
     }
-
 
     /**
      * @return the LZona
@@ -136,8 +117,6 @@ public class StakeAgrupacionAction extends BaseAction implements Preparable{
     public void setLZona(List<Tmzona> LZona) {
         this.LZona = LZona;
     }
-
-
 
     /**
      * @return the LNinfluencia
@@ -167,5 +146,4 @@ public class StakeAgrupacionAction extends BaseAction implements Preparable{
         this.LEstado = LEstado;
     }
 
-   
 }
