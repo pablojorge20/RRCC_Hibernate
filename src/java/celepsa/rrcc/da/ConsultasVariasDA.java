@@ -7,7 +7,6 @@
 package celepsa.rrcc.da;
 
 import celepsa.rrcc.eh.Tmdocumento;
-import celepsa.rrcc.eh.Tmstakepersona;
 import celepsa.rrcc.web.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Query;
