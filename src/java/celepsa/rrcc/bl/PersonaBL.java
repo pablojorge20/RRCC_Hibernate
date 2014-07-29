@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package celepsa.rrcc.bl;
 
-import celepsa.rrcc.be.PersonaBE;
+import celepsa.rrcc.eh.Tmstakepersona;
 import celepsa.rrcc.da.PersonaDA;
 import java.util.List;
 
@@ -15,55 +14,51 @@ import java.util.List;
  * @author pmedina
  */
 public class PersonaBL {
- public List<PersonaBE> listarPersona(Integer pAg) throws Exception 
-    {
-           
+
+    public List<Tmstakepersona> listarPersona(Integer pAg) throws Exception {
+
         PersonaDA objSistemaDA = new PersonaDA();
         return objSistemaDA.listarPersona(pAg);
-    }    
-     public PersonaBE obtenerPersona(PersonaBE objPersona) throws Exception
-    {
+    }
+
+    public Tmstakepersona obtenerPersona(Tmstakepersona objPersona) throws Exception {
         PersonaDA objPersonaDA = new PersonaDA();
         return objPersonaDA.obtenerPersona(objPersona);
-    }  
-     
-      public boolean registrarPersona(PersonaBE objSistema) throws Exception 
-    {
-        PersonaBE PerRegistrada = new PersonaBE();
-        
+    }
+
+    public boolean registrarPersona(Tmstakepersona objSistema) throws Exception {
+        Tmstakepersona PerRegistrada = new Tmstakepersona();
+
         //PerRegistrada(this.obtenerPersona(objSistema).getNroDocumento());
-        
         //if (!PerRegistrada.equals(objSistema)){
-            PersonaDA objSistemaDA = new PersonaDA();
-            objSistemaDA.registrarPersona(objSistema);
+        PersonaDA objSistemaDA = new PersonaDA();
+        objSistemaDA.registrarPersona(objSistema);
         //}
-       // else{
-         //     return false;
+        // else{
+        //     return false;
         //}
-     
+
         return true;
-        
-        
-    }  
-      
-      public void actualizarPersona (PersonaBE objSistema) throws Exception 
-    {
-     PersonaDA objSistemaDA = new PersonaDA();
+
+    }
+
+    public void actualizarPersona(Tmstakepersona objSistema) throws Exception {
+        PersonaDA objSistemaDA = new PersonaDA();
         objSistemaDA.ActualizarPersona(objSistema);
     }
-       public void eliminarPersona(PersonaBE objPersona) throws Exception
-    {
+
+    public void eliminarPersona(Tmstakepersona objPersona) throws Exception {
         PersonaDA objSistemaDA = new PersonaDA();
-        
-        objPersona.setEst("1");
+
+        objPersona.setEst(1);
         //elimimado =1
-            objSistemaDA.eliminarPersona(objPersona) ;
-        
+        objSistemaDA.eliminarPersona(objPersona);
+
     }
-       public List<PersonaBE> buscarPersonas(String AsuntoBuscado) throws Exception
-    {
+
+    public List<Tmstakepersona> buscarPersonas(String AsuntoBuscado) throws Exception {
         PersonaDA objSistemaDA = new PersonaDA();
         return objSistemaDA.buscarPersonasVarios(AsuntoBuscado);
-     
+
     }
 }

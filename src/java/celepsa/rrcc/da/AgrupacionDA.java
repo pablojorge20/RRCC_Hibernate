@@ -151,7 +151,7 @@ public class AgrupacionDA {
     private Integer CrearIDAgrupacion() throws Exception {
         Integer idnew = 0;
         try {
-            SQLQuery query = session.createSQLQuery("select max(id) from Tmstakeagrupacion ORDER BY id DESC");
+            SQLQuery query = session.createSQLQuery("select max(id) from Tmstakeagrupacion");
             idnew = (Integer) query.uniqueResult();
             if (idnew != null) {
                 if (idnew == 0) {
@@ -190,6 +190,7 @@ public class AgrupacionDA {
 
         try {
             logger.debug("buscarAgrupacionVarios");
+            org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery(" from Tmstakeagrupacion WHERE est=0 and nombre like :nombre ");
             query.setString("nombre", "%" + AsuntoBuscado + "%");
             return query.list();

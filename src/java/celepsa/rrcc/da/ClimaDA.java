@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package celepsa.rrcc.da;
-
 import celepsa.rrcc.bd.ConexionBD;
 import celepsa.rrcc.eh.Tmzona;
 import java.sql.ResultSet;

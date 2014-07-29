@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package celepsa.rrcc.web.actions;
 
-import celepsa.rrcc.be.AdjuntoBE;
-import celepsa.rrcc.be.DocumentoBE;
+import celepsa.rrcc.eh.Tmadjunto;
+import celepsa.rrcc.eh.Tmdocumento;
 import celepsa.rrcc.bl.DocumentoBL;
 import celepsa.rrcc.web.util.Funciones;
 import static com.opensymphony.xwork2.Action.INPUT;
@@ -16,204 +15,177 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
+
 /**
  *
  * @author pmedina
  */
-public class DocumentosAdjuntosAction  extends BaseAction implements Preparable{
-    private DocumentoBE Documento;
-    private AdjuntoBE adjunto;
-    private List<AdjuntoBE> adjuntos;
-     private File upload;
+public class DocumentosAdjuntosAction extends BaseAction implements Preparable {
+
+    private Tmdocumento Documento;
+    private Tmadjunto adjunto;
+    private List<Tmadjunto> adjuntos;
+    private File upload;
     private String uploadContentType; //The content type of the file
     private String uploadFileName; //The uploaded file name
 
-         @Override
+    @Override
     public void prepare() throws Exception {
         super.prepare();
-        
-        DocumentoBL objAdjuntoBL =  new DocumentoBL() ;
-        
-           if (getDocumento().getId()== null)
-         {
-             setAdjuntos(objAdjuntoBL.listarAdjuntos(0));
-         }
-         else
-         {
-             setAdjuntos(objAdjuntoBL.listarAdjuntos(Integer.parseInt(getDocumento().getId())));
-         }
-        
-        
+
+        DocumentoBL objAdjuntoBL = new DocumentoBL();
+
+        if (getDocumento().getId() == null) {
+            setAdjuntos(objAdjuntoBL.listarAdjuntos(0));
+        } else {
+            setAdjuntos(objAdjuntoBL.listarAdjuntos(getDocumento().getId()));
+        }
+
     }
-   public String listarAdjuntos() {
-         try 
-        {
+
+    public String listarAdjuntos() {
+        try {
             this.prepararMensaje();
           // StakeholderBL objStakeholderBL= new StakeholderBL();
-           // setStakeholders(objStakeholderBL.listarStakeholderDoc(getDocumento().getId()));
-           DocumentoBL objDocumentoBL= new DocumentoBL();
-          setAdjuntos(objDocumentoBL.listarAdjuntos(Integer.parseInt(getDocumento().getId())));
-              
-      
+            // setStakeholders(objStakeholderBL.listarStakeholderDoc(getDocumento().getId()));
+            DocumentoBL objDocumentoBL = new DocumentoBL();
+            setAdjuntos(objDocumentoBL.listarAdjuntos(getDocumento().getId()));
+
             return INPUT;
-        } 
-        catch (Exception e) 
-        {
+        } catch (Exception e) {
             addActionError(e.getMessage());
             return INPUT;
         }
-   } 
-    public String grabar()
-    {        
-        try
-        {
+    }
+
+    public String grabar() {
+        try {
        //     StakeholderBL objSistemaBL = new StakeholderBL();
-         //   StakeholderBL objRemitenteBL =  new StakeholderBL() ;
-           
+            //   StakeholderBL objRemitenteBL =  new StakeholderBL() ;
+
         //   if (Documento.getId().isEmpty() &&
-          //    !stakeholder.getId().isEmpty())
-          //  {
-           addActionMessage("Seleccione  correctamente");
+            //    !stakeholder.getId().isEmpty())
+            //  {
+            addActionMessage("Seleccione  correctamente");
           //  }
-           // else
-          //  {
-          //       objSistemaBL.registrarStakeholderDocumento(stakeholder,Documento );
-                 
+            // else
+            //  {
+            //       objSistemaBL.registrarStakeholderDocumento(stakeholder,Documento );
+
            //     addActionMessage("El Documento se grabo correctamente");
             //    setLRemitente(objRemitenteBL.listarStakeholder(Integer.parseInt(getDocumento().getId())));
             //this.listarStakeholder();
-               
-           // }
-        }
-        catch(Exception e)        
-        {
+            // }
+        } catch (Exception e) {
             procesarError(e);
         }
-      
-        
+
         return INPUT;
-     
+
     }
-    
-     public String eliminarAdjuntoDocumento() {
-              try 
-        {
-           DocumentoBL objDocumentoBL = new DocumentoBL();
-           
-           objDocumentoBL.eliminarAdjuntoDocumento(getAdjunto(), getDocumento()); 
-            
-            
+
+    public String eliminarAdjuntoDocumento() {
+        try {
+            DocumentoBL objDocumentoBL = new DocumentoBL();
+
+            objDocumentoBL.eliminarAdjuntoDocumento(getAdjunto(), getDocumento());
+
            // StakeholderBL objStakeholderBL = new StakeholderBL();
-           // StakeholderBL objRemitenteBL =  new StakeholderBL() ;
-           // objStakeholderBL.eliminarStakeholderDocumento(getStakeholder(), getDocumento()); 
-            
+            // StakeholderBL objRemitenteBL =  new StakeholderBL() ;
+            // objStakeholderBL.eliminarStakeholderDocumento(getStakeholder(), getDocumento()); 
             addActionMessage("El adjunto se elimino correctamente");
-            
-          // setLRemitente(objRemitenteBL.listarStakeholder(Integer.parseInt(getDocumento().getId())));
-           this.listarAdjuntos();
+
+            // setLRemitente(objRemitenteBL.listarStakeholder(Integer.parseInt(getDocumento().getId())));
+            this.listarAdjuntos();
             return INPUT;
-        } 
-        catch (Exception e) 
-        {
-            if (e.getMessage().startsWith("*"))
-            {
+        } catch (Exception e) {
+            if (e.getMessage().startsWith("*")) {
                 addActionError(e.getMessage().substring(1));
-             //   this.listarStakeholder();
-            }
-            else
-            {
+                //   this.listarStakeholder();
+            } else {
                 addActionError(e.getMessage());
             }
             return INPUT;
         }
-       
+
     }
 
-     
-     
-    public String subirArchivo()
-    {
-        try 
-        {
-            if (getUploadFileName() != null)
-            {
+    public String subirArchivo() {
+        try {
+            if (getUploadFileName() != null) {
                 String filePath = request.getRealPath("/") + "uploads/";
-                String sExtension = getUploadFileName().substring(getUploadFileName().lastIndexOf(".")-1);
+                String sExtension = getUploadFileName().substring(getUploadFileName().lastIndexOf(".") - 1);
                 String sFecha = Funciones.formatearFecha_yyyyMMdd(new Date());
                 String sCodigo = sFecha + sExtension;
-                
+
                 File fileToCreate = new File(filePath, sCodigo);
                 FileUtils.copyFile(getUpload(), fileToCreate);
-                
-        // adjunto
-               AdjuntoBE objAdjunto = new AdjuntoBE();
-               objAdjunto.setNombre(getUploadFileName());
-               objAdjunto.setScodigo(sCodigo);
-        
-                
-               DocumentoBL objAdjuntoBL = new DocumentoBL();
-               objAdjuntoBL.registrarAdjunto(objAdjunto, Documento);
-              //int iIdArchivo = objAdjuntoBL.registrarAdjunto(objAdjunto, Documento);
+
+                // adjunto
+                Tmadjunto objAdjunto = new Tmadjunto();
+                objAdjunto.setNombre(getUploadFileName());
+                objAdjunto.setScodigo(sCodigo);
+
+                DocumentoBL objAdjuntoBL = new DocumentoBL();
+                objAdjuntoBL.registrarAdjunto(objAdjunto, Documento);
+                //int iIdArchivo = objAdjuntoBL.registrarAdjunto(objAdjunto, Documento);
                 this.listarAdjuntos();
             //  adjunto = new AdjuntoBE();
-              // adjunto.setId(String.valueOf(iIdArchivo));
+                // adjunto.setId(String.valueOf(iIdArchivo));
                 addActionMessage("El adjunto se cargo correctamente");
                 msgAction = "";
-            }
-            else
-            {
+            } else {
                 msgAction = "Seleccione el archivo";
             }
-        } 
-        catch (Exception e) 
-        {
+        } catch (Exception e) {
             procesarError(e);
-        }   
-             return INPUT;
-    }     
+        }
+        return INPUT;
+    }
+
     private void prepararMensaje() {
-       
-    } 
+
+    }
 
     /**
      * @return the Documento
      */
-    public DocumentoBE getDocumento() {
+    public Tmdocumento getDocumento() {
         return Documento;
     }
 
     /**
      * @param Documento the Documento to set
      */
-    public void setDocumento(DocumentoBE Documento) {
+    public void setDocumento(Tmdocumento Documento) {
         this.Documento = Documento;
     }
 
     /**
      * @return the adjunto
      */
-    public AdjuntoBE getAdjunto() {
+    public Tmadjunto getAdjunto() {
         return adjunto;
     }
 
     /**
      * @param adjunto the adjunto to set
      */
-    public void setAdjunto(AdjuntoBE adjunto) {
+    public void setAdjunto(Tmadjunto adjunto) {
         this.adjunto = adjunto;
     }
 
     /**
      * @return the adjuntos
      */
-    public List<AdjuntoBE> getAdjuntos() {
+    public List<Tmadjunto> getAdjuntos() {
         return adjuntos;
     }
 
     /**
      * @param adjuntos the adjuntos to set
      */
-    public void setAdjuntos(List<AdjuntoBE> adjuntos) {
+    public void setAdjuntos(List<Tmadjunto> adjuntos) {
         this.adjuntos = adjuntos;
     }
 
