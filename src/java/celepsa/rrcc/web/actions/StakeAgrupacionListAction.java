@@ -6,8 +6,8 @@
 
 package celepsa.rrcc.web.actions;
 
-import celepsa.rrcc.be.AgrupacionBE;
 import celepsa.rrcc.bl.AgrupacionBL;
+import celepsa.rrcc.eh.Tmstakeagrupacion;
 
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
@@ -17,8 +17,8 @@ import java.util.List;
  * @author pmedina
  */
 public class StakeAgrupacionListAction extends BaseAction implements Preparable {
-    private AgrupacionBE agrupacion;
-    private List<AgrupacionBE> agrupacions;
+    private Tmstakeagrupacion agrupacion;
+    private List<Tmstakeagrupacion> agrupacions;
     private String textobuscado;
         @Override
     public void prepare() throws Exception {
@@ -97,28 +97,28 @@ public class StakeAgrupacionListAction extends BaseAction implements Preparable 
     /**
      * @return the agrupacion
      */
-    public AgrupacionBE getAgrupacion() {
+    public Tmstakeagrupacion getAgrupacion() {
         return agrupacion;
     }
 
     /**
      * @param agrupacion the agrupacion to set
      */
-    public void setAgrupacion(AgrupacionBE agrupacion) {
+    public void setAgrupacion(Tmstakeagrupacion agrupacion) {
         this.agrupacion = agrupacion;
     }
 
     /**
      * @return the agrupacions
      */
-    public List<AgrupacionBE> getAgrupacions() {
+    public List<Tmstakeagrupacion> getAgrupacions() {
         return agrupacions;
     }
 
     /**
      * @param agrupacions the agrupacions to set
      */
-    public void setAgrupacions(List<AgrupacionBE> agrupacions) {
+    public void setAgrupacions(List<Tmstakeagrupacion> agrupacions) {
         this.agrupacions = agrupacions;
     }
 

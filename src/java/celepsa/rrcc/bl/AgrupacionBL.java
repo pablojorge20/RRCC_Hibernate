@@ -6,7 +6,6 @@
 
 package celepsa.rrcc.bl;
 
-import celepsa.rrcc.be.AgrupacionBE;
 import celepsa.rrcc.da.AgrupacionDA;
 import celepsa.rrcc.eh.Tmstakeagrupacion;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
  * @author pmedina
  */
 public class AgrupacionBL {
-public List<AgrupacionBE> listarAgrupacion(Integer pAg) throws Exception {
+public List<Tmstakeagrupacion> listarAgrupacion(Integer pAg) throws Exception {
            
         AgrupacionDA objSistemaDA = new AgrupacionDA();
         return objSistemaDA.listarAgrupacion(pAg);
@@ -28,7 +27,7 @@ public Tmstakeagrupacion obtenerAgrupacion(Tmstakeagrupacion objAgrupacion) thro
      
       public void registrarAgrupacion(Tmstakeagrupacion objSistema) throws Exception 
     {
-        AgrupacionDA objSistemaDA = new AgrupacionDA();
+        AgrupacionDA objSistemaDA = new AgrupacionDA();                
         objSistemaDA.registrarAgrupacion(objSistema);
     }  
       
@@ -37,16 +36,16 @@ public Tmstakeagrupacion obtenerAgrupacion(Tmstakeagrupacion objAgrupacion) thro
      AgrupacionDA objSistemaDA = new AgrupacionDA();
         objSistemaDA.ActualizarAgrupacion(objSistema);
     }
-       public void eliminarAgrupacion(AgrupacionBE objAgrupacion) throws Exception
+       public void eliminarAgrupacion(Tmstakeagrupacion objAgrupacion) throws Exception
     {
         AgrupacionDA objSistemaDA = new AgrupacionDA();
         
-        objAgrupacion.setEst("1");
+        objAgrupacion.setEst(1);
         //elimimado =1
             objSistemaDA.eliminarAgrupacion(objAgrupacion) ;
         
     }  
-  public List<AgrupacionBE> buscarAgrupacion(String AsuntoBuscado) throws Exception
+  public List<Tmstakeagrupacion> buscarAgrupacion(String AsuntoBuscado) throws Exception
     {
         AgrupacionDA objSistemaDA = new AgrupacionDA();
         return objSistemaDA.buscarAgrupacionVarios(AsuntoBuscado);

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package celepsa.rrcc.web.actions;
 
 import celepsa.rrcc.be.PersonaBE;
@@ -17,81 +16,68 @@ import java.util.List;
  * @author pmedina
  */
 public class StakePersonaListAction extends BaseAction implements Preparable {
+
     private PersonaBE persona;
     private List<PersonaBE> personas;
     private String textobuscado;
-        @Override
+
+    @Override
     public void prepare() throws Exception {
         super.prepare();
-   
-        
+
     }
-    
-       public String listarStakePersona() 
-    {
-        try 
-        {
+
+    public String listarStakePersona() {
+        try {
             this.prepararMensaje();
-            PersonaBL objPersonaBL= new PersonaBL();
-          setPersonas(objPersonaBL.listarPersona(0));
-            
-      
+            PersonaBL objPersonaBL = new PersonaBL();
+            setPersonas(objPersonaBL.listarPersona(0));
+
             return INPUT;
-        } 
-        catch (Exception e) 
-        {
+        } catch (Exception e) {
             addActionError(e.getMessage());;
             return INPUT;
         }
     }
-            public String buscarPersonas() 
-    {
-        try 
-        {
+
+    public String buscarPersonas() {
+        try {
             this.prepararMensaje();
-            PersonaBL objPersonaBL= new PersonaBL();
-          setPersonas(objPersonaBL.buscarPersonas(getTextobuscado()));
-            
-      
+            PersonaBL objPersonaBL = new PersonaBL();
+            setPersonas(objPersonaBL.buscarPersonas(getTextobuscado()));
+
             return INPUT;
-        } 
-        catch (Exception e) 
-        {
+        } catch (Exception e) {
             addActionError(e.getMessage());;
             return INPUT;
         }
     }
-            
-   public String eliminarPersona() {
-              try 
-        {
-           
+
+    public String eliminarPersona() {
+        try {
+
             PersonaBL objPersonaBL = new PersonaBL();
             objPersonaBL.eliminarPersona(persona);
-           
+
             addActionMessage("La persona se elimino correctamente");
-            
+
             this.listarStakePersona();
-            
+
             return INPUT;
-        } 
-        catch (Exception e) 
-        {
-            if (e.getMessage().startsWith("*"))
-            {
+        } catch (Exception e) {
+            if (e.getMessage().startsWith("*")) {
                 addActionError(e.getMessage().substring(1));
                 this.listarStakePersona();
-            }
-            else
-            {
+            } else {
                 addActionError(e.getMessage());
             }
             return INPUT;
         }
-       
+
     }
-           private void prepararMensaje() {
-       
+
+    private void prepararMensaje() {
+
     }
 
     /**

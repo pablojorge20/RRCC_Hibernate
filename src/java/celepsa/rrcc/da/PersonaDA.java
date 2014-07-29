@@ -137,20 +137,9 @@ public class PersonaDA {
         return objPersonaBE;
     }
 
-    public int registrarPersona(PersonaBE objSistema) throws Exception {
-
-        /*        ConexionBD objConexion = null;
-         String query = "";
-
-         query = "INSERT INTO `RRHH`.`tmStakePersona` (`id`, `FechaRegistro`, `Nombre`, `Apellido`, `Alias`, `Identidad`, `NroDocumento`, `tmTDocumento_id`,"
-         + "`tmNivelInfluencia_id`, `est`, `tmZona_id`, `tmEstado_id`) VALUES (?,?,?,?,?,?,?,?,?,0,?,?);";
-
-         int cont = 1;*/
+    public int registrarPersona(PersonaBE objSistema) throws Exception {        
         Tmstakepersona persona = new Tmstakepersona();
-        try {
-            /*objConexion = new ConexionBD();
-             objConexion.open();
-             objConexion.prepararSentencia(query);*/
+        try {            
             persona.setId(CrearIDPersona());
             persona.setFechaRegistro(objSistema.getFechaRegistro());
             persona.setNombre(objSistema.getNombre());
