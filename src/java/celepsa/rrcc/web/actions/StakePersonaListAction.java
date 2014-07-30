@@ -5,8 +5,8 @@
  */
 package celepsa.rrcc.web.actions;
 
-import celepsa.rrcc.be.PersonaBE;
 import celepsa.rrcc.bl.PersonaBL;
+import celepsa.rrcc.eh.Tmstakepersona;
 
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class StakePersonaListAction extends BaseAction implements Preparable {
 
-    private PersonaBE persona;
-    private List<PersonaBE> personas;
+    private Tmstakepersona persona;
+    private List<Tmstakepersona> personas;
     private String textobuscado;
 
     @Override
@@ -83,28 +83,28 @@ public class StakePersonaListAction extends BaseAction implements Preparable {
     /**
      * @return the persona
      */
-    public PersonaBE getPersona() {
+    public Tmstakepersona getPersona() {
         return persona;
     }
 
     /**
      * @param persona the persona to set
      */
-    public void setPersona(PersonaBE persona) {
+    public void setPersona(Tmstakepersona persona) {
         this.persona = persona;
     }
 
     /**
      * @return the personas
      */
-    public List<PersonaBE> getPersonas() {
+    public List<Tmstakepersona> getPersonas() {
         return personas;
     }
 
     /**
      * @param personas the personas to set
      */
-    public void setPersonas(List<PersonaBE> personas) {
+    public void setPersonas(List<Tmstakepersona> personas) {
         this.personas = personas;
     }
 

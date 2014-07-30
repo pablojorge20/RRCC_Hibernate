@@ -5,15 +5,12 @@
  */
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.bd.ConexionBD;
 import celepsa.rrcc.web.util.HibernateUtil;
 import celepsa.rrcc.eh.Tmestado;
 import celepsa.rrcc.eh.Tmnivelinfluencia;
 import celepsa.rrcc.eh.Tmstakepersona;
 import celepsa.rrcc.eh.Tmtdocumentoidentidad;
 import celepsa.rrcc.eh.Tmzona;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -55,15 +52,6 @@ public class PersonaDA {
         }
     }
 
-//    private PersonaBE populatePersonaVarios(ResultSet resultado) throws SQLException {
-//        PersonaBE objPersonaBE = new PersonaBE();
-//
-//        objPersonaBE.setId(resultado.getString("id"));
-//
-//        objPersonaBE.setNombre(resultado.getString("nombre"));
-//
-//        return objPersonaBE;
-//    }
     public Tmstakepersona obtenerPersona(Tmstakepersona objPersona) throws Exception {
 
         try {
@@ -78,37 +66,6 @@ public class PersonaDA {
         }
     }
 
-//    private Tmstakepersona populatePersona(ResultSet resultado) throws Exception {
-//        Tmstakepersona objPersonaBE = new Tmstakepersona();
-//
-//        NivelInfluenciaBE objNivelInfluenciaBE = new NivelInfluenciaBE();
-//        TipoDocumentoIdentidadBE objTipoDocumentoIdentidadBE = new TipoDocumentoIdentidadBE();
-//        ZonaBE objZonaBE = new ZonaBE();
-//        EstadoBE objEstadoBE = new EstadoBE();
-//
-//        objPersonaBE.setId(resultado.getString("id"));
-//        objPersonaBE.setFechaRegistro(resultado.getString("FechaRegistro"));
-//        objPersonaBE.setNombre(resultado.getString("Nombre"));
-//        objPersonaBE.setApellido(resultado.getString("Apellido"));
-//        objPersonaBE.setAlias(resultado.getString("Alias"));
-//        objPersonaBE.setIdentidad(resultado.getString("Identidad"));
-//        objPersonaBE.setNroDocumento(resultado.getString("NroDocumento"));
-//        objPersonaBE.setFotografia(resultado.getString("Fotografia"));
-//
-//        objTipoDocumentoIdentidadBE.setId(resultado.getString("tmTDocumento_id"));
-//        objPersonaBE.setTDoumentoIdentidad(objTipoDocumentoIdentidadBE);;
-//
-//        objNivelInfluenciaBE.setId(resultado.getString("tmNivelInfluencia_id"));
-//        objPersonaBE.setNInfluencia(objNivelInfluenciaBE);
-//
-//        objZonaBE.setId(resultado.getString("tmZona_id"));
-//        objPersonaBE.setZona(objZonaBE);
-//
-//        objEstadoBE.setId(resultado.getString("tmEstado_id"));
-//        objPersonaBE.setEstado(objEstadoBE);
-//
-//        return objPersonaBE;
-//    }
     public int registrarPersona(Tmstakepersona objSistema) throws Exception {
         Tmstakepersona persona = new Tmstakepersona();
         try {
@@ -132,52 +89,23 @@ public class PersonaDA {
         } catch (Exception e) {
             e.printStackTrace();
             return 0;// no inserto nada 
-        } /*finally {
-         objConexion.close();
-         }*/
+        }  
 
     }
 
     public boolean ActualizarPersona(Tmstakepersona objSistema) throws Exception {
 
-        ConexionBD objConexion = null;
-        String query = "";
-
-        query = "UPDATE `RRHH`.`tmStakePersona` SET `FechaRegistro`=?, "
-                + "`Nombre`=?, `Apellido`=?, "
-                + "`Alias`=?, `Identidad`=?, "
-                + "`NroDocumento`=?, `tmTDocumento_id`=?, "
-                + "`tmNivelInfluencia_id`=?, `tmZona_id`=?, `tmEstado_id`=? "
-                + " WHERE `id`='" + objSistema.getId() + "'";
-
-        int cont = 1;
-
-        try {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-
-            objConexion.agregarParametro(cont++, objSistema.getFechaRegistro());
-            objConexion.agregarParametro(cont++, objSistema.getNombre());
-            objConexion.agregarParametro(cont++, objSistema.getApellido());
-            objConexion.agregarParametro(cont++, objSistema.getAlias());
-            objConexion.agregarParametro(cont++, objSistema.getIdentidad());
-            objConexion.agregarParametro(cont++, objSistema.getNroDocumento());
-            objConexion.agregarParametro(cont++, objSistema.getTmTDocumentoid().getId());
-            objConexion.agregarParametro(cont++, objSistema.getTmNivelInfluenciaid().getId());
-            objConexion.agregarParametro(cont++, objSistema.getTmZonaid().getId());
-            objConexion.agregarParametro(cont++, objSistema.getTmEstadoid().getId());
-
-            objConexion.ejecutar();
+       try {
+            logger.debug("update");
+            org.hibernate.Transaction tx = session.beginTransaction();
+            session.merge(objSistema);
+            tx.commit();
             return true;
-            //return objConexion.insertar();
-        } catch (Exception e) {
+        } catch (NumberFormatException | HibernateException e) {
             System.out.println(e.getMessage());
-            throw e;
-        } finally {
-            objConexion.close();
+            return false;
         }
-
+       
     }
 
     private Integer CrearIDPersona() throws Exception {
@@ -204,24 +132,17 @@ public class PersonaDA {
     }
 
     public boolean eliminarPersona(Tmstakepersona objDocumento) throws Exception {
-        ConexionBD objConexion = null;
-        int cont = 1;
-        String query = " UPDATE tmStakePersona SET est = ? WHERE id = ? ";
-
-        try {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-            objConexion.agregarParametro(cont++, objDocumento.getEst());
-            objConexion.agregarParametro(cont++, objDocumento.getId());
-            objConexion.ejecutar();
-            return true;
-        } catch (Exception e) {
+       
+         try {
+            Query query = session.createQuery("  UPDATE tmStakePersona SET est = :est WHERE id = :id ");
+            query.setInteger("est", objDocumento.getEst() );
+            query.setInteger("id", objDocumento.getId());
+            return query.executeUpdate() > 0;
+        } catch (NumberFormatException | HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
-        } finally {
-            objConexion.close();
         }
+            
     }
 
     public List<Tmstakepersona> buscarPersonasVarios(String nombreBuscado) throws Exception {
@@ -239,12 +160,4 @@ public class PersonaDA {
         }
     }
 
-//    private PersonaBE populatePersonasVarios(ResultSet resultado) throws SQLException {
-//        PersonaBE objPersonaBE = new PersonaBE();
-//
-//        objPersonaBE.setId(resultado.getString("id"));
-//        objPersonaBE.setNombre(resultado.getString("nombre"));
-//
-//        return objPersonaBE;
-//    }
 }

@@ -70,6 +70,7 @@ public class Tmstakepersona implements Serializable {
     private String fotografia;
     @Column(name = "est")
     private Integer est;
+    
     @OneToMany(mappedBy = "tmStakePersonaid")
     private Collection<Tmdocumento> tmdocumentoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tmstakepersona")

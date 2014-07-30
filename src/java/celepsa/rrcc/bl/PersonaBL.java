@@ -27,8 +27,7 @@ public class PersonaBL {
     }
 
     public boolean registrarPersona(Tmstakepersona objSistema) throws Exception {
-        Tmstakepersona PerRegistrada = new Tmstakepersona();
-
+        
         //PerRegistrada(this.obtenerPersona(objSistema).getNroDocumento());
         //if (!PerRegistrada.equals(objSistema)){
         PersonaDA objSistemaDA = new PersonaDA();

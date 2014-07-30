@@ -5,7 +5,6 @@
  */
 package celepsa.rrcc.da;
 
-import celepsa.rrcc.bd.ConexionBD;
 import celepsa.rrcc.web.util.HibernateUtil;
 import celepsa.rrcc.eh.Tmdocumento;
 import celepsa.rrcc.eh.Tmadjunto;
@@ -100,71 +99,6 @@ public class DocumentoDA {
         }
     }
 
-//    private DocumentoBE populateDocumento(ResultSet resultado) throws SQLException {
-//        DocumentoBE objDocumentoBE = new DocumentoBE();
-//        DocumentoBE objConvenioBE = new DocumentoBE();
-//        DocumentoBE objProgramaBE = new DocumentoBE();
-//        DocumentoBE objProyectoBE = new DocumentoBE();
-//        DocumentoBE objOtroDocsBE = new DocumentoBE();
-//        TipoDocumentoBE objTipoDocumentoBE = new TipoDocumentoBE();
-//        StakeholderBE objStakeholderBE = new StakeholderBE();
-//        IngrsoSalidaBE objIngreoSalidaBE = new IngrsoSalidaBE();
-//        CriticidadBE objCriticidadBE = new CriticidadBE();
-//        EstadoBE objEstadoBE = new EstadoBE();
-//
-//        objDocumentoBE.setId(resultado.getString("id"));
-//
-//        objDocumentoBE.setFechaRegistro(resultado.getString("FechaRegistro"));
-//        objDocumentoBE.setFechaRecepcion(resultado.getString("FechaRecepcion"));
-//
-//        objTipoDocumentoBE.setId(resultado.getString("tmTipoDocumento_id"));
-//        objDocumentoBE.setTipoDocumento(objTipoDocumentoBE);
-//
-//        objStakeholderBE.setId(resultado.getString("tmStakePersona_id"));
-//        objDocumentoBE.setStakeholder(objStakeholderBE);
-//
-//        objDocumentoBE.setObservaciones(resultado.getString("Observaciones"));
-//        objDocumentoBE.setAsunto(resultado.getString("Asunto"));
-//
-//        objIngreoSalidaBE.setId(resultado.getString("IngresoSalida"));
-//        objDocumentoBE.setIngreso(objIngreoSalidaBE);
-//
-//        objCriticidadBE.setId(resultado.getString("Criticidad_id"));
-//        objDocumentoBE.setCriticidad(objCriticidadBE);
-//        objDocumentoBE.setFechaCaducidad(resultado.getString("FechaCaducidad"));
-//
-//        objConvenioBE.setId(resultado.getString("RefConvenio"));
-//        objDocumentoBE.setConvenio(objConvenioBE);
-//
-//        objProgramaBE.setId(resultado.getString("RefPrograma"));
-//        objDocumentoBE.setPrograma(objProgramaBE);
-//
-//        objProyectoBE.setId(resultado.getString("RefProyecto"));
-//        objDocumentoBE.setProyecto(objProyectoBE);
-//
-//        objOtroDocsBE.setId(resultado.getString("RefDocumento"));
-//        objDocumentoBE.setDocumento(objOtroDocsBE);
-//
-//        objEstadoBE.setId(resultado.getString("tmEstado_id"));
-//        objDocumentoBE.setEstado(objEstadoBE);
-//
-//        return objDocumentoBE;
-//    }
-//    private AdjuntoBE populateAdjunto(ResultSet resultado) throws SQLException {
-//        AdjuntoBE objAdjuntoBE = new AdjuntoBE();
-//        DocumentoBE objDocumentoBE = new DocumentoBE();
-//
-//        objAdjuntoBE.setId(resultado.getString("id"));
-//
-//        objDocumentoBE.setId(resultado.getString("tmDocumento_id"));
-//        objAdjuntoBE.setDocumento(objDocumentoBE);
-//
-//        objAdjuntoBE.setNombre(resultado.getString("Nombre"));
-//        objAdjuntoBE.setEliminado(resultado.getString("eliminado"));
-//        objAdjuntoBE.setScodigo(resultado.getString("scodigo"));
-//
-//        return objAdjuntoBE;
-//    }
     private Integer CrearIDDoc() throws Exception {
         Integer idnew = 0;
         try {
@@ -214,27 +148,24 @@ public class DocumentoDA {
 
     public int registrarAdjunto(Tmadjunto objSistema, Tmdocumento objDocumento) throws Exception {
 
-        ConexionBD objConexion = null;        
-        String query = "INSERT INTO `tmAdjunto`(`id`,`tmDocumento_id`,`Nombre`,`eliminado`, `scodigo`)"
-                + "VALUES (?,?,?,'0',?)";
-
-        int cont = 1;
+        String squery = "INSERT INTO `tmAdjunto`(`id`,`tmDocumento_id`,`Nombre`,`eliminado`, `scodigo`)"
+                + "VALUES (:id,:doc, :nom, '0', :scod)";
+        logger.debug("registrarStakeholderDocumento");
         try {
-            objConexion = new ConexionBD();
-            objConexion.open();
-            objConexion.prepararSentencia(query);
-            objConexion.agregarParametro(cont++, CrearIDAdjunto());
-            objConexion.agregarParametro(cont++, objDocumento.getId());
-            objConexion.agregarParametro(cont++, objSistema.getNombre());
-            objConexion.agregarParametro(cont++, objSistema.getScodigo());
-            return objConexion.insertar();
+            org.hibernate.Transaction tx = session.beginTransaction();
+            SQLQuery query = session.createSQLQuery(squery);
+            query.setInteger("id", CrearIDAdjunto());
+            query.setInteger("doc", objDocumento.getId());
+            query.setString("nom", objSistema.getNombre());
+            query.setString("scod", objSistema.getScodigo());
+            
+            int res = query.executeUpdate();
+            tx.commit();
+            return res;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             throw e;
-        } finally {
-            objConexion.close();
         }
-
     }
 
     private Integer CrearIDAdjunto() throws Exception {

@@ -14,6 +14,7 @@ import celepsa.rrcc.bl.TipoDocumentoIdentidadBL;
 import celepsa.rrcc.bl.ZonaBL;
 import celepsa.rrcc.eh.Tmestado;
 import celepsa.rrcc.eh.Tmnivelinfluencia;
+import celepsa.rrcc.eh.Tmstakepersona;
 import celepsa.rrcc.eh.Tmtdocumentoidentidad;
 import celepsa.rrcc.eh.Tmzona;
 import com.opensymphony.xwork2.Preparable;
@@ -28,7 +29,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
  * @author pmedina
  */
 public class StakePersonaAction extends BaseAction implements Preparable{
-    private PersonaBE Persona;
+    private Tmstakepersona Persona;
     private List<Tmtdocumentoidentidad> LTipo;
     private List<Tmnivelinfluencia> LNinfluencia;
     private List<Tmzona> LZona;
@@ -54,7 +55,7 @@ public class StakePersonaAction extends BaseAction implements Preparable{
             //pmedina-agrgado
        Date date = new Date();
        DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-       PersonaBE FRegPersona= new PersonaBE();
+       Tmstakepersona FRegPersona= new Tmstakepersona();
        FRegPersona.setFechaRegistro(fecha.format(date));
        setPersona(FRegPersona);
        //pmedina-agrgado
@@ -66,9 +67,9 @@ public class StakePersonaAction extends BaseAction implements Preparable{
        
                   try 
         {
-            if (getPersona() == null || getPersona().getId().isEmpty() )
+            if (getPersona() == null || getPersona().getId() == null )
             {
-                setPersona(new PersonaBE());
+                setPersona(new Tmstakepersona());
             }
             else
             {
@@ -98,7 +99,7 @@ public class StakePersonaAction extends BaseAction implements Preparable{
             PersonaBL objSistemaBL = new PersonaBL();
            // Documento = objSistemaBL.obtenerDocumento(Documento);
             if (getPersona().getId() != null &&
-                !Persona.getId().isEmpty())
+                Persona.getId() != null)
             {
                 objSistemaBL.actualizarPersona(getPersona());
                 addActionMessage("El Documento se actualizo correctamente");
@@ -135,14 +136,14 @@ public class StakePersonaAction extends BaseAction implements Preparable{
     /**
      * @return the Persona
      */
-    public PersonaBE getPersona() {
+    public Tmstakepersona getPersona() {
         return Persona;
     }
 
     /**
      * @param Persona the Persona to set
      */
-    public void setPersona(PersonaBE Persona) {
+    public void setPersona(Tmstakepersona Persona) {
         this.Persona = Persona;
     }
 

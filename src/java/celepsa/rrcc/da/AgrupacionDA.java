@@ -56,16 +56,7 @@ public class AgrupacionDA {
             throw e;
         }
     }
-
-//    private AgrupacionBE populateAgrupacionVarios(ResultSet resultado) throws SQLException {
-//        AgrupacionBE objAgrupacionBE = new AgrupacionBE();
-//        logger.debug("populateAgrupacionVarios");
-//        objAgrupacionBE.setId(resultado.getString("id"));
-//
-//        objAgrupacionBE.setNombre(resultado.getString("nombre"));
-//
-//        return objAgrupacionBE;
-//    }
+ 
     public Tmstakeagrupacion obtenerAgrupacion(Tmstakeagrupacion objAgrupacion) throws Exception {
 
         logger.debug("obtenerAgrupacion hib");
@@ -81,49 +72,15 @@ public class AgrupacionDA {
         }
     }
 
-//    private AgrupacionBE populateAgrupacion(ResultSet resultado) throws SQLException {
-//        AgrupacionBE objAgrupacionBE = new AgrupacionBE();
-//        logger.debug("populateAgrupacion");
-//        NivelInfluenciaBE objNivelInfluenciaBE = new NivelInfluenciaBE();
-//        TipoDocumentoIdentidadBE objTipoDocumentoIdentidadBE = new TipoDocumentoIdentidadBE();
-//        ZonaBE objZonaBE = new ZonaBE();
-//        EstadoBE objEstadoBE = new EstadoBE();
-//        objAgrupacionBE.setId(resultado.getString("id"));
-//        objAgrupacionBE.setFechaRegistro(resultado.getString("FechaRegistro"));
-//        objAgrupacionBE.setNombre(resultado.getString("Nombre"));
-//        objAgrupacionBE.setIdentidad(resultado.getString("Identidad"));
-//        objAgrupacionBE.setUbicacion(resultado.getString("Ubicacion"));
-//        objAgrupacionBE.setFotografia(resultado.getString("Fotografia"));
-//
-//        objNivelInfluenciaBE.setId(resultado.getString("tmNivelInfluencia_id"));
-//        objAgrupacionBE.setNInfluencia(objNivelInfluenciaBE);;
-//
-//        objZonaBE.setId(resultado.getString("tmZona_id"));
-//        objAgrupacionBE.setZona(objZonaBE);
-//
-//        objEstadoBE.setId(resultado.getString("tmEstado_id"));
-//        objAgrupacionBE.setEstado(objEstadoBE);
-//
-//        return objAgrupacionBE;
-//    }
     public void registrarAgrupacion(Tmstakeagrupacion objSistema) throws Exception {
         logger.debug("registrarAgrupacion:1");
         try {
-            Tmstakeagrupacion ad = new Tmstakeagrupacion();
-            ad.setId(CrearIDAgrupacion());
-            ad.setFechaRegistro(objSistema.getFechaRegistro());
-            ad.setNombre(objSistema.getNombre());
-            ad.setIdentidad(objSistema.getIdentidad());
-            ad.setUbicacion(objSistema.getUbicacion());
-            ad.setEst(0);
-            ad.setFotografia(objSistema.getFotografia());
-            logger.debug("registrarAgrupacion:2");
-            ad.setTmNivelInfluenciaid(new Tmnivelinfluencia(objSistema.getTmNivelInfluenciaid().getId()));
-            logger.debug("registrarAgrupacion:2.1");
-            ad.setTmZonaid(new Tmzona(objSistema.getTmZonaid().getId()));
-            ad.setTmEstadoid(new Tmestado(objSistema.getTmEstadoid().getId()));
+           // Tmstakeagrupacion ad = new Tmstakeagrupacion();
+            objSistema.setId(CrearIDAgrupacion());
+            objSistema.setEst(0);
+             
             org.hibernate.Transaction tx = session.beginTransaction();
-            session.save(ad);
+            session.save( objSistema );
             logger.debug("registrarAgrupacion:3");
             tx.commit();
 

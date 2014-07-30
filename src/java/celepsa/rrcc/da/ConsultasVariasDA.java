@@ -9,6 +9,7 @@ package celepsa.rrcc.da;
 import celepsa.rrcc.eh.Tmdocumento;
 import celepsa.rrcc.web.util.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -32,7 +33,7 @@ public class ConsultasVariasDA {
               
                 System.out.println(" lista " + li);
                   a = li != null && li.size()>0;
-            } catch (Exception e){
+            } catch (HibernateException e){
                 e.printStackTrace();
             }
         return a;

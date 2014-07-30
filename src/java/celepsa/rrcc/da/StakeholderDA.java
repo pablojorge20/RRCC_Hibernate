@@ -6,7 +6,6 @@
 package celepsa.rrcc.da;
 
 import celepsa.rrcc.be.DocumentoBE;
-import celepsa.rrcc.eh.Personadocumento;
 import celepsa.rrcc.eh.Tmstakepersona;
 import celepsa.rrcc.web.util.HibernateUtil;
 import java.util.List;
