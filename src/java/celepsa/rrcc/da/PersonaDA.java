@@ -50,6 +50,7 @@ public class PersonaDA {
             List<Tmstakepersona> lista = new ArrayList<Tmstakepersona>();
             Tmstakepersona ddd = new Tmstakepersona();
             for( Object[] r : res){
+                 ddd = new Tmstakepersona();
                 ddd.setId( Integer.parseInt( r[0].toString() ));
                 ddd.setNombre( r[1].toString() );
                 lista.add(ddd);
@@ -88,11 +89,17 @@ public class PersonaDA {
             persona.setNroDocumento(objSistema.getNroDocumento());
             if(objSistema != null && objSistema.getTmTDocumentoid()!=null)
                 persona.setTmTDocumentoid(new Tmtdocumentoidentidad(objSistema.getTmTDocumentoid().getId()));
+            else
+                persona.setTmTDocumentoid(new Tmtdocumentoidentidad(1));
             if(objSistema!= null && objSistema.getTmNivelInfluenciaid()!=null)
                 persona.setTmNivelInfluenciaid(new Tmnivelinfluencia(objSistema.getTmNivelInfluenciaid().getId()));
+            else
+                persona.setTmNivelInfluenciaid(new Tmnivelinfluencia(1));
             persona.setEst(0);
             if(objSistema!= null && objSistema.getTmZonaid() != null)
-            persona.setTmZonaid(new Tmzona(objSistema.getTmZonaid().getId()));
+                persona.setTmZonaid(new Tmzona(objSistema.getTmZonaid().getId()));
+            else
+                persona.setTmZonaid(new Tmzona(1));
             if(objSistema!= null && objSistema.getTmEstadoid() != null)
                 persona.setTmEstadoid(new Tmestado(objSistema.getTmEstadoid().getId()));
             else
