@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,6 +52,8 @@ public class Tmdocumento implements Serializable {
     @NotNull
     @Column(name = "id")
     private Integer id;
+    @Transient
+    private String id2;
     @Size(max = 10)
     @Column(name = "FechaRegistro")
     private String fechaRegistro;
@@ -293,6 +296,20 @@ public class Tmdocumento implements Serializable {
     @Override
     public String toString() {
         return "celepsa.rrcc.eh.Tmdocumento[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the id2
+     */
+    public String getId2() {
+        return id2;
+    }
+
+    /**
+     * @param id2 the id2 to set
+     */
+    public void setId2(String id2) {
+        this.id2 = id2;
     }
     
 }

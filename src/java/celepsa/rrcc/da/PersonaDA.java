@@ -91,9 +91,12 @@ public class PersonaDA {
             if(objSistema!= null && objSistema.getTmNivelInfluenciaid()!=null)
                 persona.setTmNivelInfluenciaid(new Tmnivelinfluencia(objSistema.getTmNivelInfluenciaid().getId()));
             persona.setEst(0);
+            if(objSistema!= null && objSistema.getTmZonaid() != null)
             persona.setTmZonaid(new Tmzona(objSistema.getTmZonaid().getId()));
-            persona.setTmEstadoid(new Tmestado(objSistema.getTmEstadoid().getId()));
-
+            if(objSistema!= null && objSistema.getTmEstadoid() != null)
+                persona.setTmEstadoid(new Tmestado(objSistema.getTmEstadoid().getId()));
+            else
+                persona.setTmEstadoid(new Tmestado(1));
             org.hibernate.Transaction tx = session.beginTransaction();
             session.save(persona);
             tx.commit();
