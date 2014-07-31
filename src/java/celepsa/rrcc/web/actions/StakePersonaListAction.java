@@ -65,6 +65,7 @@ public class StakePersonaListAction extends BaseAction implements Preparable {
 
             return INPUT;
         } catch (Exception e) {
+            e.printStackTrace();
             if (e.getMessage().startsWith("*")) {
                 addActionError(e.getMessage().substring(1));
                 this.listarStakePersona();

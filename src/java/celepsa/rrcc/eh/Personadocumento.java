@@ -33,13 +33,16 @@ public class Personadocumento implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected PersonadocumentoPK personadocumentoPK;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "est")
     private int est;
+    
     @JoinColumn(name = "tmDocumento_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Tmdocumento tmdocumento;
+    
     @JoinColumn(name = "tmStakePersona_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Tmstakepersona tmstakepersona;

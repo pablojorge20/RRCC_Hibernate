@@ -11,6 +11,7 @@ import celepsa.rrcc.eh.Tmnivelinfluencia;
 import celepsa.rrcc.eh.Tmstakepersona;
 import celepsa.rrcc.eh.Tmtdocumentoidentidad;
 import celepsa.rrcc.eh.Tmzona;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -41,12 +42,21 @@ public class PersonaDA {
                         + " PersonaDocumento.tmDocumento_id = :documentoId)";
             }
             org.hibernate.Transaction tx = session.beginTransaction();
-            Query query = session.createQuery(sQuery);
+            Query query = session.createSQLQuery(sQuery);
             if (tdoc != 0) {
                 query.setInteger("documentoId", tdoc);
             }
-            return query.list();
-        } catch (HibernateException e) {
+            List<Object[]> res = query.list();
+            List<Tmstakepersona> lista = new ArrayList<Tmstakepersona>();
+            Tmstakepersona ddd = new Tmstakepersona();
+            for( Object[] r : res){
+                ddd.setId( Integer.parseInt( r[0].toString() ));
+                ddd.setNombre( r[1].toString() );
+                lista.add(ddd);
+            }
+            return lista;
+        } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
             throw e;
         }
@@ -76,8 +86,10 @@ public class PersonaDA {
             persona.setAlias(objSistema.getAlias());
             persona.setIdentidad(objSistema.getIdentidad());
             persona.setNroDocumento(objSistema.getNroDocumento());
-            persona.setTmTDocumentoid(new Tmtdocumentoidentidad(objSistema.getTmTDocumentoid().getId()));
-            persona.setTmNivelInfluenciaid(new Tmnivelinfluencia(objSistema.getTmNivelInfluenciaid().getId()));
+            if(objSistema != null && objSistema.getTmTDocumentoid()!=null)
+                persona.setTmTDocumentoid(new Tmtdocumentoidentidad(objSistema.getTmTDocumentoid().getId()));
+            if(objSistema!= null && objSistema.getTmNivelInfluenciaid()!=null)
+                persona.setTmNivelInfluenciaid(new Tmnivelinfluencia(objSistema.getTmNivelInfluenciaid().getId()));
             persona.setEst(0);
             persona.setTmZonaid(new Tmzona(objSistema.getTmZonaid().getId()));
             persona.setTmEstadoid(new Tmestado(objSistema.getTmEstadoid().getId()));
@@ -112,7 +124,7 @@ public class PersonaDA {
         Integer idnew = 0;
         try {
             org.hibernate.Transaction tx = session.beginTransaction();
-            SQLQuery query = session.createSQLQuery("select max(id) from tmStakePersona");
+            SQLQuery query = session.createSQLQuery("select max(id) from Tmstakepersona");
             idnew = (Integer) query.uniqueResult();
             if (idnew != null) {
                 if (idnew == 0) {
@@ -134,7 +146,7 @@ public class PersonaDA {
     public boolean eliminarPersona(Tmstakepersona objDocumento) throws Exception {
        
          try {
-            Query query = session.createQuery("  UPDATE tmStakePersona SET est = :est WHERE id = :id ");
+            Query query = session.createQuery("  UPDATE Tmstakepersona SET est = :est WHERE id = :id ");
             query.setInteger("est", objDocumento.getEst() );
             query.setInteger("id", objDocumento.getId());
             return query.executeUpdate() > 0;
@@ -147,7 +159,7 @@ public class PersonaDA {
 
     public List<Tmstakepersona> buscarPersonasVarios(String nombreBuscado) throws Exception {
         String sQuery = "SELECT id, CONCAT(Nombre , ' ', Apellido) as nombre FROM "
-                + "Tmstakepersona WHERE est=0 and Tmstakepersona.Nombre like :nombreBuscado or Tmstakepersona.Apellido like :nombreBuscado ";
+                + "Tmstakepersona WHERE est=0 and nombre like :nombreBuscado or apellido like :nombreBuscado ";
         try {
             logger.debug("buscarPersonasVarios");
             org.hibernate.Transaction tx = session.beginTransaction();
@@ -155,6 +167,7 @@ public class PersonaDA {
             query.setString("nombreBuscado", "%" + nombreBuscado + "%");
             return query.list();
         } catch (HibernateException e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
             throw e;
         }
