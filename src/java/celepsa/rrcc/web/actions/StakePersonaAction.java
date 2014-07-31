@@ -102,7 +102,7 @@ public class StakePersonaAction extends BaseAction implements Preparable{
                 Persona.getId() != null)
             {
                 objSistemaBL.actualizarPersona(getPersona());
-                addActionMessage("El Documento se actualizo correctamente");
+                addActionMessage("La Persona se actualizo correctamente");
             }
             else
             {
@@ -111,7 +111,7 @@ public class StakePersonaAction extends BaseAction implements Preparable{
                     addActionMessage("El Numero de DNI ya se ha registrado");
                }
                else{
-                    addActionMessage("El Documento se grabo correctamente");
+                    addActionMessage("La Persona se grabo correctamente");
                }
                    
                

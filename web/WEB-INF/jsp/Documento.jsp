@@ -26,151 +26,92 @@
     
         <s:actionerror theme="mensaje" />
         <s:actionmessage theme="mensaje" />
-
-    
-	<TABLE BORDER=0 WIDTH=600>
-
-
-<TD WIDTH=200>
-       
-	<div id="form_container">
-	
-		
-		<form id="form_813135" class="appnitro"  method="post" action="">
-		<div class="form_description">
-			 <br>&nbsp;&nbsp;<s:text name="Usted esta en :"/>
-    <strong>
+        <form id="form_813135" class="appnitro"  method="post" action="">
+        <br>&nbsp;&nbsp;<s:text name="Usted esta en :"/>
+ <strong>
        Documentos
     </strong>
-       
-    <br>
-                        <s:hidden name="documento.id" value="%{documento.id}" theme="simple"/>    
-		</div>						
-			<ul >
-					
-		<label class="description" for="element_1">Fecha Registro </label>
-		<span>
-			
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	 <s:textfield name="documento.fechaRegistro" value="%{documento.fechaRegistro}" size="12" disabled="true" maxLength="10" theme="simple"/>
-              
-		 
-		<br>
-                    <br>
-		<label class="description" for="element_2">Fecha recepcion </label>
-		<span>
-                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <sx:datetimepicker name="documento.fechaRecepcion"  value="%{documento.fechaRecepcion}"  displayFormat="dd/MM/yyyy"/>
-			
-		</span>
-		<br>
-		 
-		
-		<label class="description" for="element_5">Tipo Documentos </label>
-		&nbsp;&nbsp;&nbsp;
-	<s:select  list="LTipo"
+ <s:hidden name="documento.id" value="%{documento.id}" theme="simple"/>   
+  <table border="0">
+  <tr>
+       <td WIDTH=150>
+           <label class="description" for="element_1">Fecha Registro </label>  <br>  <br>  
+           <label class="description" for="element_2">Fecha recepcion </label> <br>  <br>  
+           <label class="description" for="element_5">Tipo Documentos </label> <br>  <br>  
+           <label class="description" for="element_6">Remitente </label> <br>  <br>  
+           <label class="description" for="element_3">Observaciones </label> <br>  <br> <br>  
+           <label class="description" for="element_4">Asunto </label> <br>  <br>  <br>  
+           <label class="description" for="element_7">Ingreso/Salida </label> <br>  <br>  
+            <label class="description" for="element_8">Criticidad </label> <br>  <br>  
+            <label class="description" for="element_8">Estado </label> <br>    
+       </td>
+       <td WIDTH=150>
+           <br>  
+           <s:textfield name="documento.fechaRegistro" value="%{documento.fechaRegistro}" size="12" disabled="true" maxLength="10" theme="simple"/> <br>  <br>  
+           <sx:datetimepicker name="documento.fechaRecepcion"  value="%{documento.fechaRecepcion}"  displayFormat="dd/MM/yyyy"/> <br>  <br>  
+           	<s:select  list="LTipo"
                                    listKey="id"
                                    listValue="Descripcion"
                                    name="documento.tmTipoDocumentoid.id"
                                    value="%{documento.tmTipoDocumentoid.id}"
                                  
                                    theme="simple"
-                                   cssClass="texto"/>  
-	
-		
-		<br><label class="description" for="element_6">Remitente </label>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	  <s:select  list="LRemitente"
+                                   cssClass="texto"/>   <br>  <br>  
+<s:select  list="LRemitente"
                                    listKey="id"
                                    listValue="Nombre"
                                    name="documento.tmStakePersonaid.id"
                                    value="%{documento.tmStakePersonaid.id}"
                                  
                                    theme="simple"
-                                   cssClass="texto"/>  
-		
-		<br>
-		<label class="description" for="element_3">Observaciones </label>
-		<div>
-                     <s:textarea name="documento.observaciones" value="%{documento.observaciones}" rows="2" cols="50" maxLength="100" theme="simple"/>
-			
-		</div> 
-		
-		<label class="description" for="element_4">Asunto </label>
-		<div>
-                    <s:textarea name="documento.asunto" value="%{documento.asunto}" rows="2" cols="50" maxLength="100" theme="simple"/>
-		
-		</div> 
-		
-		<label class="description" for="element_7">Ingreso/Salida </label>
-		<div>
-	  <s:select  list="LIngreso"
+                                   cssClass="texto"/>  <br>  <br>  
+<s:textarea name="documento.observaciones" value="%{documento.observaciones}" rows="2" cols="50" maxLength="100" theme="simple"/> <br>  <br>  
+ <s:textarea name="documento.asunto" value="%{documento.asunto}" rows="2" cols="50" maxLength="100" theme="simple"/> <br>  <br>  
+ 	  <s:select  list="LIngreso"
                                    listKey="id"
                                    listValue="Descripcion"
                                    name="documento.ingresoSalida"
                                    value="%{documento.ingresoSalida}"
                                  
                                    theme="simple"
-                                   cssClass="texto"/>  
-		</div> 
-		
-		<label class="description" for="element_8">Criticidad </label>
-		<div>
-	  <s:select  list="LCriticidad"
+                                   cssClass="texto"/>   <br>  <br>  
+ <s:select  list="LCriticidad"
                                    listKey="id"
                                    listValue="Descripcion"
                                    name="documento.criticidadid.id"
                                    value="%{documento.criticidadid.id}"
                                  
                                    theme="simple"
-                                   cssClass="texto"/>  
-                    
-		</div> 
-                     <br>
-		<label class="description" for="element_8">Estado </label>
-		
-	  <s:select  list="LEstado"
+                                   cssClass="texto"/>   <br>  <br>  
+     <s:select  list="LEstado"
                                    listKey="id"
                                    listValue="Descripcion"
                                    name="documento.tmEstadoid.id"
                                    value="%{documento.tmEstadoid.id}"
                                  
                                    theme="simple"
-                                   cssClass="texto"/>  
-        	
-		</div> 
-		
-			
-			
-</TD>
-
-<TD WIDTH=250>
-    		
-		<label class="description" for="element_1">Fecha Caducidad </label>
-                            <span>
-			
-                        
-                        <sx:datetimepicker name="documento.fechaCaducidad"  value="%{documento.fechaCaducidad}"  displayFormat="dd/MM/yyyy"/>
-                            </span>  
-                            <BR>
-                                <BR>
-                <div>
-<label class="description" for="element_1">Relacionado a: </label>
-</div>
-        
-		<label class="description" for="element_5">Convenio </label>
-		<div>
-  <s:select  list="LConvenio"
+                                   cssClass="texto"/>   <br>  <br>  
+      
+       </td>
+     <td WIDTH=150>
+         <br> 
+         <label class="description" for="element_1">Fecha Caducidad </label> <br>  <br> <br>  <br>    
+         <label class="description" for="element_1">Relacionado a: </label> <br>  <br>  
+         <label class="description" for="element_5">Convenio </label> <br>  <br>  
+         <label class="description" for="element_5">Programa </label> <br>  <br>  
+         <label class="description" for="element_5">Proyecto </label> <br>  <br>  
+         <label class="description" for="element_5">Documento </label> <br>  <br>  <br>  <br>  <br>  <br>  <br> 
+     </td>
+     <td WIDTH=150>
+         <sx:datetimepicker name="documento.fechaCaducidad"  value="%{documento.fechaCaducidad}"  displayFormat="dd/MM/yyyy"/> <br>  <br>  <br>  <br>  <br>  <br>  
+           <s:select  list="LConvenio"
                                    listKey="id"
                                    listValue="Asunto"
                                    name="documento.refConvenio"
                                    value="%{documento.refConvenio}"
                                  
                                    theme="simple"
-                                   cssClass="texto"/>  
-		</div> 
-              
-		<label class="description" for="element_5">Programa </label>
-		<div>
-		<div>
+                                   cssClass="texto"/>   <br>  <br>  
   <s:select  list="LPrograma"
                                    listKey="id"
                                    listValue="Asunto"
@@ -178,11 +119,7 @@
                                    value="%{documento.refPrograma}"
                                  
                                    theme="simple"
-                                   cssClass="texto"/>  
-		</div> 
-                
-		<label class="description" for="element_5">Proyecto </label>
-		<div>
+                                   cssClass="texto"/>   <br>  <br>  
 <s:select  list="LProyecto"
                                    listKey="id"
                                    listValue="Asunto"
@@ -190,12 +127,7 @@
                                    value="%{documento.refProyecto}"
                                  
                                    theme="simple"
-                                   cssClass="texto"/>  
-		</div> 
-                
-                
-		<label class="description" for="element_5">Documento </label>
-		<div>
+                                   cssClass="texto"/>   <br>  <br>  
 <s:select  list="LDocumento"
                                    listKey="id"
                                    listValue="Asunto"
@@ -203,41 +135,31 @@
                                    value="%{documento.refDocumento}"
                                  
                                    theme="simple"
-                                   cssClass="texto"/>  
-		</div> 
-       
-</TD>
-                
-    <TR>
-    <TD WIDTH=100>
-        
-        <input type="reset"  value="Cancelar" />
+                                   cssClass="texto"/>   <br>  <br>   <br>  <br>  <br>  <br>   
+
+     </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+         <a href="StakeholderDoc.action?documento.id=<s:property value="%{documento.id}"/>">Hacer click para añadir Stakeholder &nbsp;&nbsp;<img src="imagenes/stakeholder.png" height="20" title="Documentos"/></a>        
+           <BR>
+<a href="AdjuntosDoc.action?documento.id=<s:property value="%{documento.id}"/>">Hacer click para añadir Adjuntos &nbsp;&nbsp;<img src="imagenes/aprobar.png" height="20" title="Documentos"/></a>             
+    </td>
+    <td></td>
+    <td>
+         <input type="reset"  value="Cancelar" style="width:100px;height:20px;background-color:#819FF7;color:white;font-size:10pt; font-family:Verdana;text-align:center;"/>
             		
 			    <input type="hidden" name="form_id" value="813135" />
 			    
-				<input id="saveForm" class="button_text" type="submit" name="Guardar" value="Guardar" />
-	</div>
-	
-            </form>	
-        </TD>
-        
-            <TD WIDTH=100>
-           <a href="StakeholderDoc.action?documento.id=<s:property value="%{documento.id}"/>">Hacer click para añadir Stakeholder &nbsp;&nbsp;<img src="imagenes/stakeholder.png" height="20" title="Documentos"/></a>        
-           <BR>
-<a href="AdjuntosDoc.action?documento.id=<s:property value="%{documento.id}"/>">Hacer click para añadir Adjuntos &nbsp;&nbsp;<img src="imagenes/aprobar.png" height="20" title="Documentos"/></a>             
-     
-	
-        </TD>
-
-        </TR>
-
-
-          
-                        
-                 
-
-
-</TABLE>
+				<input id="saveForm" class="button_text" type="submit" name="Guardar" value="Guardar" style="width:100px;height:20px;background-color:#819FF7;color:white;font-size:10pt; font-family:Verdana;text-align:center;"/>
+                                
+                                
+                                
+    </td>
+  </tr>
+</table>  
+	</form>
 
        
 
