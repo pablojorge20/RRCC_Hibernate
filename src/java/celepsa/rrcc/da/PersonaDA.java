@@ -76,6 +76,25 @@ public class PersonaDA {
             throw e;
         }
     }
+       public boolean obtenerPersonaNDOC(Tmstakepersona objPersona) throws Exception {
+
+        try {
+            boolean a = false;
+            String sQuery = "FROM Tmstakepersona WHERE nroDocumento = :NDocumento ";
+            org.hibernate.Transaction tx = session.beginTransaction();
+            Query query = session.createQuery(sQuery);
+            query.setString("NDocumento", objPersona.getNroDocumento());
+            List<Object[]> res = query.list();
+             res =query.list();
+             if (res.isEmpty()){
+                  a= true;      
+             }
+             return a;
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+    } 
 
     public int registrarPersona(Tmstakepersona objSistema) throws Exception {
         Tmstakepersona persona = new Tmstakepersona();

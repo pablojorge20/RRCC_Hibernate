@@ -26,18 +26,22 @@ public class PersonaBL {
         return objPersonaDA.obtenerPersona(objPersona);
     }
 
+      public boolean obtenerPersonaNroDocumento(Tmstakepersona objPersona) throws Exception {
+        PersonaDA objPersonaDA = new PersonaDA();
+        return objPersonaDA.obtenerPersonaNDOC(objPersona);
+    }    
+    
     public boolean registrarPersona(Tmstakepersona objSistema) throws Exception {
-        
-        //PerRegistrada(this.obtenerPersona(objSistema).getNroDocumento());
-        //if (!PerRegistrada.equals(objSistema)){
-        PersonaDA objSistemaDA = new PersonaDA();
+        if(this.obtenerPersonaNroDocumento(objSistema) == false){
+            return false;  
+            }
+        else{
+            PersonaDA objSistemaDA = new PersonaDA();
         objSistemaDA.registrarPersona(objSistema);
-        //}
-        // else{
-        //     return false;
-        //}
-
-        return true;
+            return true;
+            }
+    
+        
 
     }
 
