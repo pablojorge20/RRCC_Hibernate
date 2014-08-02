@@ -160,9 +160,9 @@ public class DocumentoDA {
 
     public int registrarAdjunto(Tmadjunto objSistema, Tmdocumento objDocumento) throws Exception {
 
-        String squery = "INSERT INTO `tmAdjunto`(`id`,`tmDocumento_id`,`Nombre`,`eliminado`, `scodigo`)"
+        String squery = "INSERT INTO Tmadjunto(id, tmDocumento_id, Nombre, eliminado, scodigo)"
                 + "VALUES (:id,:doc, :nom, '0', :scod)";
-        logger.debug("registrarStakeholderDocumento");
+        logger.debug("In registrarStakeholderDocumentoAdjunto");
         try {
             org.hibernate.Transaction tx = session.beginTransaction();
             SQLQuery query = session.createSQLQuery(squery);
@@ -173,9 +173,10 @@ public class DocumentoDA {
             
             int res = query.executeUpdate();
             tx.commit();
+            logger.debug("Out registrarStakeholderDocumentoAdjunto");
             return res;
-        } catch (Exception e) {
-            e.printStackTrace();
+        }  catch (NumberFormatException | HibernateException e) {
+            System.out.println(e.getMessage());
             throw e;
         }
     }
@@ -205,8 +206,7 @@ public class DocumentoDA {
 
     public List<Tmadjunto> listarAdjuntos(Integer tdoc) throws Exception {
         try {
-            String sQuery = "SELECT id, tmDocumento_id, Nombre, eliminado, scodigo  FROM "
-                    + "tmAdjunto where tmDocumento_id = :documentoId";
+            String sQuery = "FROM Tmadjunto where tmDocumento_id = :documentoId";
             logger.debug("listarAdjuntosPorDocumento");
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery(sQuery);

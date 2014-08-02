@@ -34,30 +34,22 @@ public class PersonaDA {
 
     public List<Tmstakepersona> listarPersona(Integer tdoc) throws Exception {
         try {
-            String sQuery = "SELECT id, CONCAT(Nombre , ' ', Apellido) as nombre FROM tmStakePersona WHERE est=0";
+            String sQuery = "FROM Tmstakepersona WHERE est=0";
             if (tdoc != 0) {
-                sQuery = "SELECT DISTINCT tmStakePersona.id, CONCAT(tmStakePersona.Nombre , ' ', tmStakePersona.Apellido) as nombre FROM "
-                        + "tmStakePersona WHERE  tmStakePersona.id NOT IN (SELECT tmStakePersona.id  FROM "
-                        + "tmStakePersona, PersonaDocumento where tmStakePersona.id=PersonaDocumento.tmStakePersona_id and "
+                sQuery = "SELECT DISTINCT Tmstakepersona.id, CONCAT(Tmstakepersona.Nombre , ' ', Tmstakepersona.Apellido) as nombre FROM "
+                        + "Tmstakepersona WHERE  Tmstakepersona.id NOT IN (SELECT Tmstakepersona.id  FROM "
+                        + "Tmstakepersona, PersonaDocumento where Tmstakepersona.id=PersonaDocumento.Tmstakepersona_id and "
                         + " PersonaDocumento.tmDocumento_id = :documentoId)";
             }
+             logger.debug("listarPersona: "+ sQuery);
             org.hibernate.Transaction tx = session.beginTransaction();
-            Query query = session.createSQLQuery(sQuery);
+            Query query = session.createQuery(sQuery);
             if (tdoc != 0) {
                 query.setInteger("documentoId", tdoc);
             }
-            List<Object[]> res = query.list();
-            List<Tmstakepersona> lista = new ArrayList<Tmstakepersona>();
-            Tmstakepersona ddd = new Tmstakepersona();
-            for( Object[] r : res){
-                 ddd = new Tmstakepersona();
-                ddd.setId( Integer.parseInt( r[0].toString() ));
-                ddd.setNombre( r[1].toString() );
-                lista.add(ddd);
-            }
-            return lista;
-        } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug("listarPersona: End");
+            return query.list();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
         }
@@ -175,7 +167,8 @@ public class PersonaDA {
     public boolean eliminarPersona(Tmstakepersona objDocumento) throws Exception {
        
          try {
-            Query query = session.createQuery("  UPDATE Tmstakepersona SET est = :est WHERE id = :id ");
+             org.hibernate.Transaction tx = session.beginTransaction();
+            Query query = session.createQuery("UPDATE Tmstakepersona SET est = :est WHERE id = :id ");
             query.setInteger("est", objDocumento.getEst() );
             query.setInteger("id", objDocumento.getId());
             return query.executeUpdate() > 0;
@@ -187,16 +180,16 @@ public class PersonaDA {
     }
 
     public List<Tmstakepersona> buscarPersonasVarios(String nombreBuscado) throws Exception {
-        String sQuery = "SELECT id, CONCAT(Nombre , ' ', Apellido) as nombre FROM "
-                + "Tmstakepersona WHERE est=0 and nombre like :nombreBuscado or apellido like :nombreBuscado ";
+        String sQuery = "FROM "
+                + "Tmstakepersona WHERE est=0 and Nombre like :nombreBuscado or Apellido like :nombreBuscado ";
         try {
             logger.debug("buscarPersonasVarios");
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery(sQuery);
             query.setString("nombreBuscado", "%" + nombreBuscado + "%");
+            logger.debug("buscarPersonasVarios End");
             return query.list();
-        } catch (HibernateException e) {
-            e.printStackTrace();
+        } catch (NumberFormatException | HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
         }

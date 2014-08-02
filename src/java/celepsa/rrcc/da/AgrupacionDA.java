@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package celepsa.rrcc.da;
+
 import celepsa.rrcc.web.util.HibernateUtil;
 import celepsa.rrcc.eh.Tmestado;
 import celepsa.rrcc.eh.Tmnivelinfluencia;
@@ -33,11 +34,8 @@ public class AgrupacionDA {
 
         logger.debug("listarAgrupacion");
         try {
-            String sQuery = "";
-            if (tdoc == 0) {
-                sQuery = "FROM Tmstakeagrupacion WHERE est=0";
-
-            } else {
+            String sQuery = "FROM Tmstakeagrupacion WHERE est=0";
+            if (tdoc != 0) {
                 sQuery = "SELECT DISTINCT tmStakeAgrupacion.id, CONCAT(tmStakeAgrupacion.Nombre , ' ', tmStakeAgrupacion.Apellido) as nombre FROM "
                         + "tmStakeAgrupacion WHERE  tmStakeAgrupacion.id NOT IN (SELECT tmStakeAgrupacion.id  FROM "
                         + "tmStakeAgrupacion, AgrupacionDocumento where tmStakeAgrupacion.id=AgrupacionDocumento.tmStakeAgrupacion_id and "
@@ -56,7 +54,7 @@ public class AgrupacionDA {
             throw e;
         }
     }
- 
+
     public Tmstakeagrupacion obtenerAgrupacion(Tmstakeagrupacion objAgrupacion) throws Exception {
 
         logger.debug("obtenerAgrupacion hib");
@@ -75,12 +73,12 @@ public class AgrupacionDA {
     public void registrarAgrupacion(Tmstakeagrupacion objSistema) throws Exception {
         logger.debug("registrarAgrupacion:1");
         try {
-           // Tmstakeagrupacion ad = new Tmstakeagrupacion();
+            // Tmstakeagrupacion ad = new Tmstakeagrupacion();
             objSistema.setId(CrearIDAgrupacion());
             objSistema.setEst(0);
-             
+
             org.hibernate.Transaction tx = session.beginTransaction();
-            session.save( objSistema );
+            session.save(objSistema);
             logger.debug("registrarAgrupacion:3");
             tx.commit();
 
@@ -93,7 +91,8 @@ public class AgrupacionDA {
     public void ActualizarAgrupacion(Tmstakeagrupacion objSistema) throws Exception {
         logger.debug("ActualizarAgrupacion");
         try {
-            logger.debug("id: " + objSistema.getId());
+            objSistema.setEst(0);
+            logger.debug("id: " + objSistema.getId());             
             logger.debug("estado: " + objSistema.getTmEstadoid().getId());
             org.hibernate.Transaction tx = session.beginTransaction();
 

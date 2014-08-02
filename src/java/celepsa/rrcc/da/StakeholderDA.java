@@ -10,6 +10,7 @@ import celepsa.rrcc.eh.Tmstakepersona;
 import celepsa.rrcc.web.util.HibernateUtil;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -30,23 +31,25 @@ public class StakeholderDA {
     public List<Tmstakepersona> listarStakeholder(Integer tdoc) throws Exception {
 
         try {
-            logger.debug("listarStakeholder");
-            String sQuery = "";
-            if (tdoc == 0) {
-                sQuery = " FROM Tmstakepersona WHERE est=0";
-            } else {
+            String sQuery = "FROM Tmstakepersona WHERE est=0";
+            logger.debug("listarStakeholder: " + sQuery);
+            if (tdoc != 0) {
                 /*  sQuery="SELECT DISTINCT tmStakePersona.id, "
                  + " CONCAT(tmStakePersona.Nombre , ' ', tmStakePersona.Apellido) as nombre FROM " +
                  "tmStakePersona  WHERE  tmStakePersona.id NOT IN (SELECT tmStakePersona.id  FROM " +
                  "tmStakePersona, PersonaDocumento where tmStakePersona.id=PersonaDocumento.tmStakePersona_id and " +
                  " PersonaDocumento.tmDocumento_id =" + tdoc +")";*/
-                sQuery = " from Tmstakepersona where id not in ( select t.tmStakePersonaid.id from Tmdocumento t where t.id='" + tdoc + "' )";
+                sQuery = "FROM Tmstakepersona where id not in ( select t.tmStakePersonaid.id from Tmdocumento t where t.id=:documentoId )";
+                logger.debug("listarStakeholder: " + sQuery);
             }
             logger.debug(sQuery);
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery(sQuery);
+            if (tdoc != 0) {
+                query.setInteger("documentoId", tdoc);
+            }
             return query.list();
-        } catch (Exception e) {
+        } catch (NumberFormatException | HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
         }
@@ -66,6 +69,7 @@ public class StakeholderDA {
             logger.debug(sQuery);
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery(sQuery);
+
             return query.list();
 
         } catch (Exception e) {
