@@ -11,7 +11,6 @@ import celepsa.rrcc.eh.Tmnivelinfluencia;
 import celepsa.rrcc.eh.Tmstakepersona;
 import celepsa.rrcc.eh.Tmtdocumentoidentidad;
 import celepsa.rrcc.eh.Tmzona;
-import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -37,7 +36,7 @@ public class PersonaDA {
             String sQuery = "FROM Tmstakepersona WHERE est=0";
             if (tdoc != 0) {
                 sQuery = "SELECT DISTINCT Tmstakepersona.id, CONCAT(Tmstakepersona.Nombre , ' ', Tmstakepersona.Apellido) as nombre FROM "
-                        + "Tmstakepersona WHERE  Tmstakepersona.id NOT IN (SELECT Tmstakepersona.id  FROM "
+                        + "Tmstakepersona WHERE Tmstakepersona.est=0 and  Tmstakepersona.id NOT IN (SELECT Tmstakepersona.id  FROM "
                         + "Tmstakepersona, PersonaDocumento where Tmstakepersona.id=PersonaDocumento.Tmstakepersona_id and "
                         + " PersonaDocumento.tmDocumento_id = :documentoId)";
             }
@@ -47,7 +46,6 @@ public class PersonaDA {
             if (tdoc != 0) {
                 query.setInteger("documentoId", tdoc);
             }
-            logger.debug("listarPersona: End");
             return query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -56,7 +54,6 @@ public class PersonaDA {
     }
 
     public Tmstakepersona obtenerPersona(Tmstakepersona objPersona) throws Exception {
-
         try {
             String sQuery = "FROM Tmstakepersona WHERE id = :id ";
             org.hibernate.Transaction tx = session.beginTransaction();
@@ -64,13 +61,12 @@ public class PersonaDA {
             query.setInteger("id", objPersona.getId());
             return (Tmstakepersona) query.list().get(0);
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
 
     public boolean obtenerPersonaNDOC(Tmstakepersona objPersona) throws Exception {
-
         try {
             boolean a = false;
             String sQuery = "FROM Tmstakepersona WHERE nroDocumento = :NDocumento ";
@@ -84,7 +80,7 @@ public class PersonaDA {
             }
             return a;
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -125,8 +121,8 @@ public class PersonaDA {
             tx.commit();
             return 1;
         } catch (Exception e) {
-            e.printStackTrace();
-            return 0;// no inserto nada 
+            logger.error( e.getMessage() );
+            throw e;
         }
 
     }
@@ -140,8 +136,8 @@ public class PersonaDA {
             tx.commit();
             return true;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
-            return false;
+            logger.error( e.getMessage() );
+             throw e;
         }
 
     }
@@ -164,7 +160,7 @@ public class PersonaDA {
             logger.debug("CrearIDPersona: " + idnew);
             return idnew;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -183,24 +179,22 @@ public class PersonaDA {
             tx.commit();
             return true;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+           logger.error( e.getMessage() );
             throw e;
         }
 
     }
 
     public List<Tmstakepersona> buscarPersonasVarios(String nombreBuscado) throws Exception {
-        String sQuery = "FROM "
-                + "Tmstakepersona WHERE est=0 and Nombre like :nombreBuscado or Apellido like :nombreBuscado ";
+        String sQuery = "from Tmstakepersona WHERE est=0 and ( nombre like :nombreBuscado or apellido like :nombreBuscado ) ";
         try {
             logger.debug("buscarPersonasVarios");
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery(sQuery);
             query.setString("nombreBuscado", "%" + nombreBuscado + "%");
-            logger.debug("buscarPersonasVarios End");
             return query.list();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }

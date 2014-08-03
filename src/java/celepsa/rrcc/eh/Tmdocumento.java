@@ -14,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -31,20 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "tmdocumento")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Tmdocumento.findAll", query = "SELECT t FROM Tmdocumento t"),
-    @NamedQuery(name = "Tmdocumento.findById", query = "SELECT t FROM Tmdocumento t WHERE t.id = :id"),
-    @NamedQuery(name = "Tmdocumento.findByFechaRegistro", query = "SELECT t FROM Tmdocumento t WHERE t.fechaRegistro = :fechaRegistro"),
-    @NamedQuery(name = "Tmdocumento.findByFechaRecepcion", query = "SELECT t FROM Tmdocumento t WHERE t.fechaRecepcion = :fechaRecepcion"),
-    @NamedQuery(name = "Tmdocumento.findByFechaCaducidad", query = "SELECT t FROM Tmdocumento t WHERE t.fechaCaducidad = :fechaCaducidad"),
-    @NamedQuery(name = "Tmdocumento.findByAsunto", query = "SELECT t FROM Tmdocumento t WHERE t.asunto = :asunto"),
-    @NamedQuery(name = "Tmdocumento.findByObservaciones", query = "SELECT t FROM Tmdocumento t WHERE t.observaciones = :observaciones"),
-    @NamedQuery(name = "Tmdocumento.findByIngresoSalida", query = "SELECT t FROM Tmdocumento t WHERE t.ingresoSalida = :ingresoSalida"),
-    @NamedQuery(name = "Tmdocumento.findByRefConvenio", query = "SELECT t FROM Tmdocumento t WHERE t.refConvenio = :refConvenio"),
-    @NamedQuery(name = "Tmdocumento.findByRefPrograma", query = "SELECT t FROM Tmdocumento t WHERE t.refPrograma = :refPrograma"),
-    @NamedQuery(name = "Tmdocumento.findByRefProyecto", query = "SELECT t FROM Tmdocumento t WHERE t.refProyecto = :refProyecto"),
-    @NamedQuery(name = "Tmdocumento.findByRefDocumento", query = "SELECT t FROM Tmdocumento t WHERE t.refDocumento = :refDocumento"),
-    @NamedQuery(name = "Tmdocumento.findByEliminado", query = "SELECT t FROM Tmdocumento t WHERE t.eliminado = :eliminado")})
 public class Tmdocumento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -79,8 +63,10 @@ public class Tmdocumento implements Serializable {
     private Integer refProyecto;
     @Column(name = "RefDocumento")
     private Integer refDocumento;
+    
     @Column(name = "eliminado")
     private Character eliminado;
+    
     @ManyToMany(mappedBy = "tmdocumentoCollection")
     private Collection<Tmstakeagrupacion> tmstakeagrupacionCollection;
     @JoinColumn(name = "tmEstado_id", referencedColumnName = "id")

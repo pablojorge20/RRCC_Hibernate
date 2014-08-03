@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package celepsa.rrcc.web.actions;
 
-import celepsa.rrcc.be.PersonaBE;
 import celepsa.rrcc.bl.EstadoBL;
 import celepsa.rrcc.bl.NivelInfluenciaBL;
 import celepsa.rrcc.bl.PersonaBL;
@@ -22,114 +20,96 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 /**
  *
  * @author pmedina
  */
-public class StakePersonaAction extends BaseAction implements Preparable{
+public class StakePersonaAction extends BaseAction implements Preparable {
+private static final Logger logger = Logger.getLogger(StakePersonaAction.class);
     private Tmstakepersona Persona;
     private List<Tmtdocumentoidentidad> LTipo;
     private List<Tmnivelinfluencia> LNinfluencia;
     private List<Tmzona> LZona;
     private List<Tmestado> LEstado;
-    
- @Override
+
+    @Override
     public void prepare() throws Exception {
         super.prepare();
-        
+
         TipoDocumentoIdentidadBL objTipoDocumentoBL = new TipoDocumentoIdentidadBL();
         setLTipo(objTipoDocumentoBL.ListarTipoDocumento());
-        
-    
-          NivelInfluenciaBL objNivelInfluenciaBL = new NivelInfluenciaBL();
+
+
+        NivelInfluenciaBL objNivelInfluenciaBL = new NivelInfluenciaBL();
         setLNinfluencia(objNivelInfluenciaBL.ListarNivelInfluencia());
-        
-          ZonaBL objZonaBL = new ZonaBL();
+
+        ZonaBL objZonaBL = new ZonaBL();
         setLZona(objZonaBL.ListarZona());
-        
-          EstadoBL objEstadoBL = new EstadoBL();
+
+        EstadoBL objEstadoBL = new EstadoBL();
         setLEstado(objEstadoBL.ListarEstado());
-        
-            //pmedina-agrgado
-       Date date = new Date();
-       DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-       Tmstakepersona FRegPersona= new Tmstakepersona();
-       FRegPersona.setFechaRegistro(fecha.format(date));
-       setPersona(FRegPersona);
-       //pmedina-agrgado
-        
+
+        //pmedina-agrgado
+        Date date = new Date();
+        DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        Tmstakepersona FRegPersona = new Tmstakepersona();
+        FRegPersona.setFechaRegistro(fecha.format(date));
+        setPersona(FRegPersona);
+        //pmedina-agrgado
+
     }
-   
+
     @SkipValidation
     public String obtenerStakePersona() {
-       
-                  try 
-        {
-            if (getPersona() == null || getPersona().getId() == null )
-            {
+
+        try {
+            if (getPersona() == null || getPersona().getId() == null) {
                 setPersona(new Tmstakepersona());
-            }
-            else
-            {
-                PersonaBL objPersonaBL = new PersonaBL(); 
+            } else {
+                PersonaBL objPersonaBL = new PersonaBL();
                 setPersona(objPersonaBL.obtenerPersona(getPersona()));
-                
+
             }
             return INPUT;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             addActionError(e.getMessage());
             return INPUT;
         }
-   
+
     }
-    
-    private void obtenerDetalleParametros() throws Exception
-    {
-  
-        
+
+    private void obtenerDetalleParametros() throws Exception {
     }
-  public String grabar()
-    {         
-        try
-        {
+
+    public String grabar() {
+        logger.debug("grabar");
+        try {
             PersonaBL objSistemaBL = new PersonaBL();
-           // Documento = objSistemaBL.obtenerDocumento(Documento);
-            if (getPersona().getId() != null &&
-                Persona.getId() != null)
-            {
+            if (getPersona().getId() != null && Persona.getId() != null) {
                 objSistemaBL.actualizarPersona(getPersona());
                 addActionMessage("La Persona se actualizo correctamente");
-            }
-            else
-            {
-               boolean a =objSistemaBL.registrarPersona(getPersona());
-               if (a==false ){
+            } else {
+                boolean a = objSistemaBL.registrarPersona(getPersona());
+                if (a == false) {
                     addActionMessage("El Numero de DNI ya se ha registrado");
-               }
-               else{
+                } else {
                     addActionMessage("La Persona se grabo correctamente");
-               }
-                   
-               
+                }
             }
-        }
-        catch(Exception e)        
-        {
+        } catch (Exception e) {
+            addActionMessage("Ocurrio un error ");
             procesarError(e);
         }
-      
-        
+
+
         return INPUT;
-     
+
     }
-    
-  
-    public String cancelar()
-    {
+
+    public String cancelar() {
         return CANCEL;
     }
 
@@ -161,8 +141,6 @@ public class StakePersonaAction extends BaseAction implements Preparable{
         this.LTipo = LTipo;
     }
 
-
-
     /**
      * @return the LZona
      */
@@ -176,7 +154,6 @@ public class StakePersonaAction extends BaseAction implements Preparable{
     public void setLZona(List<Tmzona> LZona) {
         this.LZona = LZona;
     }
-
 
     /**
      * @return the LNinfluencia
@@ -205,6 +182,4 @@ public class StakePersonaAction extends BaseAction implements Preparable{
     public void setLEstado(List<Tmestado> LEstado) {
         this.LEstado = LEstado;
     }
-
-
 }

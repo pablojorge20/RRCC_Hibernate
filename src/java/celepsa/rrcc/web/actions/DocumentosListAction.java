@@ -10,6 +10,7 @@ import celepsa.rrcc.bl.DocumentoBL;
 import celepsa.rrcc.eh.Tmdocumento;
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -17,6 +18,8 @@ import java.util.List;
  */
 public class DocumentosListAction extends BaseAction implements Preparable {
 
+    private static final Logger logger = Logger.getLogger(DocumentosListAction.class);
+     
     private Tmdocumento documento;
     private List<Tmdocumento> documentos;
     private String textobuscado;
@@ -29,6 +32,7 @@ public class DocumentosListAction extends BaseAction implements Preparable {
     }
 
     public String listarDocumentos() {
+         logger.debug("listarDocumentos");
         try {
             this.prepararMensaje();
             DocumentoBL objDocumentoBL = new DocumentoBL();
@@ -42,6 +46,7 @@ public class DocumentosListAction extends BaseAction implements Preparable {
     }
 
     public String buscarDocumentos() {
+        logger.debug("buscarDocumentos");
         try {
             this.prepararMensaje();
             DocumentoBL objDocumentoBL = new DocumentoBL();
@@ -55,6 +60,7 @@ public class DocumentosListAction extends BaseAction implements Preparable {
     }
 
     public String eliminarDocumento() {
+        logger.debug("eliminarDocumento");
         try {
             boolean a = false;
             //CorreoBL objMsgCorreoBL = new CorreoBL();

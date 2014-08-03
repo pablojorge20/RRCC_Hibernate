@@ -78,12 +78,15 @@ public class Tmstakepersona implements Serializable {
     @JoinColumn(name = "tmEstado_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Tmestado tmEstadoid;
+    
     @JoinColumn(name = "tmZona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Tmzona tmZonaid;
+    
     @JoinColumn(name = "tmNivelInfluencia_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Tmnivelinfluencia tmNivelInfluenciaid;
+    
     @JoinColumn(name = "tmTDocumento_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Tmtdocumentoidentidad tmTDocumentoid;

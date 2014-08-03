@@ -10,6 +10,7 @@ import celepsa.rrcc.eh.Tmstakepersona;
 
 import com.opensymphony.xwork2.Preparable;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -17,6 +18,8 @@ import java.util.List;
  */
 public class StakePersonaListAction extends BaseAction implements Preparable {
 
+    private static final Logger logger = Logger.getLogger(StakePersonaListAction.class);
+    
     private Tmstakepersona persona;
     private List<Tmstakepersona> personas;
     private String textobuscado;
@@ -28,6 +31,7 @@ public class StakePersonaListAction extends BaseAction implements Preparable {
     }
 
     public String listarStakePersona() {
+        logger.debug("listarStakePersona");
         try {
             this.prepararMensaje();
             PersonaBL objPersonaBL = new PersonaBL();
@@ -41,6 +45,7 @@ public class StakePersonaListAction extends BaseAction implements Preparable {
     }
 
     public String buscarPersonas() {
+        logger.debug("buscarPersonas");
         try {
             this.prepararMensaje();
             PersonaBL objPersonaBL = new PersonaBL();
@@ -54,15 +59,12 @@ public class StakePersonaListAction extends BaseAction implements Preparable {
     }
 
     public String eliminarPersona() {
+        logger.debug("eliminarPersona");
         try {
-
             PersonaBL objPersonaBL = new PersonaBL();
             objPersonaBL.eliminarPersona(persona);
-
             addActionMessage("La persona se elimino correctamente");
-
             this.listarStakePersona();
-
             return INPUT;
         } catch (Exception e) {
             e.printStackTrace();

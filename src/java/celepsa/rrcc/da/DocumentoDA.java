@@ -5,6 +5,7 @@
  */
 package celepsa.rrcc.da;
 
+import celepsa.rrcc.eh.Personadocumento;
 import celepsa.rrcc.web.util.HibernateUtil;
 import celepsa.rrcc.eh.Tmdocumento;
 import celepsa.rrcc.eh.Tmadjunto;
@@ -78,10 +79,14 @@ public class DocumentoDA {
         }
     }
 
+    /**
+     * Traer todos los documenos que no estan eliinados
+     * @return
+     * @throws Exception 
+     */
     public List<Tmdocumento> listarDocumentosVarios() throws Exception {
         try {
             logger.debug("listarDocumentosVarios");
-
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery("from Tmdocumento where eliminado='0' ");
             return query.list();
@@ -137,7 +142,11 @@ public class DocumentoDA {
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery("from Tmdocumento where id = :id ");
             query.setInteger("id", objDocumento.getId());
-            return (Tmdocumento) query.list().get(0);
+            List res = query.list();
+            if( res.size() > 0 )
+                return (Tmdocumento) res.get(0);
+            else
+                return new Tmdocumento(-1);
         } catch (NumberFormatException | HibernateException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -146,13 +155,14 @@ public class DocumentoDA {
     }
 
     public boolean eliminarDocumento(Tmdocumento objDocumento) throws Exception {
-        // eliminar con hibernate 
+        logger.debug("eliminarDocumento");
         org.hibernate.Transaction tx = session.beginTransaction();
         try {
             Query query = session.createQuery(" update Tmdocumento set eliminado = :eliminado where id = :id ");
             query.setString("eliminado", objDocumento.getEliminado().toString());
             query.setInteger("id", objDocumento.getId());
             boolean resultado = query.executeUpdate() > 0;
+            tx.commit();
             return resultado;
         } catch (NumberFormatException | HibernateException e) {
             if (tx!=null) tx.rollback();

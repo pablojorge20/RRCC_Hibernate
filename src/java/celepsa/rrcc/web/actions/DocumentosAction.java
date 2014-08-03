@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package celepsa.rrcc.web.actions;
+
 import celepsa.rrcc.be.CriticidadBE;
 import celepsa.rrcc.be.IngrsoSalidaBE;
 import celepsa.rrcc.bl.DocumentoBL;
@@ -21,16 +21,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 /**
  *
  * @author pmedina
  */
-
-
-
 public class DocumentosAction extends BaseAction implements Preparable {
+
+    private static final Logger logger = Logger.getLogger(DocumentosAction.class);
     private Tmdocumento Documento;
     private List<Tmtipodocumento> LTipo;
     private List<Tmstakepersona> LRemitente;
@@ -41,143 +41,128 @@ public class DocumentosAction extends BaseAction implements Preparable {
     private List<Tmdocumento> LProyecto;
     private List<IngrsoSalidaBE> LIngreso;
     private List<Tmestado> LEstado;
-    
+
     @Override
     public void prepare() throws Exception {
         super.prepare();
-        
+
         TipoDocumentoBL objTipoDocumentoBL = new TipoDocumentoBL();
         //setLTipo(objTipoDocumentoBL.ListarTipoDocumento());
         setLTipo(objTipoDocumentoBL.ListarTipoDocumento());
         //pmedina-agrgado
-       Date date = new Date();
-       DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-       Tmdocumento fdocumento= new Tmdocumento();
-       fdocumento.setFechaCaducidad(fecha.format(date));
-       fdocumento.setFechaRegistro(fecha.format(date));
-       fdocumento.setFechaRecepcion(fecha.format(date));
-       setDocumento(fdocumento);
-       //pmedina-agrgado
-       
-       DocumentoBL objDocumentoBL = new DocumentoBL();
+        Date date = new Date();
+        DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        Tmdocumento fdocumento = new Tmdocumento();
+        fdocumento.setFechaCaducidad(fecha.format(date));
+        fdocumento.setFechaRegistro(fecha.format(date));
+        fdocumento.setFechaRecepcion(fecha.format(date));
+        setDocumento(fdocumento);
+        //pmedina-agrgado
+        logger.debug("void prepare()");
+        DocumentoBL objDocumentoBL = new DocumentoBL();
         setLConvenio(objDocumentoBL.listarDocumento(4));
         setLPrograma(objDocumentoBL.listarDocumento(5));
         setLDocumento(objDocumentoBL.listarDocumento(0));
         setLProyecto(objDocumentoBL.listarDocumento(6));
-        
-        
-        
-        StakeholderBL objRemitenteBL =  new StakeholderBL() ;
+
+
+
+        StakeholderBL objRemitenteBL = new StakeholderBL();
         setLRemitente(objRemitenteBL.listarStakeholder(0));
-        
-         EstadoBL objEstadoBL = new EstadoBL();
+
+        EstadoBL objEstadoBL = new EstadoBL();
         setLEstado(objEstadoBL.ListarEstado());
-        
-         CriticidadBE Criticidad1= new CriticidadBE();
-      Criticidad1.setId("3");
-      Criticidad1.setDescripcion("Alto");
-        CriticidadBE Criticidad2= new CriticidadBE();
-       Criticidad2.setId("2");
-     Criticidad2.setDescripcion("Medio");
-        CriticidadBE Criticidad3= new CriticidadBE();
-       Criticidad3.setId("1");
-      Criticidad3.setDescripcion("Bajo");
+
+        CriticidadBE Criticidad1 = new CriticidadBE();
+        Criticidad1.setId("3");
+        Criticidad1.setDescripcion("Alto");
+        CriticidadBE Criticidad2 = new CriticidadBE();
+        Criticidad2.setId("2");
+        Criticidad2.setDescripcion("Medio");
+        CriticidadBE Criticidad3 = new CriticidadBE();
+        Criticidad3.setId("1");
+        Criticidad3.setDescripcion("Bajo");
         setLCriticidad(new ArrayList<CriticidadBE>());
         setLCriticidad(new ArrayList<CriticidadBE>());
         getLCriticidad().add(Criticidad1);
         getLCriticidad().add(Criticidad2);
         getLCriticidad().add(Criticidad3);
-        
-         IngrsoSalidaBE Ingres1= new IngrsoSalidaBE();
-      Ingres1.setId("1");
-      Ingres1.setDescripcion("Ingreso");
-        IngrsoSalidaBE Ingrse2= new IngrsoSalidaBE();
-       Ingrse2.setId("2");
-      Ingrse2.setDescripcion("Salida");
+
+        IngrsoSalidaBE Ingres1 = new IngrsoSalidaBE();
+        Ingres1.setId("1");
+        Ingres1.setDescripcion("Ingreso");
+        IngrsoSalidaBE Ingrse2 = new IngrsoSalidaBE();
+        Ingrse2.setId("2");
+        Ingrse2.setDescripcion("Salida");
         setLIngreso(new ArrayList<IngrsoSalidaBE>());
         getLIngreso().add(Ingres1);
         getLIngreso().add(Ingrse2);
-     
+
     }
-   
+
     @SkipValidation
     public String obtenerDocumentos() {
-       
-       try{
-            if (getDocumento() == null || getDocumento().getId() == null)
-            {
+        logger.debug("obtenerDocumentos()");
+        try {
+            if (getDocumento() == null || getDocumento().getId() == null) {
                 setDocumento(new Tmdocumento());
-            }
-            else
-            {
-                DocumentoBL objDocumentoBL = new DocumentoBL(); 
-                setDocumento( objDocumentoBL.obtenerDocumento( getDocumento() ) );
-                
+            } else {
+                DocumentoBL objDocumentoBL = new DocumentoBL();
+                setDocumento(objDocumentoBL.obtenerDocumento(getDocumento()));
+
             }
             return INPUT;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             addActionError(e.getMessage());
             return INPUT;
         }
-   
-    }
-    
-    private void obtenerDetalleParametros() throws Exception
-    {
-  
-        
+
     }
 
-    public String grabar(){
+    private void obtenerDetalleParametros() throws Exception {
+    }
+
+    public String grabar() {
         DocumentoBL objSistemaBL = new DocumentoBL();
- 
-        try
-        {
-            if (!Documento.getAsunto().isEmpty() &&
-                !Documento.getObservaciones().isEmpty()){
-               Documento.setFechaRecepcion(this.formatFecha(Documento.getFechaRecepcion().substring(0, 10)));
+        logger.debug("grabar()");
+        try {
+            if (!Documento.getAsunto().isEmpty()
+                    && !Documento.getObservaciones().isEmpty()) {
+                Documento.setFechaRecepcion(this.formatFecha(Documento.getFechaRecepcion().substring(0, 10)));
                 Documento.setFechaCaducidad(this.formatFecha(Documento.getFechaCaducidad().substring(0, 10)));
                 //Date reportDate =fT.parse(Recepcion2);
                 //String Recepcion=fT.format(reportDate);
-               // Tmdfileconflictividad.tmfileconflictividad
-               // Tmfileconflictividad
-                        
-                if (getDocumento().getId() != null &&  Documento.getId()!=null ){
-                    objSistemaBL.actualizarDocumento( getDocumento());
+                // Tmdfileconflictividad.tmfileconflictividad
+                // Tmfileconflictividad
+
+                if (getDocumento().getId() != null && Documento.getId() != null) {
+                    objSistemaBL.actualizarDocumento(getDocumento());
                     addActionMessage("El Documento se actualizo correctamente");
-                }
-                else{
-                    int i = objSistemaBL.registrarDocumento( getDocumento() ); 
-                    if( i > 0 )
+                } else {
+                    int i = objSistemaBL.registrarDocumento(getDocumento());
+                    if (i > 0) {
                         addActionMessage("El Documento se grabo correctamente");
-                    else
+                    } else {
                         addActionMessage("No se pudo grabar el documento");
+                    }
                 }
-            }
-            else{
+            } else {
                 addActionMessage("Por favor llene Asunto y Observaciones");
             }
-            
-        }
-        catch(Exception e)        
-        {
+
+        } catch (Exception e) {
             procesarError(e);
         }
         return INPUT;
-     
+
     }
-    private String formatFecha(String fecha){
-         
-          //SimpleDateFormat fT = new SimpleDateFormat("dd/MM/yyyy");
-               
-               fecha = fecha.substring(8, 10) + "/" + fecha.substring(5, 7)+ "/" + fecha.substring(0, 4);
-      return fecha;  
-    } 
-    
-    public String cancelar()
-    {
+
+    private String formatFecha(String fecha) {
+        fecha = fecha.substring(8, 10) + "/" + fecha.substring(5, 7) + "/" + fecha.substring(0, 4);
+        return fecha;
+    }
+
+    public String cancelar() {
         return CANCEL;
     }
 
@@ -194,8 +179,6 @@ public class DocumentosAction extends BaseAction implements Preparable {
     public void setDocumento(Tmdocumento Documento) {
         this.Documento = Documento;
     }
-
-
 
     /**
      * @return the LRemitente
@@ -295,8 +278,6 @@ public class DocumentosAction extends BaseAction implements Preparable {
         this.LIngreso = LIngreso;
     }
 
-
-
     /**
      * @return the LTipo
      */
@@ -324,13 +305,4 @@ public class DocumentosAction extends BaseAction implements Preparable {
     public void setLEstado(List<Tmestado> LEstado) {
         this.LEstado = LEstado;
     }
-    
-
-
-
 }
-    
-    
-    
-    
-

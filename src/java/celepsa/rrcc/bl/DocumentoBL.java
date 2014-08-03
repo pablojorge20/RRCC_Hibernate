@@ -9,14 +9,16 @@ import celepsa.rrcc.da.ConsultasVariasDA;
 import celepsa.rrcc.da.DocumentoDA;
 import celepsa.rrcc.eh.Tmadjunto;
 import celepsa.rrcc.eh.Tmdocumento;
+import celepsa.rrcc.web.actions.DocumentosListAction;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author pmedina
  */
 public class DocumentoBL {
-
+   private static final Logger logger = Logger.getLogger(DocumentoBL.class);
     public int registrarDocumento(Tmdocumento documento) throws Exception {
 
         if (documento.getRefConvenio() == null) {
@@ -74,21 +76,18 @@ public class DocumentoBL {
     }
 
     public boolean eliminarDocumento(Tmdocumento objDocumento) throws Exception {
-        boolean a, b = false;
+         logger.debug("eliminarDocumento ");
+         boolean a, b = false;
         ConsultasVariasDA objconsulta = new ConsultasVariasDA();
-        DocumentoDA objDocumentoDA = new DocumentoDA();
-
-        objDocumento = objDocumentoDA.obtenerDocumento(objDocumento);
-
+        DocumentoDA objDocumentoDA = new DocumentoDA(); 
+        
         a = objconsulta.BuscarPersonaDocumento(objDocumento.getId() + "");
+        
         if (a == true) {
             b = true;//No se puede eliminar por que tiene transaccion
         } else {
             objDocumento.setEliminado('1');
-            Tmdocumento obj = new Tmdocumento();
-            obj.setEliminado(objDocumento.getEliminado());
-            obj.setId(objDocumento.getId());
-            objDocumentoDA.eliminarDocumento(obj);
+            objDocumentoDA.eliminarDocumento(objDocumento);
             b = false;
         }
         return b;
