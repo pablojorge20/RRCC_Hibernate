@@ -128,7 +128,7 @@ public class AgrupacionDA {
 
     public void eliminarAgrupacion(Tmstakeagrupacion objAgrupacion) throws Exception {
         logger.debug("eliminarAgrupacion id=" + objAgrupacion.getId());
-        String squery = " update Tmstakeagrupacion set est='2' WHERE id = :id ";
+        String squery = " update Tmstakeagrupacion set est=2 WHERE id = :id ";
 
         try {
             org.hibernate.Transaction tx = session.beginTransaction();

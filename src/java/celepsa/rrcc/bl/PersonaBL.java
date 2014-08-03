@@ -52,9 +52,7 @@ public class PersonaBL {
 
     public void eliminarPersona(Tmstakepersona objPersona) throws Exception {
         PersonaDA objSistemaDA = new PersonaDA();
-
-        objPersona.setEst(1);
-        //elimimado =1
+        objPersona.setEst(1);        
         objSistemaDA.eliminarPersona(objPersona);
 
     }

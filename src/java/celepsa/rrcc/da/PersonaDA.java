@@ -41,7 +41,7 @@ public class PersonaDA {
                         + "Tmstakepersona, PersonaDocumento where Tmstakepersona.id=PersonaDocumento.Tmstakepersona_id and "
                         + " PersonaDocumento.tmDocumento_id = :documentoId)";
             }
-             logger.debug("listarPersona: "+ sQuery);
+            logger.debug("listarPersona: " + sQuery);
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery(sQuery);
             if (tdoc != 0) {
@@ -68,7 +68,8 @@ public class PersonaDA {
             throw e;
         }
     }
-       public boolean obtenerPersonaNDOC(Tmstakepersona objPersona) throws Exception {
+
+    public boolean obtenerPersonaNDOC(Tmstakepersona objPersona) throws Exception {
 
         try {
             boolean a = false;
@@ -77,16 +78,16 @@ public class PersonaDA {
             Query query = session.createQuery(sQuery);
             query.setString("NDocumento", objPersona.getNroDocumento());
             List<Object[]> res = query.list();
-             res =query.list();
-             if (res.isEmpty()){
-                  a= true;      
-             }
-             return a;
+            res = query.list();
+            if (res.isEmpty()) {
+                a = true;
+            }
+            return a;
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
         }
-    } 
+    }
 
     public int registrarPersona(Tmstakepersona objSistema) throws Exception {
         Tmstakepersona persona = new Tmstakepersona();
@@ -98,23 +99,27 @@ public class PersonaDA {
             persona.setAlias(objSistema.getAlias());
             persona.setIdentidad(objSistema.getIdentidad());
             persona.setNroDocumento(objSistema.getNroDocumento());
-            if(objSistema != null && objSistema.getTmTDocumentoid()!=null)
+            if (objSistema != null && objSistema.getTmTDocumentoid() != null) {
                 persona.setTmTDocumentoid(new Tmtdocumentoidentidad(objSistema.getTmTDocumentoid().getId()));
-            else
+            } else {
                 persona.setTmTDocumentoid(new Tmtdocumentoidentidad(1));
-            if(objSistema!= null && objSistema.getTmNivelInfluenciaid()!=null)
+            }
+            if (objSistema != null && objSistema.getTmNivelInfluenciaid() != null) {
                 persona.setTmNivelInfluenciaid(new Tmnivelinfluencia(objSistema.getTmNivelInfluenciaid().getId()));
-            else
+            } else {
                 persona.setTmNivelInfluenciaid(new Tmnivelinfluencia(1));
+            }
             persona.setEst(0);
-            if(objSistema!= null && objSistema.getTmZonaid() != null)
+            if (objSistema != null && objSistema.getTmZonaid() != null) {
                 persona.setTmZonaid(new Tmzona(objSistema.getTmZonaid().getId()));
-            else
+            } else {
                 persona.setTmZonaid(new Tmzona(1));
-            if(objSistema!= null && objSistema.getTmEstadoid() != null)
+            }
+            if (objSistema != null && objSistema.getTmEstadoid() != null) {
                 persona.setTmEstadoid(new Tmestado(objSistema.getTmEstadoid().getId()));
-            else
+            } else {
                 persona.setTmEstadoid(new Tmestado(1));
+            }
             org.hibernate.Transaction tx = session.beginTransaction();
             session.save(persona);
             tx.commit();
@@ -122,13 +127,13 @@ public class PersonaDA {
         } catch (Exception e) {
             e.printStackTrace();
             return 0;// no inserto nada 
-        }  
+        }
 
     }
 
     public boolean ActualizarPersona(Tmstakepersona objSistema) throws Exception {
 
-       try {
+        try {
             logger.debug("update");
             org.hibernate.Transaction tx = session.beginTransaction();
             session.merge(objSistema);
@@ -138,7 +143,7 @@ public class PersonaDA {
             System.out.println(e.getMessage());
             return false;
         }
-       
+
     }
 
     private Integer CrearIDPersona() throws Exception {
@@ -165,18 +170,23 @@ public class PersonaDA {
     }
 
     public boolean eliminarPersona(Tmstakepersona objDocumento) throws Exception {
-       
-         try {
-             org.hibernate.Transaction tx = session.beginTransaction();
-            Query query = session.createQuery("UPDATE Tmstakepersona SET est = :est WHERE id = :id ");
-            query.setInteger("est", objDocumento.getEst() );
+        try {
+            logger.debug("eliminarPersona(id): " + objDocumento.getId());
+            logger.debug("eliminarPersona(est): " + objDocumento.getEst());
+            org.hibernate.Transaction tx = session.beginTransaction();
+            String sQuery = " update Tmstakepersona set est = 1 WHERE id = :id ";
+            logger.debug("eliminarPersona(query): " + sQuery);
+            Query query = session.createQuery(sQuery);
+            //query.setInteger("est", objDocumento.getEst());
             query.setInteger("id", objDocumento.getId());
-            return query.executeUpdate() > 0;
+            query.executeUpdate();
+            tx.commit();
+            return true;
         } catch (NumberFormatException | HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
         }
-            
+
     }
 
     public List<Tmstakepersona> buscarPersonasVarios(String nombreBuscado) throws Exception {

@@ -16,8 +16,6 @@
                             Personas
                         </strong>
                         <s:form action="StakePersonaList!buscarPersonas" theme="simple">
-
-
                             <h1 class="title">Buscar Personas</h1>  <s:textfield name="textobuscado" value="" size="15" maxLength="10" theme="simple"/> <s:submit value="Buscar" cssClass="boton"/>
                         </s:form>
                         <div class="entry">        

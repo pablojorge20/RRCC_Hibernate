@@ -49,16 +49,16 @@
                                                                                                                                 <s:select  list="LNinfluencia"
                                                                                                                                            listKey="id"
                                                                                                                                            listValue="Descripcion"
-                                                                                                                                           name="persona.NInfluencia.id"
-                                                                                                                                           value="%{persona.NInfluencia.id}"
+                                                                                                                                           name="persona.tmNivelInfluenciaid.id"
+                                                                                                                                           value="%{persona.tmNivelInfluenciaid.id}"
 
                                                                                                                                            theme="simple"
                                                                                                                                            cssClass="texto"/>  <br>  <br> 
                                                                                                                                                <s:select  list="LZona"
                                                                                                                                                           listKey="id"
                                                                                                                                                           listValue="Descripcion"
-                                                                                                                                                          name="persona.zona.id"
-                                                                                                                                                          value="%{persona.zona.id}"
+                                                                                                                                                          name="persona.tmZonaid.id"
+                                                                                                                                                          value="%{persona.tmZonaid.id}"
 
                                                                                                                                                           theme="simple"
                                                                                                                                                           cssClass="texto"/><br>  <br> 

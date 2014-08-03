@@ -35,9 +35,9 @@ public class DocumentoDA {
             org.hibernate.Transaction tx = session.beginTransaction();
             session.save(documento);
             logger.debug("luego del commit ");
-            tx.commit();            
+            tx.commit();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage()); 
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return documento.getId();
@@ -65,12 +65,13 @@ public class DocumentoDA {
             }
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery(sQuery);
-            if (tdoc != 0) 
+            if (tdoc != 0) {
                 query.setInteger("documentoId", tdoc);
+            }
             return query.list();
 
         } catch (HibernateException e) {
-            logger.error( e.getMessage() );
+            logger.error(e.getMessage());
             System.out.println(e.getMessage());
             e.printStackTrace();
             throw e;
@@ -86,7 +87,7 @@ public class DocumentoDA {
             return query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
-            logger.error( e.getMessage() );
+            logger.error(e.getMessage());
             e.printStackTrace();
             throw e;
         }
@@ -146,16 +147,18 @@ public class DocumentoDA {
 
     public boolean eliminarDocumento(Tmdocumento objDocumento) throws Exception {
         // eliminar con hibernate 
+        org.hibernate.Transaction tx = session.beginTransaction();
         try {
-            Query query = session.createQuery(" update Tmdocumento set eliminado= :eliminado where id = :id ");
-            query.setCharacter("eliminado", objDocumento.getEliminado());
+            Query query = session.createQuery(" update Tmdocumento set eliminado = :eliminado where id = :id ");
+            query.setString("eliminado", objDocumento.getEliminado().toString());
             query.setInteger("id", objDocumento.getId());
-            return query.executeUpdate() > 0;
+            boolean resultado = query.executeUpdate() > 0;
+            return resultado;
         } catch (NumberFormatException | HibernateException e) {
+            if (tx!=null) tx.rollback();
             System.out.println(e.getMessage());
-            e.printStackTrace();
             throw e;
-        }
+        }        
     }
 
     public int registrarAdjunto(Tmadjunto objSistema, Tmdocumento objDocumento) throws Exception {
@@ -170,12 +173,12 @@ public class DocumentoDA {
             query.setInteger("doc", objDocumento.getId());
             query.setString("nom", objSistema.getNombre());
             query.setString("scod", objSistema.getScodigo());
-            
+
             int res = query.executeUpdate();
             tx.commit();
             logger.debug("Out registrarStakeholderDocumentoAdjunto");
             return res;
-        }  catch (NumberFormatException | HibernateException e) {
+        } catch (NumberFormatException | HibernateException e) {
             System.out.println(e.getMessage());
             throw e;
         }
@@ -219,10 +222,10 @@ public class DocumentoDA {
     }
 
     public boolean eliminarDocumentoAdjunto(Tmadjunto objAdjunto, Tmdocumento objDocumento) throws Exception {
-        String sQuery = "DELETE FROM RRHH.Tmadjunto WHERE id=:id and tmDocumento_id=:documentoId";        
+        String sQuery = "DELETE FROM RRHH.Tmadjunto WHERE id=:id and tmDocumento_id=:documentoId";
         try {
             org.hibernate.Transaction tx = session.beginTransaction();
-            Query query = session.createQuery(sQuery);            
+            Query query = session.createQuery(sQuery);
             query.setInteger("id", objAdjunto.getTmadjuntoPK().getId());
             query.setInteger("documentoId", objDocumento.getId());
             return query.executeUpdate() > 0;
