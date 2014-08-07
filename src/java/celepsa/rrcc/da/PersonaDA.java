@@ -48,7 +48,7 @@ public class PersonaDA {
             }
             return query.list();
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -137,7 +137,11 @@ public class PersonaDA {
             return true;
         } catch (NumberFormatException | HibernateException e) {
             logger.error( e.getMessage() );
+<<<<<<< HEAD
              throw e;
+=======
+            return false;
+>>>>>>> origin/master
         }
 
     }
@@ -179,7 +183,11 @@ public class PersonaDA {
             tx.commit();
             return true;
         } catch (NumberFormatException | HibernateException e) {
+<<<<<<< HEAD
            logger.error( e.getMessage() );
+=======
+            logger.error( e.getMessage() );
+>>>>>>> origin/master
             throw e;
         }
 

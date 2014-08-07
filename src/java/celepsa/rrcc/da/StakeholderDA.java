@@ -50,7 +50,7 @@ public class StakeholderDA {
             }
             return query.list();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
