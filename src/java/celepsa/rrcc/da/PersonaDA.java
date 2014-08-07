@@ -50,7 +50,7 @@ public class PersonaDA {
             logger.debug("listarPersona: End");
             return query.list();
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -64,7 +64,7 @@ public class PersonaDA {
             query.setInteger("id", objPersona.getId());
             return (Tmstakepersona) query.list().get(0);
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -83,7 +83,7 @@ public class PersonaDA {
              }
              return a;
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     } 
@@ -135,7 +135,7 @@ public class PersonaDA {
             tx.commit();
             return true;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             return false;
         }
        
@@ -159,7 +159,7 @@ public class PersonaDA {
             logger.debug("CrearIDPersona: " + idnew);
             return idnew;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -173,7 +173,7 @@ public class PersonaDA {
             query.setInteger("id", objDocumento.getId());
             return query.executeUpdate() > 0;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
             
@@ -190,7 +190,7 @@ public class PersonaDA {
             logger.debug("buscarPersonasVarios End");
             return query.list();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }

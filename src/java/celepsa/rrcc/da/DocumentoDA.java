@@ -39,7 +39,7 @@ public class DocumentoDA {
             tx.commit();            
         } catch (NumberFormatException | HibernateException e) {
              logger.error("Error en Registrar" + e);
-            //System.out.println(); 
+            
             e.printStackTrace();
         }
         return documento.getId();
@@ -53,7 +53,8 @@ public class DocumentoDA {
             session.merge(documento);
             tx.commit();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+             logger.error("Error en actualizar documento" + e);
+            
             e.printStackTrace();
         }
     }
@@ -73,7 +74,8 @@ public class DocumentoDA {
 
         } catch (HibernateException e) {
             logger.error( e.getMessage() );
-            System.out.println(e.getMessage());
+             
+            
             e.printStackTrace();
             throw e;
         }
@@ -87,7 +89,7 @@ public class DocumentoDA {
             Query query = session.createQuery("from Tmdocumento where eliminado='0' ");
             return query.list();
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            
             logger.error( e.getMessage() );
             e.printStackTrace();
             throw e;
@@ -103,7 +105,7 @@ public class DocumentoDA {
             query.setString("asunto", "%" + AsuntoBuscado + "%");
             return query.list();
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -126,7 +128,7 @@ public class DocumentoDA {
             logger.debug("CrearIDDocumento: " + idnew);
             return idnew;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             e.printStackTrace();
             throw e;
         }
@@ -140,7 +142,7 @@ public class DocumentoDA {
             query.setInteger("id", objDocumento.getId());
             return (Tmdocumento) query.list().get(0);
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             e.printStackTrace();
             throw e;
         }
@@ -154,7 +156,7 @@ public class DocumentoDA {
             query.setInteger("id", objDocumento.getId());
             return query.executeUpdate() > 0;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             e.printStackTrace();
             throw e;
         }
@@ -178,7 +180,7 @@ public class DocumentoDA {
             logger.debug("Out registrarStakeholderDocumentoAdjunto");
             return res;
         }  catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -201,7 +203,7 @@ public class DocumentoDA {
             logger.debug("CrearIDAdjunto: " + idnew);
             return idnew;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -215,13 +217,14 @@ public class DocumentoDA {
             query.setInteger("documentoId", tdoc);
             return query.list();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
 
     public boolean eliminarDocumentoAdjunto(Tmadjunto objAdjunto, Tmdocumento objDocumento) throws Exception {
-        String sQuery = "DELETE FROM RRHH.Tmadjunto WHERE id=:id and tmDocumento_id=:documentoId";        
+        String sQuery = "UPDATE Tmadjunto SET eliminado='1' WHERE id=:id and tmDocumento_id=:documentoId";   
+         
         try {
             org.hibernate.Transaction tx = session.beginTransaction();
             Query query = session.createQuery(sQuery);            
@@ -229,7 +232,7 @@ public class DocumentoDA {
             query.setInteger("documentoId", objDocumento.getId());
             return query.executeUpdate() > 0;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }

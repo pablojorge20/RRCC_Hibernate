@@ -51,7 +51,7 @@ public class ClimaDA {
             tx.commit();
             return getSumCri();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -74,7 +74,7 @@ public class ClimaDA {
             tx.commit();
             return getSumInf();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -94,7 +94,7 @@ public class ClimaDA {
             tx.commit();
             return getSumInfxDoc();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
   
@@ -118,7 +118,7 @@ public class ClimaDA {
             tx.commit();
             return getSumPerDoc();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     

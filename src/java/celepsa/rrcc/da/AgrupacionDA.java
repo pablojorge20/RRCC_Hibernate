@@ -50,7 +50,7 @@ public class AgrupacionDA {
             return query.list();
 
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -65,7 +65,7 @@ public class AgrupacionDA {
             return (Tmstakeagrupacion) query.list().get(0);
 
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -83,7 +83,7 @@ public class AgrupacionDA {
             tx.commit();
 
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -99,7 +99,7 @@ public class AgrupacionDA {
             session.merge(objSistema);
             tx.commit();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -121,7 +121,7 @@ public class AgrupacionDA {
             logger.debug("CrearIDAgrupacion: " + idnew);
             return idnew;
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -137,7 +137,7 @@ public class AgrupacionDA {
             query.executeUpdate();
             tx.commit();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
@@ -151,7 +151,7 @@ public class AgrupacionDA {
             query.setString("nombre", "%" + AsuntoBuscado + "%");
             return query.list();
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage());
+            logger.error( e.getMessage() );
             throw e;
         }
     }
