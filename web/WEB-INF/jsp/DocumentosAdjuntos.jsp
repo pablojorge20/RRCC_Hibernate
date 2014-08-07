@@ -18,12 +18,14 @@
 
             $(form_files).ajaxForm({
                 beforeSend: function() { //brfore sending form
+                    alert('1');
                     statustxt.empty();
                     progressbox.show(); //show progressbar
                     progressbar.width(completed); //initial value 0% of progressbar
                     statustxt.html(completed); //set status text
                     statustxt.css('color', '#000'); //initial color of status text 
                     $("#loading").show();
+                    alert('2');
                 },
                 uploadProgress: function(event, position, total, percentComplete) { //on progress
                     progressbar.width(percentComplete + '%') //update progressbar percent complete
@@ -62,7 +64,14 @@
 
         function uploadAttachFile()
         {
+            init_upload();
             $("#UploadFileForm").submit();
+        }
+
+        function uploadAttachFile2()
+        {
+            
+            document.getElementById("idForm").submit();
         }
 
     </script>
@@ -81,14 +90,10 @@
                             <s:actionmessage theme="mensaje" />
 
                             <s:property value="accion"/>
-                            <s:form action="grabarAdjunto" method="post" theme="simple">
-                                <s:hidden name="url" value="%{url}" />
-
-
-
-
-
-
+                            <s:form id="idForm" action="grabarAdjunto" method="post" theme="simple" enctype="multipart/form-data">
+                                <i>Cargar documento, seleccionar el archivo&nbsp;&nbsp;</i>
+                                <s:hidden name="documento.id" value="%{documento.id}" theme="simple"/>   
+                                <input id="upload" type="file" size="45" name="upload" onchange="javascript: uploadAttachFile2();" style="margin-bottom: 5px;">
                             </s:form>
                             <div id="formulario">            
 
@@ -97,9 +102,7 @@
                                     <table width="100%">
                                         <tr>
                                             <td>
-                                                <i>Cargar documento, seleccionar el archivo&nbsp;&nbsp;</i>
-                                                <input id="upload" type="file" size="45" name="upload" onchange="javascript: uploadAttachFile();" style="margin-bottom: 5px;">
-                                                <img id="loading" src="images/loading.gif" style="display:none;">
+                                                
                                             </td>
                                         </tr>
                                     </table>

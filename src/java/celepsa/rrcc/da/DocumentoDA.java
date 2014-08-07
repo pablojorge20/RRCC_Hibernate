@@ -10,6 +10,7 @@ import celepsa.rrcc.eh.Tmdocumento;
 import celepsa.rrcc.eh.Tmadjunto;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -37,7 +38,8 @@ public class DocumentoDA {
             logger.debug("luego del commit ");
             tx.commit();            
         } catch (NumberFormatException | HibernateException e) {
-            System.out.println(e.getMessage()); 
+             logger.error("Error en Registrar" + e);
+            //System.out.println(); 
             e.printStackTrace();
         }
         return documento.getId();

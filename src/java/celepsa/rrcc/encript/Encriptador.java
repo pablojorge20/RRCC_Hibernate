@@ -5,8 +5,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+
 
 public class Encriptador {
     private static String encryptKey  = "C3!3p5@_31P1474N41";

@@ -35,7 +35,7 @@ public class DocumentosAdjuntosAction extends BaseAction implements Preparable {
 
         DocumentoBL objAdjuntoBL = new DocumentoBL();
 
-        if (getDocumento().getId() == null) {
+        if (getDocumento() != null && getDocumento().getId() == null) {
             setAdjuntos(objAdjuntoBL.listarAdjuntos(0));
         } else {
             setAdjuntos(objAdjuntoBL.listarAdjuntos(getDocumento().getId()));
@@ -114,9 +114,16 @@ public class DocumentosAdjuntosAction extends BaseAction implements Preparable {
         try {
             if (getUploadFileName() != null) {
                 String filePath = request.getRealPath("/") + "uploads/";
-                String sExtension = getUploadFileName().substring(getUploadFileName().lastIndexOf(".") - 1);
+                String [] arr = getUploadFileName().split("\\.");
+                String sExtension = arr[arr.length -1];
+                if (!sExtension.toUpperCase().equals("PDF")){
+                    
+                    addActionMessage("Solo se puede cargar PDF");
+                     return INPUT;
+                    }
+                
                 String sFecha = Funciones.formatearFecha_yyyyMMdd(new Date());
-                String sCodigo = sFecha + sExtension;
+                String sCodigo = sFecha + getUploadFileName();
 
                 File fileToCreate = new File(filePath, sCodigo);
                 FileUtils.copyFile(getUpload(), fileToCreate);
